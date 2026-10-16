@@ -1,377 +1,3420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coming Soon — Signal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper: #F6F5F1;
-    --ink: #1B1B18;
-    --signal: #3654A6;
-    --muted: #8A8A82;
-    --line: #DEDDD5;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fffdfc">
+  <meta name="description" content="Beautiful, editable digital invitations for your lobola celebration. Make every detail feel like you.">
+  <title>Lobola Invitation — Editable Digital Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fffdfc;
+      --ink: #292320;
+      --muted: #786d68;
+      --line: #e8dfda;
+      --accent: #895b49;
+      --gutter: clamp(18px, 4vw, 54px);
+    }
 
-  *{ box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-  html, body{
-    margin: 0;
-    padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Space Grotesk', sans-serif;
-    height: 100%;
-  }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
-  body{
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+    html { scroll-behavior: smooth; }
 
-  /* ---------- top bar ---------- */
-  header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 28px clamp(20px, 5vw, 56px) 0;
-  }
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .brandmark{
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
+    a { color: inherit; }
 
-  .status{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+    .site-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      padding: 20px 0 0;
+    }
 
-  .status .dot{
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--signal);
-    animation: pulse 2.2s ease-in-out infinite;
-  }
+    .menu-toggle {
+      justify-self: start;
+      margin-left: var(--gutter);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 0 9px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--paper);
+      font: 500 12px "DM Sans", sans-serif;
+      letter-spacing: .12em;
+      cursor: pointer;
+    }
 
-  @keyframes pulse{
-    0%, 100% { box-shadow: 0 0 0 0 rgba(54,84,166,0.45); }
-    50% { box-shadow: 0 0 0 6px rgba(54,84,166,0); }
-  }
+    .menu-toggle svg { width: 18px; height: 18px; }
 
-  /* ---------- main ---------- */
-  main{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px clamp(20px, 5vw, 56px);
-  }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+    }
 
-  .stage{
-    width: 100%;
-    max-width: 620px;
-    text-align: center;
-  }
+    .brand-logo {
+      display: block;
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+    }
 
-  .eyebrow{
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--signal);
-    margin-bottom: 18px;
-    font-weight: 500;
-  }
+    .brand-tagline {
+      margin-top: 4px;
+      color: var(--muted);
+      font: 400 11px/1.4 "DM Sans", sans-serif;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
-  h1{
-    font-family: 'Fraunces', serif;
-    font-optical-sizing: auto;
-    font-weight: 450;
-    font-size: clamp(38px, 6.4vw, 64px);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    margin: 0 0 22px;
-  }
+    .header-note {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+      margin-right: var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
 
-  h1 em{
-    font-style: italic;
-    font-weight: 300;
-    color: var(--signal);
-  }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 34px;
+      color: var(--accent);
+      transition: color .2s ease, transform .2s ease;
+    }
 
-  p.lede{
-    font-size: 16px;
-    line-height: 1.6;
-    color: #4A4A44;
-    max-width: 440px;
-    margin: 0 auto 40px;
-  }
+    .social-link:hover {
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
 
-  /* ---------- form ---------- */
-  form{
-    display: flex;
-    gap: 10px;
-    max-width: 420px;
-    margin: 0 auto 48px;
-  }
+    .social-link svg {
+      display: block;
+      width: 22px;
+      height: 22px;
+    }
 
-  input[type="email"]{
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--line);
-    padding: 12px 4px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.25s ease;
-  }
+    .menu-panel {
+      position: absolute;
+      z-index: 2;
+      top: 80px;
+      left: var(--gutter);
+      display: none;
+      min-width: 190px;
+      padding: 9px 0;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: 0 12px 28px rgb(37 34 31 / 9%);
+    }
 
-  input[type="email"]::placeholder{
-    color: var(--muted);
-  }
+    .menu-panel.is-open { display: grid; }
 
-  input[type="email"]:focus{
-    border-bottom-color: var(--signal);
-  }
+    .menu-panel a {
+      padding: 11px 16px;
+      font-size: 16px;
+      text-decoration: none;
+    }
 
-  button{
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    padding: 12px 22px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: background 0.25s ease, transform 0.15s ease;
-    white-space: nowrap;
-  }
+    .menu-panel a:hover,
+    .menu-panel a:focus-visible { color: var(--accent); }
 
-  button:hover{ background: var(--signal); }
-  button:active{ transform: translateY(1px); }
+    main { padding: 0 var(--gutter); }
 
-  button:focus-visible,
-  input[type="email"]:focus-visible{
-    outline: 2px solid var(--signal);
-    outline-offset: 3px;
-  }
+    .categories {
+      display: grid;
+      justify-items: center;
+      gap: 32px;
+      padding: 32px 0 24px;
+    }
 
-  .note{
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: -34px;
-    margin-bottom: 44px;
-    min-height: 16px;
-  }
+    .category-card {
+      display: flex;
+      width: min(100%, 320px);
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: center;
+      cursor: pointer;
+    }
 
-  /* ---------- signature: waveform ---------- */
-  .waveform{
-    width: 100%;
-    height: 34px;
-    margin-bottom: 36px;
-  }
+    .category-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 3px;
+      object-fit: cover;
+      transition: transform .5s cubic-bezier(.2, .65, .3, 1);
+    }
 
-  .waveform path{
-    fill: none;
-    stroke: var(--signal);
-    stroke-width: 1.4;
-    stroke-linecap: round;
-    opacity: 0.55;
-  }
+    .category-card:hover img { transform: scale(1.015); }
 
-  /* ---------- countdown ---------- */
-  .countdown{
-    display: flex;
-    justify-content: center;
-    gap: clamp(14px, 4vw, 30px);
-  }
+    .category-button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: .08em;
+      transition: background .2s ease, color .2s ease;
+    }
 
-  .unit{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 54px;
-  }
+    .category-card:hover .category-button,
+    .category-card:focus-visible .category-button {
+      background: var(--accent);
+      color: var(--paper);
+    }
 
-  .unit .num{
-    font-family: 'Fraunces', serif;
-    font-weight: 450;
-    font-size: clamp(26px, 5vw, 38px);
-    font-variant-numeric: tabular-nums;
-  }
+    .product-list {
+      display: grid;
+      width: min(100%, 320px);
+      justify-items: center;
+    }
 
-  .unit .lbl{
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+    .product-list[hidden] { display: none; }
 
-  .sep{
-    font-family: 'Fraunces', serif;
-    font-size: clamp(26px, 5vw, 38px);
-    color: var(--line);
-    align-self: flex-start;
-    margin-top: 1px;
-  }
+    .product-card {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: center;
+      cursor: pointer;
+    }
 
-  /* ---------- footer ---------- */
-  footer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(20px, 5vw, 56px) 28px;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
-    padding-top: 18px;
-    margin: 0 clamp(20px, 5vw, 56px);
-  }
+    .product-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 3px;
+      object-fit: cover;
+    }
 
-  footer a{
-    color: var(--muted);
-    text-decoration: none;
-    margin-left: 18px;
-    transition: color 0.2s ease;
-  }
+    .product-name {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      font-size: 14px;
+      letter-spacing: .08em;
+    }
 
-  footer a:hover{ color: var(--ink); }
+    .product-card:hover .product-name,
+    .product-card:focus-visible .product-name {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
-  @media (max-width: 480px){
-    form{ flex-direction: column; }
-    button{ width: 100%; }
-    .note{ margin-top: 8px; margin-bottom: 32px; }
-    footer{ flex-direction: column; gap: 8px; text-align: center; }
-    footer a{ margin: 0 8px; }
-  }
+    .editor-dialog {
+      width: min(1450px, calc(100vw - 32px));
+      max-width: none;
+      max-height: calc(100dvh - 32px);
+      padding: 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 0 24px 80px rgb(37 34 31 / 22%);
+    }
 
-  @media (prefers-reduced-motion: reduce){
-    .status .dot{ animation: none; }
-  }
-</style>
+    .editor-dialog::backdrop { background: rgb(37 34 31 / 62%); }
+
+    .editor-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .editor-commandbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      min-height: 52px;
+      padding: 8px 16px;
+      background: var(--accent);
+      color: var(--paper);
+      font: 500 13px "DM Sans", sans-serif;
+    }
+
+    .editor-commandbar-group { display: flex; align-items: center; gap: 8px; }
+    .editor-commandbar-group:last-child { justify-content: flex-end; }
+    .editor-commandbar button {
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid rgb(255 255 255 / 38%);
+      border-radius: 7px;
+      background: rgb(255 255 255 / 10%);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+    .editor-commandbar button:hover { background: rgb(255 255 255 / 20%); }
+    .editor-commandbar button:disabled { opacity: .45; cursor: not-allowed; }
+    .editor-document-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+
+    .editor-formatbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 54px;
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 3px 10px rgb(37 34 31 / 7%);
+    }
+
+    .editor-formatbar select,
+    .editor-formatbar input[type="number"],
+    .editor-formatbar input[type="color"],
+    .editor-formatbar button {
+      min-height: 34px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: 500 13px "DM Sans", sans-serif;
+    }
+
+    .editor-formatbar select { max-width: 170px; }
+    .editor-formatbar input[type="number"] { width: 58px; }
+    .editor-formatbar input[type="color"] { width: 40px; padding: 3px; cursor: pointer; }
+    .editor-formatbar button { min-width: 34px; cursor: pointer; }
+    .editor-formatbar button[aria-pressed="true"] { border-color: var(--accent); background: #f4eeeb; }
+    .editor-formatbar button:disabled,
+    .editor-formatbar select:disabled,
+    .editor-formatbar input:disabled { opacity: .45; cursor: not-allowed; }
+
+    .editor-header h2 {
+      margin: 0 0 5px;
+      font: 500 22px/1.3 "Manrope", sans-serif;
+    }
+
+    .editor-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .editor-close {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .editor-close:hover { border-color: var(--accent); }
+
+    .editor-workspace {
+      display: grid;
+      grid-template-columns: 64px minmax(220px, 280px) minmax(320px, 1fr);
+      align-items: start;
+      gap: 0;
+      min-height: min(72vh, 850px);
+      padding: 0;
+      background: #f2f3f7;
+    }
+
+    .editor-rail {
+      position: sticky;
+      top: 0;
+      display: grid;
+      align-content: start;
+      gap: 4px;
+      min-height: 100%;
+      padding: 9px 5px;
+      border-right: 1px solid #e0e1e7;
+      background: #fbfbfd;
+    }
+
+    .editor-rail button {
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      min-height: 56px;
+      padding: 6px 2px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: #565765;
+      font: 500 10px "DM Sans", sans-serif;
+      cursor: pointer;
+    }
+
+    .editor-rail button:hover,
+    .editor-rail button[aria-pressed="true"] { background: #f4eeeb; color: var(--accent); }
+    .editor-rail svg { width: 20px; height: 20px; }
+
+    .editor-tools {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      max-height: min(72vh, 850px);
+      padding: 18px 14px;
+      border-right: 1px solid #e0e1e7;
+      background: #fff;
+      overflow: auto;
+    }
+
+    .editor-tools > [hidden] { display: none !important; }
+    .editor-tools .editor-section { background: #fff; }
+    .editor-canvas-area {
+      display: grid;
+      align-content: start;
+      justify-items: center;
+      gap: 14px;
+      min-width: 0;
+      max-height: min(72vh, 850px);
+      padding: 24px 20px;
+      overflow: auto;
+    }
+
+    .editor-canvas-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .editor-context-menu {
+      position: fixed;
+      z-index: 10;
+      display: grid;
+      width: 210px;
+      padding: 6px;
+      border: 1px solid #e4e4ea;
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 12px 35px rgb(30 30 40 / 20%);
+      max-height: min(80vh, 520px);
+      overflow: auto;
+    }
+
+    .editor-context-menu[hidden] { display: none; }
+    .editor-context-menu button {
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: var(--ink);
+      font: 400 13px "DM Sans", sans-serif;
+      text-align: left;
+      cursor: pointer;
+    }
+    .editor-context-menu button:hover { background: #f4eeeb; }
+    .editor-context-menu button:disabled { color: #999; cursor: not-allowed; }
+
+    .editor-pages-strip {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .editor-page-thumb {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 68px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: #fff;
+      color: var(--muted);
+      font: 12px "DM Sans", sans-serif;
+      cursor: pointer;
+    }
+
+    .editor-page-thumb[aria-current="page"] { border: 2px solid var(--accent); color: var(--ink); }
+
+    .editor-upload audio { width: 100%; }
+
+    .editor-section input[type="file"] { max-width: 100%; }
+    .editor-page-add { min-width: 84px; }
+
+    .editor-size {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .editor-size strong { color: var(--ink); }
+
+    .editor-section {
+      display: grid;
+      gap: 11px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+    }
+
+    .editor-section h3 {
+      margin: 0;
+      font: 600 13px "DM Sans", sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .editor-section > summary {
+      cursor: pointer;
+      font: 600 13px "DM Sans", sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .editor-accordion {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #fff;
+    }
+
+    .editor-accordion > summary {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+      padding: 13px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .editor-accordion > .editor-lock {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      margin-right: 10px;
+    }
+
+    .editor-accordion-content {
+      grid-column: 1 / -1;
+      padding: 0 12px 12px;
+    }
+    .editor-accordion-content .editor-field { margin: 0; }
+    .editor-accordion-content :disabled { cursor: not-allowed; opacity: .65; }
+
+    .editor-lock {
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .editor-lock:hover,
+    .editor-lock[aria-pressed="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .editor-lock svg { width: 18px; height: 18px; }
+    .editor-advanced { margin-top: 2px; }
+    .editor-advanced[open] { display: grid; }
+    .editor-advanced > summary { margin-bottom: 3px; }
+    .custom-text-list { display: grid; gap: 8px; }
+    .editor-layer-list { display: grid; gap: 5px; }
+    .editor-layer-item {
+      width: 100%;
+      min-height: 34px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      font: 400 12px "DM Sans", sans-serif;
+      text-align: left;
+      cursor: pointer;
+    }
+    .editor-layer-item[aria-current="true"] { border-color: #7352e8; background: #f2efff; }
+
+    .editor-pages,
+    .editor-actions,
+    .editor-layer-actions,
+    .editor-photo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .editor-pages select { flex: 1 1 100px; }
+
+    .editor-tool-button,
+    .editor-pages select,
+    .editor-style select,
+    .editor-style input[type="number"],
+    .editor-style input[type="color"] {
+      min-height: 38px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #fff;
+      color: var(--ink);
+      font: 400 14px "DM Sans", sans-serif;
+    }
+
+    .editor-tool-button { cursor: pointer; }
+    .editor-tool-button.editor-lock { width: 38px; min-height: 38px; padding: 0; }
+    .editor-tool-button:hover { border-color: var(--accent); color: var(--accent); }
+    .editor-tool-button[aria-pressed="true"] { border-color: var(--accent); background: #f4eeeb; }
+
+    .editor-field {
+      display: grid;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .editor-style {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 104px;
+      align-items: center;
+      gap: 8px 12px;
+      font-size: 14px;
+    }
+
+    .editor-style input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .editor-style input[type="range"] { grid-column: 1; }
+    .editor-style output { grid-column: 2; }
+    .editor-style input[type="color"] { width: 100%; padding: 4px; }
+    .editor-style select { width: 100%; }
+    .editor-style output { color: var(--muted); text-align: right; }
+
+    .editor-field {
+      display: grid;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .editor-field input,
+    .editor-field textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #fff;
+      color: var(--ink);
+      font: 400 16px/1.45 "DM Sans", sans-serif;
+    }
+
+    .editor-field input[type="checkbox"] {
+      width: 18px;
+      min-height: 18px;
+      accent-color: var(--accent);
+    }
+
+    .editor-field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .editor-field input:focus-visible,
+    .editor-field textarea:focus-visible,
+    .editor-close:focus-visible,
+    .editor-download:focus-visible,
+    .editor-tool-button:focus-visible,
+    .editor-pages select:focus-visible,
+    .editor-style select:focus-visible,
+    .editor-style input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .editor-upload {
+      display: grid;
+      gap: 8px;
+      padding: 15px;
+      border: 1px dashed var(--accent);
+      border-radius: 3px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .editor-upload label {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .editor-upload input {
+      width: 100%;
+      color: var(--muted);
+      font: inherit;
+    }
+
+    .editor-download {
+      min-height: 48px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--accent);
+      color: var(--paper);
+      font: 500 15px "DM Sans", sans-serif;
+      cursor: pointer;
+    }
+
+    .editor-download:hover { background: var(--ink); }
+
+    .editor-status {
+      min-height: 22px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .editor-status[data-state="error"] { color: #a32f27; }
+    .editor-status[data-state="success"] { color: #376b45; }
+
+    .editor-preview {
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .editor-preview canvas {
+      display: block;
+      width: min(100%, 500px);
+      height: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: 0 8px 25px rgb(37 34 31 / 11%);
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .editor-preview.is-phone {
+      width: 300px;
+      max-width: 100%;
+      justify-self: center;
+      padding: 12px;
+      border: 7px solid #24211f;
+      border-radius: 38px;
+      background: #24211f;
+      box-shadow: 0 12px 35px rgb(37 34 31 / 22%);
+    }
+
+    .editor-preview.is-phone::before {
+      content: "";
+      width: 72px;
+      height: 8px;
+      border-radius: 999px;
+      background: #5d5854;
+    }
+
+    .editor-preview figcaption {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .editor-preview.is-phone figcaption { color: #fffdfc; }
+
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 105px 20px 100px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label {
+      margin: 5px 0 13px;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .details h1 {
+      max-width: 420px;
+      margin: 0;
+      font: 300 clamp(30px, 4vw, 44px)/1.2 "Manrope", sans-serif;
+      letter-spacing: -.055em;
+    }
+
+    .details-copy {
+      align-self: center;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .details-copy p { margin: 0 0 17px; }
+
+    .text-link {
+      display: inline-block;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px var(--gutter) 27px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .06em;
+    }
+
+    .site-footer a { text-decoration: none; }
+    .site-footer a:hover { color: var(--ink); }
+
+    @media (max-width: 760px) {
+      .brand-logo { width: 120px; height: 120px; }
+      .header-note { gap: 11px; }
+      .details { padding: 78px 8px; }
+      .editor-workspace { grid-template-columns: 56px minmax(0, 1fr); }
+      .editor-tools { max-height: 38vh; grid-column: 2; grid-row: 1; }
+      .editor-canvas-area { grid-column: 1 / -1; grid-row: 2; max-height: 58vh; }
+      .editor-rail { grid-column: 1; grid-row: 1; }
+      .editor-formatbar { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+    }
+
+    @media (max-width: 520px) {
+      .site-header {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        padding-top: 16px;
+      }
+
+      .menu-toggle {
+        width: 32px;
+        min-height: 32px;
+        justify-content: center;
+        padding: 0;
+        font-size: 0;
+      }
+
+      .brand-logo { width: 104px; height: 104px; }
+      .brand-tagline { font-size: 9px; letter-spacing: .13em; }
+      .header-note { gap: 4px; }
+      .social-link { width: 22px; height: 30px; }
+      .social-link svg { width: 19px; height: 19px; }
+      .details { grid-template-columns: 1fr; gap: 22px; padding: 66px 4px; }
+      .details-copy { font-size: 16px; }
+      .site-footer { flex-direction: column; gap: 9px; text-align: center; }
+      .editor-dialog {
+        width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px);
+      }
+      .editor-header { padding: 18px; }
+      .editor-header h2 { font-size: 19px; }
+      .editor-workspace { gap: 0; padding: 0; }
+      .editor-header p { max-width: 230px; line-height: 1.5; }
+      .editor-style { grid-template-columns: minmax(0, 1fr) 92px; }
+      .editor-commandbar { grid-template-columns: 1fr auto; }
+      .editor-document-name { display: none; }
+      .editor-tools { max-height: 42vh; padding: 12px 8px; overflow: auto; }
+      .editor-canvas-area { max-height: 52vh; padding: 14px 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header>
-  <div class="brandmark">Signal</div>
-  <div class="status"><span class="dot"></span>Transmission incoming</div>
-</header>
-
-<main>
-  <div class="stage">
-    <div class="eyebrow">Coming soon</div>
-    <h1>Something is<br><em>coming through.</em></h1>
-    <p class="lede">
-      We're building a better way to work with your data — quietly, in the background, for a little while longer. Leave your email and we'll let you know the moment it's live.
-    </p>
-
-    <form id="notify-form">
-      <input type="email" id="email" placeholder="you@email.com" required autocomplete="email">
-      <button type="submit">Notify me</button>
-    </form>
-    <div class="note" id="form-note"></div>
-
-    <svg class="waveform" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
-      <path id="wave" d="M0,17 L600,17"></path>
-    </svg>
-
-    <div class="countdown" id="countdown" aria-label="Time until launch">
-      <div class="unit"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
-      <span class="sep">/</span>
-      <div class="unit"><span class="num" id="cd-hours">00</span><span class="lbl">Hrs</span></div>
-      <span class="sep">/</span>
-      <div class="unit"><span class="num" id="cd-mins">00</span><span class="lbl">Min</span></div>
-      <span class="sep">/</span>
-      <div class="unit"><span class="num" id="cd-secs">00</span><span class="lbl">Sec</span></div>
+  <header class="site-header">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M2 4h16M2 10h16M2 16h16" stroke="currentColor" stroke-width="2.5"></path>
+      </svg>
+      Menu
+    </button>
+    <nav class="menu-panel" id="site-menu" aria-label="Main navigation">
+      <a href="#categories">The collection</a>
+      <a href="#about">How it works</a>
+      <a href="#contact">Get in touch</a>
+    </nav>
+    <a class="brand" href="#" aria-label="Lobola Invitation home">
+      <img class="brand-logo" src="https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/284088209_104493135614872_3978818778956920310_n.jpg?stp=dst-jpg_tt6&amp;cstp=mx1154x1154&amp;ctp=s200x200&amp;_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=2d3e12&amp;_nc_ohc=ENEKrX1DM9cQ7kNvwGkf2_o&amp;_nc_oc=Adq_gO_ZqLS97sTeYycWqPiwxwkmPTg4HcoeG1rud5G_WX23LRtL4ybAS67B__nA8fw&amp;_nc_zt=24&amp;_nc_ht=scontent-jnb2-1.xx&amp;_nc_gid=fXKYgnKTf0nKccF_cBYDEg&amp;_nc_ss=7b2a8&amp;oh=00_AQN2ox7Rbe65ag-KXq4yjIpuZgJ4KQsi8CEySRFopO6_yQ&amp;oe=6AD6D1C5" alt="Lobola Invitation logo">
+      <span class="brand-tagline">Editable Digital Templates</span>
+    </a>
+    <div class="header-note" aria-label="Social media and contact links">
+      <a class="social-link" href="https://www.facebook.com/lobolainvitation/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.2H7.8V13h2.7v8h3.1Z"></path>
+        </svg>
+      </a>
+      <a class="social-link" href="https://www.instagram.com/lobolainvitation/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"></rect>
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"></circle>
+          <circle cx="17.7" cy="6.5" r="1.1" fill="currentColor"></circle>
+        </svg>
+      </a>
+      <a class="social-link" href="#contact" aria-label="Contact us">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke="currentColor" stroke-width="1.8"></rect>
+          <path d="m4 6 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
     </div>
-  </div>
-</main>
+  </header>
 
-<footer>
-  <span>&copy; 2026 Signal</span>
-  <span>
-    <a href="#" aria-label="Twitter / X">X</a>
-    <a href="#" aria-label="Instagram">Instagram</a>
-    <a href="mailto:hello@example.com">Email</a>
-  </span>
-</footer>
+  <main>
+    <section class="categories" id="categories" aria-label="Invitation categories">
+      <button class="category-card" type="button" aria-expanded="false" aria-controls="products-lobola-template">
+        <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Bride holding a bouquet on her wedding day">
+        <span class="category-button">Lobola Invitation Template</span>
+      </button>
+      <div class="product-list" id="products-lobola-template" aria-label="Products in Lobola Invitation Template" hidden>
+        <button class="product-card" id="open-editor" type="button" aria-haspopup="dialog" aria-controls="template-editor">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="A wedding couple celebrating outdoors">
+          <span class="product-name">Product 1</span>
+        </button>
+      </div>
+    </section>
 
-<script>
-  // ---- EDIT ME: set your real launch date/time here ----
-  const LAUNCH_DATE = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // defaults to 30 days from page load
+    <section class="details" id="about">
+      <div>
+        <p class="section-label">A little more personal</p>
+        <h1>Beautiful invitations, made yours.</h1>
+      </div>
+      <div class="details-copy">
+        <p>Set the tone for your lobola celebration with a digital invitation that feels like you. Choose a design, add your details, and share your special day with the people who matter most.</p>
+        <a class="text-link" href="#contact">Let’s make it yours</a>
+      </div>
+    </section>
+  </main>
 
-  function pad(n){ return String(n).padStart(2, '0'); }
+  <dialog class="editor-dialog" id="template-editor" aria-labelledby="editor-title">
+    <div class="editor-header">
+      <div>
+        <h2 id="editor-title">Customize your invitation</h2>
+        <p>Fill in the details to build your invitation. Open optional design editing only when you want to make more changes.</p>
+      </div>
+      <button class="editor-close" id="close-editor" type="button">Close</button>
+    </div>
+    <div class="editor-commandbar" aria-label="Document controls">
+      <div class="editor-commandbar-group">
+        <button type="button" id="editor-home">Home</button>
+        <button type="button" id="editor-file">File</button>
+        <button type="button" id="editor-size-lock" aria-pressed="true">1080 × 1350 px</button>
+      </div>
+      <span class="editor-document-name">Lobola Invitation — Product 1</span>
+      <div class="editor-commandbar-group">
+        <button type="button" id="editor-undo" aria-label="Undo" disabled>Undo</button>
+        <button type="button" id="editor-share">Share</button>
+      </div>
+    </div>
+    <div class="editor-formatbar" id="editor-formatbar" aria-label="Selected item formatting">
+      <label class="visually-hidden" for="toolbar-font">Font family</label>
+      <select id="toolbar-font" aria-label="Font family">
+        <option value="elegant">Playfair Display</option>
+        <option value="classic">Georgia</option>
+        <option value="modern">DM Sans</option>
+      </select>
+      <button id="toolbar-size-down" type="button" aria-label="Decrease font size">−</button>
+      <label class="visually-hidden" for="toolbar-size">Font size</label>
+      <input id="toolbar-size" type="number" min="20" max="110" value="76" aria-label="Font size">
+      <button id="toolbar-size-up" type="button" aria-label="Increase font size">+</button>
+      <label class="visually-hidden" for="toolbar-color">Text color</label>
+      <input id="toolbar-color" type="color" value="#292320" aria-label="Text color">
+      <button id="toolbar-bold" type="button" aria-label="Bold" aria-pressed="false"><strong>B</strong></button>
+      <button id="toolbar-italic" type="button" aria-label="Italic" aria-pressed="false"><em>I</em></button>
+      <button id="toolbar-underline" type="button" aria-label="Underline" aria-pressed="false"><u>U</u></button>
+      <select id="toolbar-align" aria-label="Text alignment">
+        <option value="left">Align left</option><option value="center">Align center</option><option value="right">Align right</option>
+      </select>
+      <select id="toolbar-effect" aria-label="Text effect">
+        <option value="none">Effects</option><option value="shadow">Shadow</option><option value="lift">Lift</option>
+        <option value="hollow">Hollow</option><option value="splice">Splice</option><option value="echo">Echo</option>
+        <option value="neon">Neon</option><option value="glitch">Glitch</option><option value="curve">Curve</option>
+      </select>
+      <button id="toolbar-position" type="button">Position</button>
+      <button id="toolbar-lock" class="editor-lock" type="button" aria-label="Lock selected item" title="Lock selected item"></button>
+    </div>
+    <div class="editor-workspace">
+      <nav class="editor-rail" aria-label="Editor tools">
+        <button type="button" data-editor-tab="templates" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8"/></svg>Templates</button>
+        <button type="button" data-editor-tab="elements" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M14 6h6M17 3v6M5 17h14M8 14v6" stroke="currentColor" stroke-width="1.8"/></svg>Elements</button>
+        <button type="button" data-editor-tab="text" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6V4h16v2M12 4v16M8 20h8" stroke="currentColor" stroke-width="1.8"/></svg>Text</button>
+        <button type="button" data-editor-tab="brand" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 12 5l7 14M8 14h8" stroke="currentColor" stroke-width="1.8"/></svg>Brand</button>
+        <button type="button" data-editor-tab="uploads" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" stroke="currentColor" stroke-width="1.8"/></svg>Uploads</button>
+        <button type="button" data-editor-tab="tools" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6 4 4M4 20l4-.8L19 8a2.8 2.8 0 0 0-4-4L4 15z" stroke="currentColor" stroke-width="1.8"/></svg>Picture</button>
+        <button type="button" data-editor-tab="projects" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3zM3 7V5h7l2 2" stroke="currentColor" stroke-width="1.8"/></svg>Pages</button>
+        <button type="button" data-editor-tab="apps" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>Export</button>
+      </nav>
+      <form class="editor-tools" id="invitation-form">
+        <p class="editor-size">Fixed template size: <strong>1080 × 1350 px</strong></p>
+        <section class="editor-section" aria-label="Page controls" data-editor-panel="templates projects">
+          <h3>Pages</h3>
+          <div class="editor-pages">
+            <label class="visually-hidden" for="page-select">Current page</label>
+            <select id="page-select" aria-label="Current page">
+              <option value="0">Page 1</option>
+            </select>
+            <button class="editor-tool-button" id="add-page" type="button">Add page</button>
+            <button class="editor-tool-button" id="duplicate-page" type="button">Duplicate</button>
+          </div>
+        </section>
 
-  function tick(){
-    const now = new Date();
-    let diff = Math.max(0, LAUNCH_DATE - now);
+        <details class="editor-section" aria-label="Photo editing" data-editor-panel="uploads tools">
+          <summary>Photo</summary>
+          <div class="editor-upload">
+            <label for="photo-upload">Upload your photograph</label>
+            <input id="photo-upload" type="file" accept="image/*">
+            <span>Drag the photo on the canvas to reposition it. Resize and move are limited to the photo frame.</span>
+          </div>
+          <label class="editor-field">
+            <span>Remove white background</span>
+            <input id="white-background-transparent" type="checkbox">
+          </label>
+          <label class="editor-style">White removal threshold
+            <input id="white-background-threshold" type="range" min="180" max="250" value="230">
+            <output for="white-background-threshold">230</output>
+          </label>
+          <label class="editor-style">
+            Zoom / crop
+            <input id="photo-zoom" type="range" min="0.2" max="2.5" step="0.05" value="1">
+          </label>
+          <label class="editor-style">
+            Photo filter
+            <select id="photo-filter">
+              <option value="none">Original</option>
+              <option value="soft">Soft light</option>
+              <option value="warm">Warm</option>
+              <option value="classic">Classic</option>
+              <option value="mono">Black &amp; white</option>
+            </select>
+          </label>
+          <label class="editor-style">Brightness <input id="photo-brightness" type="range" min="50" max="150" value="100"><output for="photo-brightness">100%</output></label>
+          <label class="editor-style">Contrast <input id="photo-contrast" type="range" min="50" max="150" value="100"><output for="photo-contrast">100%</output></label>
+          <label class="editor-style">Saturation <input id="photo-saturation" type="range" min="0" max="200" value="100"><output for="photo-saturation">100%</output></label>
+          <label class="editor-style">Warmth <input id="photo-warmth" type="range" min="-100" max="100" value="0"><output for="photo-warmth">0</output></label>
+          <label class="editor-style">Highlights <input id="photo-highlights" type="range" min="-100" max="100" value="0"><output for="photo-highlights">0</output></label>
+          <label class="editor-style">Shadows <input id="photo-shadows" type="range" min="-100" max="100" value="0"><output for="photo-shadows">0</output></label>
+          <label class="editor-style">Tint <input id="photo-tint" type="range" min="-100" max="100" value="0"><output for="photo-tint">0</output></label>
+          <label class="editor-style">Position horizontal <input id="photo-position-x" type="range" min="-462" max="462" value="0"><output for="photo-position-x">0</output></label>
+          <label class="editor-style">Position vertical <input id="photo-position-y" type="range" min="-310" max="310" value="0"><output for="photo-position-y">0</output></label>
+          <div class="editor-photo-actions">
+            <button class="editor-tool-button" id="rotate-photo" type="button">Rotate 90°</button>
+            <button class="editor-tool-button" id="flip-photo" type="button" aria-pressed="false">Flip horizontal</button>
+            <button class="editor-tool-button" id="flip-photo-vertical" type="button" aria-pressed="false">Flip vertical</button>
+          </div>
+        </details>
 
-    const days = Math.floor(diff / 86400000);
-    diff -= days * 86400000;
-    const hours = Math.floor(diff / 3600000);
-    diff -= hours * 3600000;
-    const mins = Math.floor(diff / 60000);
-    diff -= mins * 60000;
-    const secs = Math.floor(diff / 1000);
+        <details class="editor-section" aria-label="Background image" data-editor-panel="templates elements uploads tools">
+          <summary>Background</summary>
+          <div class="editor-upload">
+            <label for="background-upload">Upload a background image</label>
+            <input id="background-upload" type="file" accept="image/*">
+            <button class="editor-tool-button" id="remove-background" type="button">Remove background image</button>
+          </div>
+          <label class="editor-style">Background size <input id="background-zoom" type="range" min="0.2" max="5" step="0.05" value="1"><output for="background-zoom">100%</output></label>
+          <label class="editor-style">Background horizontal position <input id="background-position-x" type="range" min="-1080" max="1080" value="0"><output for="background-position-x">0</output></label>
+          <label class="editor-style">Background vertical position <input id="background-position-y" type="range" min="-1350" max="1350" value="0"><output for="background-position-y">0</output></label>
+        </details>
 
-    document.getElementById('cd-days').textContent = pad(days);
-    document.getElementById('cd-hours').textContent = pad(hours);
-    document.getElementById('cd-mins').textContent = pad(mins);
-    document.getElementById('cd-secs').textContent = pad(secs);
-  }
-  tick();
-  setInterval(tick, 1000);
+        <details class="editor-section" aria-label="Frames and shapes" data-editor-panel="elements">
+          <summary>Insert frame / shape</summary>
+          <label class="editor-field" for="shape-type">Shape
+            <select id="shape-type">
+              <option value="rectangle">Rectangle frame</option>
+              <option value="rounded">Rounded frame</option>
+              <option value="circle">Circle frame</option>
+              <option value="ellipse">Oval frame</option>
+              <option value="triangle">Triangle frame</option>
+              <option value="diamond">Diamond frame</option>
+              <option value="star">Star frame</option>
+              <option value="line">Line</option>
+            </select>
+          </label>
+          <button class="editor-tool-button" id="insert-shape" type="button">Insert frame</button>
+          <label class="editor-style">Border color <input id="shape-stroke" type="color" value="#895b49"></label>
+          <label class="editor-style">Border thickness <input id="shape-stroke-width" type="range" min="1" max="40" value="8"><output for="shape-stroke-width">8 px</output></label>
+          <label class="editor-style">Fill color <input id="shape-fill" type="color" value="#fffdfc"></label>
+          <label class="editor-style"><input id="shape-transparent" type="checkbox" checked> Transparent fill</label>
+          <div class="editor-upload">
+            <label for="shape-photo-upload">Upload picture into selected frame</label>
+            <input id="shape-photo-upload" type="file" accept="image/*">
+          </div>
+          <label class="editor-style">Picture crop / size <input id="shape-photo-zoom" type="range" min="1" max="3" step="0.05" value="1"><output for="shape-photo-zoom">100%</output></label>
+          <div class="editor-layer-actions">
+            <button class="editor-tool-button" id="shape-bring-forward" type="button">Bring forward</button>
+            <button class="editor-tool-button" id="shape-send-backward" type="button">Send backward</button>
+            <button class="editor-tool-button editor-lock" id="shape-lock" type="button" aria-label="Lock selected shape"></button>
+            <button class="editor-tool-button" id="delete-shape" type="button">Delete shape</button>
+          </div>
+          <p class="editor-size">Select a shape to resize it with the canvas handles. Drag it to reposition.</p>
+        </details>
 
-  // ---- gentle animated waveform, breathes like a transmitted signal ----
-  const wave = document.getElementById('wave');
-  let t = 0;
-  function drawWave(){
-    t += 0.02;
-    let d = 'M0,17 ';
-    const points = 60;
-    for(let i = 0; i <= points; i++){
-      const x = (600 / points) * i;
-      const amp = 6 * Math.sin(i * 0.35 + t) * Math.exp(-Math.pow((i - points/2)/ (points/2), 2) * 0.4);
-      const y = 17 + amp;
-      d += `L${x.toFixed(1)},${y.toFixed(2)} `;
+        <section class="editor-section" aria-label="Text editing" data-editor-panel="templates text elements">
+          <h3>Invitation details</h3>
+          <details class="editor-accordion" name="invitation-details" open>
+            <summary>Couple’s names</summary>
+            <button class="editor-lock" type="button" data-lock-layer="names" aria-label="Lock Couple’s names" aria-pressed="false" title="Lock Couple’s names"></button>
+            <div class="editor-accordion-content">
+              <label class="editor-field">Couple’s names
+                <input id="couple-names" type="text" maxlength="40" value="Nomsa &amp; Thabo">
+              </label>
+            </div>
+          </details>
+          <details class="editor-accordion" name="invitation-details">
+            <summary>Invitation message</summary>
+            <button class="editor-lock" type="button" data-lock-layer="message" aria-label="Lock invitation message" aria-pressed="false" title="Lock invitation message"></button>
+            <div class="editor-accordion-content">
+              <label class="editor-field">Invitation message
+                <textarea id="invitation-message" maxlength="110">Together with our families, we invite you to celebrate our lobola.</textarea>
+              </label>
+            </div>
+          </details>
+          <details class="editor-accordion" name="invitation-details">
+            <summary>Date</summary>
+            <button class="editor-lock" type="button" data-lock-layer="date" aria-label="Lock date" aria-pressed="false" title="Lock date"></button>
+            <div class="editor-accordion-content">
+              <label class="editor-field">Date
+                <input id="event-date" type="text" maxlength="42" value="Saturday, 12 December 2026">
+              </label>
+            </div>
+          </details>
+          <details class="editor-accordion" name="invitation-details">
+            <summary>Time</summary>
+            <button class="editor-lock" type="button" data-lock-layer="time" aria-label="Lock time" aria-pressed="false" title="Lock time"></button>
+            <div class="editor-accordion-content">
+              <label class="editor-field">Time
+                <input id="event-time" type="text" maxlength="30" value="12:00">
+              </label>
+            </div>
+          </details>
+          <details class="editor-accordion" name="invitation-details">
+            <summary>Venue</summary>
+            <button class="editor-lock" type="button" data-lock-layer="venue" aria-label="Lock venue" aria-pressed="false" title="Lock venue"></button>
+            <div class="editor-accordion-content">
+              <label class="editor-field">Venue
+                <input id="event-venue" type="text" maxlength="48" value="Venue name, City">
+              </label>
+            </div>
+          </details>
+          <div id="custom-text-list" class="custom-text-list" aria-label="Additional text"></div>
+        </section>
+
+        <details class="editor-section editor-advanced" aria-label="Optional design editing" data-editor-panel="text elements brand">
+          <summary>Design editing (optional)</summary>
+          <label class="editor-field" for="selected-text-content">Selected text
+            <textarea id="selected-text-content" maxlength="180"></textarea>
+          </label>
+          <button class="editor-tool-button" id="add-text" type="button">Add Text</button>
+          <label class="editor-field" for="text-layer">Select text layer
+            <select id="text-layer">
+              <option value="photo">Photo</option>
+              <option value="names">Couple’s names</option>
+              <option value="message">Invitation message</option>
+              <option value="date">Date</option>
+              <option value="time">Time</option>
+              <option value="venue">Venue</option>
+            </select>
+          </label>
+          <h3>Layers</h3>
+          <div id="editor-layer-list" class="editor-layer-list" aria-label="Design layers"></div>
+          <label class="editor-style">Font combination
+            <select id="font-preset">
+              <option value="elegant">Elegant serif</option>
+              <option value="classic">Classic serif</option>
+              <option value="modern">Modern sans</option>
+            </select>
+          </label>
+          <label class="editor-style">Text style
+            <select id="text-style">
+              <option value="custom">Custom</option>
+              <option value="headline">Elegant headline</option>
+              <option value="subheading">Refined subheading</option>
+              <option value="body">Invitation body</option>
+              <option value="accent">Date accent</option>
+            </select>
+          </label>
+          <label class="editor-style">Font size <input id="text-size" type="range" min="20" max="110" value="76"><output for="text-size">76 px</output></label>
+          <label class="editor-style">Font color <input id="text-color" type="color" value="#292320"></label>
+          <label class="editor-style">Font weight
+            <select id="text-weight"><option value="400">Regular</option><option value="500">Medium</option><option value="600">Semi-bold</option><option value="700">Bold</option></select>
+          </label>
+          <label class="editor-style">Alignment
+            <select id="text-alignment"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select>
+          </label>
+          <label class="editor-style">Line spacing <input id="text-line-spacing" type="range" min="0.8" max="2.2" step="0.05" value="1.2"><output for="text-line-spacing">1.2</output></label>
+          <label class="editor-style">Letter spacing <input id="text-letter-spacing" type="range" min="0" max="14" step="0.5" value="0"><output for="text-letter-spacing">0 px</output></label>
+          <label class="editor-style">Text effect
+            <select id="text-effect">
+              <option value="none">None</option><option value="shadow">Shadow</option><option value="lift">Lift</option>
+              <option value="hollow">Hollow</option><option value="splice">Splice</option><option value="echo">Echo</option>
+              <option value="neon">Neon</option><option value="glitch">Glitch</option><option value="curve">Curve</option>
+            </select>
+          </label>
+          <label class="editor-style">Rotation <input id="text-rotation" type="range" min="-30" max="30" value="0"><output for="text-rotation">0°</output></label>
+          <label class="editor-style">Transparency <input id="text-opacity" type="range" min="10" max="100" value="100"><output for="text-opacity">100%</output></label>
+          <div class="editor-layer-actions">
+            <button class="editor-tool-button" id="bring-forward" type="button">Bring forward</button>
+            <button class="editor-tool-button" id="send-backward" type="button">Send backward</button>
+            <button class="editor-tool-button editor-lock" id="toggle-lock" type="button" aria-pressed="false" aria-label="Lock selected text" title="Lock selected text"></button>
+          </div>
+          <p class="editor-size">Drag text on the artwork to position it. Snapping guides appear while moving.</p>
+        </details>
+
+        <section class="editor-section" aria-label="Export options" data-editor-panel="apps">
+          <h3>Export &amp; preview</h3>
+          <div class="editor-actions">
+            <button class="editor-tool-button" id="toggle-phone" type="button" aria-pressed="false">Preview</button>
+            <button class="editor-tool-button" id="download-png" type="button">PNG</button>
+            <button class="editor-tool-button" id="download-jpg" type="button">JPG</button>
+            <button class="editor-tool-button" id="download-pdf-standard" type="button">PDF standard</button>
+            <button class="editor-tool-button" id="download-pdf-print" type="button">PDF print</button>
+          </div>
+          <div class="editor-upload">
+            <label for="music-upload">Add music to MP4</label>
+            <input id="music-upload" type="file" accept="audio/*">
+            <audio id="music-preview" controls hidden></audio>
+            <p class="editor-size">MP4 keeps the artwork at 1080 × 1350 px, trims audio to fit a 3 MB limit, and fades the ending.</p>
+            <button class="editor-tool-button" id="download-mp4" type="button" disabled>Download MP4 (max 3 MB)</button>
+          </div>
+        </section>
+        <p class="editor-status" id="editor-status" role="status" aria-live="polite"></p>
+      </form>
+      <section class="editor-canvas-area" aria-label="Invitation canvas workspace">
+        <figure class="editor-preview" id="editor-preview">
+          <canvas id="invitation-canvas" width="1080" height="1350" role="img" aria-label="Live preview of the fixed-size lobola invitation template"></canvas>
+          <figcaption id="preview-caption">Live preview · 1080 × 1350 px · click to select, drag to move</figcaption>
+        </figure>
+        <div class="editor-canvas-actions">
+          <button class="editor-tool-button" id="canvas-lock" type="button" aria-label="Lock selected item"></button>
+          <button class="editor-tool-button" id="canvas-duplicate" type="button">Duplicate</button>
+          <button class="editor-tool-button" id="canvas-add-page" type="button">+ Add page</button>
+        </div>
+        <div class="editor-pages-strip" id="editor-pages-strip" aria-label="Invitation pages"></div>
+      </section>
+    </div>
+    <menu class="editor-context-menu" id="editor-context-menu" hidden>
+      <button type="button" data-context-action="copy">Copy</button>
+      <button type="button" data-context-action="copy-style">Copy style</button>
+      <button type="button" data-context-action="paste">Paste</button>
+      <button type="button" data-context-action="paste-style">Paste style</button>
+      <button type="button" data-context-action="duplicate">Duplicate</button>
+      <button type="button" data-context-action="delete">Delete</button>
+      <button type="button" data-context-action="forward">Bring forward</button>
+      <button type="button" data-context-action="backward">Send backward</button>
+      <button type="button" data-context-action="align-left">Align left</button>
+      <button type="button" data-context-action="align-center">Align to page center</button>
+      <button type="button" data-context-action="align-right">Align right</button>
+      <button type="button" data-context-action="align-top">Align top</button>
+      <button type="button" data-context-action="align-middle">Align middle</button>
+      <button type="button" data-context-action="align-bottom">Align bottom</button>
+      <button type="button" data-context-action="lock">Lock / unlock</button>
+    </menu>
+  </dialog>
+
+  <footer class="site-footer" id="contact">
+    <span>&copy; 2026 Lobola Invitation</span>
+    <span>Editable digital templates for your special day</span>
+    <a href="mailto:hello@lobolainvitation.co.za">Get in touch</a>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('site-menu');
+    const categoryToggle = document.querySelector('.category-card');
+    const categoryProducts = document.getElementById('products-lobola-template');
+    const productButton = document.getElementById('open-editor');
+    const editorDialog = document.getElementById('template-editor');
+    const closeEditorButton = document.getElementById('close-editor');
+    const photoUpload = document.getElementById('photo-upload');
+    const backgroundUpload = document.getElementById('background-upload');
+    const musicUpload = document.getElementById('music-upload');
+    const musicPreview = document.getElementById('music-preview');
+    let musicFile = null;
+    let musicObjectUrl = null;
+    const invitationCanvas = document.getElementById('invitation-canvas');
+    const previewFigure = document.getElementById('editor-preview');
+    const previewCaption = document.getElementById('preview-caption');
+    const editorStatus = document.getElementById('editor-status');
+    const pageSelect = document.getElementById('page-select');
+    const textLayerSelect = document.getElementById('text-layer');
+    const customTextList = document.getElementById('custom-text-list');
+    const layerList = document.getElementById('editor-layer-list');
+    const contextMenu = document.getElementById('editor-context-menu');
+    const pageStrip = document.getElementById('editor-pages-strip');
+    const toolbar = {
+      font: document.getElementById('toolbar-font'),
+      size: document.getElementById('toolbar-size'),
+      color: document.getElementById('toolbar-color'),
+      bold: document.getElementById('toolbar-bold'),
+      italic: document.getElementById('toolbar-italic'),
+      underline: document.getElementById('toolbar-underline'),
+      alignment: document.getElementById('toolbar-align'),
+      effect: document.getElementById('toolbar-effect'),
+      lock: document.getElementById('toolbar-lock')
+    };
+    const canvasContext = invitationCanvas.getContext('2d');
+    const textFields = {
+      names: document.getElementById('couple-names'),
+      message: document.getElementById('invitation-message'),
+      date: document.getElementById('event-date'),
+      time: document.getElementById('event-time'),
+      venue: document.getElementById('event-venue')
+    };
+    const styleControls = {
+      size: document.getElementById('text-size'),
+      color: document.getElementById('text-color'),
+      weight: document.getElementById('text-weight'),
+      alignment: document.getElementById('text-alignment'),
+      lineSpacing: document.getElementById('text-line-spacing'),
+      letterSpacing: document.getElementById('text-letter-spacing'),
+      effect: document.getElementById('text-effect'),
+      rotation: document.getElementById('text-rotation'),
+      opacity: document.getElementById('text-opacity')
+    };
+    const photoControls = {
+      zoom: document.getElementById('photo-zoom'),
+      filter: document.getElementById('photo-filter'),
+      brightness: document.getElementById('photo-brightness'),
+      contrast: document.getElementById('photo-contrast'),
+      saturation: document.getElementById('photo-saturation'),
+      warmth: document.getElementById('photo-warmth'),
+      highlights: document.getElementById('photo-highlights'),
+      shadows: document.getElementById('photo-shadows'),
+      tint: document.getElementById('photo-tint'),
+      positionX: document.getElementById('photo-position-x'),
+      positionY: document.getElementById('photo-position-y')
+    };
+    const whiteTransparencyToggle = document.getElementById('white-background-transparent');
+    const whiteThresholdControl = document.getElementById('white-background-threshold');
+    const fontFamilies = {
+      elegant: '"Playfair Display", Georgia, serif',
+      classic: 'Georgia, "Times New Roman", serif',
+      modern: '"DM Sans", Arial, sans-serif'
+    };
+    const layerKeys = ['pretitle', 'subtitle', 'names', 'message', 'date', 'time', 'venue', 'footer'];
+    const layerLabels = {
+      pretitle: 'Please join us',
+      subtitle: 'Celebration subtitle',
+      names: 'Couple’s names',
+      message: 'Invitation message',
+      date: 'Date',
+      time: 'Time',
+      venue: 'Venue',
+      footer: 'Invitation footer'
+    };
+    const layerDefaults = {
+      pretitle: { x: 540, y: 755, width: 850, size: 22, color: '#895b49', weight: '500', align: 'center', lineSpacing: 1.2, letterSpacing: 6, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'custom', italic: false, underline: false },
+      subtitle: { x: 540, y: 797, width: 850, size: 22, color: '#786d68', weight: '400', align: 'center', lineSpacing: 1.2, letterSpacing: 3, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'custom', italic: false, underline: false },
+      names: { x: 540, y: 875, width: 900, size: 76, color: '#292320', weight: '400', align: 'center', lineSpacing: 1.1, letterSpacing: 0, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.elegant, preset: 'headline', italic: false, underline: false },
+      message: { x: 540, y: 1000, width: 850, size: 27, color: '#292320', weight: '400', align: 'center', lineSpacing: 1.35, letterSpacing: 0, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'body', italic: false, underline: false },
+      date: { x: 540, y: 1112, width: 850, size: 34, color: '#895b49', weight: '500', align: 'center', lineSpacing: 1.2, letterSpacing: 0, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'accent', italic: false, underline: false },
+      time: { x: 540, y: 1160, width: 850, size: 27, color: '#292320', weight: '400', align: 'center', lineSpacing: 1.2, letterSpacing: 0, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'body', italic: false, underline: false },
+      venue: { x: 540, y: 1205, width: 850, size: 26, color: '#292320', weight: '400', align: 'center', lineSpacing: 1.2, letterSpacing: 0, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'body', italic: false, underline: false },
+      footer: { x: 540, y: 1286, width: 850, size: 18, color: '#786d68', weight: '400', align: 'center', lineSpacing: 1.2, letterSpacing: 3, effect: 'none', rotation: 0, opacity: 100, locked: false, family: fontFamilies.modern, preset: 'custom', italic: false, underline: false }
+    };
+    const defaultText = {
+      pretitle: 'PLEASE JOIN US',
+      subtitle: 'TO CELEBRATE THEIR LOBOLA',
+      names: 'Nomsa & Thabo',
+      message: 'Together with our families, we invite you to celebrate our lobola.',
+      date: 'Saturday, 12 December 2026',
+      time: '12:00',
+      venue: 'Venue name, City',
+      footer: 'LOBOLA INVITATION'
+    };
+    const makePage = () => ({
+      text: { ...defaultText },
+      styles: Object.fromEntries(layerKeys.map((key) => [key, { ...layerDefaults[key] }])),
+      layerOrder: [...layerKeys],
+      fontPreset: 'elegant',
+      photo: null,
+      sourcePhoto: null,
+      photoLocked: false,
+      photoX: 0,
+      photoY: 0,
+      photoZoom: 1,
+      photoRotation: 0,
+      background: null,
+      backgroundLocked: false,
+      backgroundX: 0,
+      backgroundY: 0,
+      backgroundZoom: 1,
+      shapes: [
+        { id: 'template-border', type: 'rectangle', x: 34, y: 34, width: 1012, height: 1282, stroke: '#895b49', strokeWidth: 3, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1 },
+        { id: 'template-divider', type: 'line', x: 260, y: 819, width: 560, height: 2, stroke: '#e8dfda', strokeWidth: 2, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1 }
+      ],
+      flipX: false,
+      filter: 'none',
+      brightness: 100,
+      contrast: 100,
+      saturation: 100,
+      warmth: 0,
+      highlights: 0,
+      shadows: 0,
+      tint: 0,
+      whiteTransparent: false,
+      whiteThreshold: 230,
+      flipY: false
+    });
+    let pages = [makePage()];
+    let currentPageIndex = 0;
+    let selectedLayer = 'names';
+    let dragState = null;
+    let snapGuides = null;
+    let renderedBounds = [];
+    let previousFocus = null;
+    let phonePreview = false;
+    let activeEditorTab = 'templates';
+    let objectClipboard = null;
+    let styleClipboard = null;
+    const undoStack = [];
+    let controlUndoRecorded = false;
+
+    const currentPage = () => pages[currentPageIndex];
+
+    function setStatus(message, state = '') {
+      editorStatus.textContent = message;
+      editorStatus.dataset.state = state;
     }
-    wave.setAttribute('d', d);
-    requestAnimationFrame(drawWave);
-  }
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    requestAnimationFrame(drawWave);
-  }
 
-  // ---- form handling (front-end only; wire up to your backend / ESP) ----
-  document.getElementById('notify-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    const note = document.getElementById('form-note');
-    const email = document.getElementById('email').value;
-    if (email) {
-      note.textContent = "You're on the list. We'll be in touch.";
-      note.style.color = '#3654A6';
-      this.reset();
+    function photoDimensions(photo) {
+      return {
+        width: photo.naturalWidth || photo.width,
+        height: photo.naturalHeight || photo.height
+      };
     }
-  });
-</script>
 
+    function refreshRenderablePhoto(page) {
+      if (!page.sourcePhoto) {
+        page.photo = null;
+        return;
+      }
+      if (!page.whiteTransparent) {
+        page.photo = page.sourcePhoto;
+        return;
+      }
+
+      const { width, height } = photoDimensions(page.sourcePhoto);
+      const transparentPhoto = document.createElement('canvas');
+      transparentPhoto.width = width;
+      transparentPhoto.height = height;
+      const context = transparentPhoto.getContext('2d', { willReadFrequently: true });
+      if (!context) {
+        setStatus('White background removal is unavailable in this browser.', 'error');
+        page.whiteTransparent = false;
+        page.photo = page.sourcePhoto;
+        whiteTransparencyToggle.checked = false;
+        return;
+      }
+      try {
+        context.drawImage(page.sourcePhoto, 0, 0, width, height);
+        const pixels = context.getImageData(0, 0, width, height);
+        const threshold = page.whiteThreshold;
+        const range = Math.max(1, 255 - threshold);
+        for (let index = 0; index < pixels.data.length; index += 4) {
+          const whiteness = Math.min(pixels.data[index], pixels.data[index + 1], pixels.data[index + 2]);
+          if (whiteness > threshold) {
+            const alpha = Math.max(0, Math.min(255, Math.round((255 - whiteness) / range * 255)));
+            pixels.data[index + 3] = Math.min(pixels.data[index + 3], alpha);
+          }
+        }
+        context.putImageData(pixels, 0, 0);
+      } catch (error) {
+        page.whiteTransparent = false;
+        page.photo = page.sourcePhoto;
+        whiteTransparencyToggle.checked = false;
+        setStatus(`White background removal failed: ${error.message}`, 'error');
+        return;
+      }
+      page.photo = transparentPhoto;
+    }
+
+    function lockIcon(locked) {
+      const shackle = locked
+        ? '<path d="M8 10V7a4 4 0 0 1 8 0v3"></path>'
+        : '<path d="M8 10V7a4 4 0 0 1 7.7-1.5"></path>';
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.8"></rect>${shackle}<circle cx="12" cy="15.5" r="1" fill="currentColor"></circle></svg>`;
+    }
+
+    function updateLockButton(button, locked, label) {
+      button.innerHTML = lockIcon(locked);
+      button.setAttribute('aria-pressed', String(locked));
+      button.setAttribute('aria-label', `${locked ? 'Unlock' : 'Lock'} ${label}`);
+      button.title = `${locked ? 'Unlock' : 'Lock'} ${label}`;
+    }
+
+    function wrapText(text, maxWidth) {
+      const words = text.split(/\s+/).filter(Boolean);
+      if (!words.length) return [''];
+      const lines = [];
+      let line = '';
+      for (const word of words) {
+        const candidate = line ? `${line} ${word}` : word;
+        if (canvasContext.measureText(candidate).width > maxWidth && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = candidate;
+        }
+      }
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function getPhotoFilter(page) {
+      const presets = {
+        none: '',
+        soft: 'brightness(1.07) contrast(.94) saturate(.86)',
+        warm: 'sepia(.18) saturate(1.12)',
+        classic: 'contrast(1.12) saturate(.9)',
+        mono: 'grayscale(1)'
+      };
+      return `${presets[page.filter] || ''} brightness(${page.brightness}%) contrast(${page.contrast}%) saturate(${page.saturation}%)`.trim();
+    }
+
+    function drawBackground(page) {
+      if (!page.background) return;
+      const size = photoDimensions(page.background);
+      if (!size.width || !size.height) return;
+      const scale = Math.max(invitationCanvas.width / size.width, invitationCanvas.height / size.height) * page.backgroundZoom;
+      const imageWidth = size.width * scale;
+      const imageHeight = size.height * scale;
+      canvasContext.save();
+      canvasContext.beginPath();
+      canvasContext.rect(0, 0, invitationCanvas.width, invitationCanvas.height);
+      canvasContext.clip();
+      canvasContext.drawImage(page.background,
+        (invitationCanvas.width - imageWidth) / 2 + page.backgroundX,
+        (invitationCanvas.height - imageHeight) / 2 + page.backgroundY,
+        imageWidth, imageHeight);
+      canvasContext.restore();
+    }
+
+    function shapePath(context, shape) {
+      const x = shape.x;
+      const y = shape.y;
+      const width = shape.width;
+      const height = shape.height;
+      context.beginPath();
+      if (shape.type === 'circle') {
+        const radius = Math.min(width, height) / 2;
+        context.arc(x + width / 2, y + height / 2, radius, 0, Math.PI * 2);
+      } else if (shape.type === 'ellipse') {
+        context.ellipse(x + width / 2, y + height / 2, width / 2, height / 2, 0, 0, Math.PI * 2);
+      } else if (shape.type === 'triangle') {
+        context.moveTo(x + width / 2, y);
+        context.lineTo(x + width, y + height);
+        context.lineTo(x, y + height);
+        context.closePath();
+      } else if (shape.type === 'diamond') {
+        context.moveTo(x + width / 2, y);
+        context.lineTo(x + width, y + height / 2);
+        context.lineTo(x + width / 2, y + height);
+        context.lineTo(x, y + height / 2);
+        context.closePath();
+      } else if (shape.type === 'star') {
+        for (let point = 0; point < 10; point += 1) {
+          const angle = -Math.PI / 2 + point * Math.PI / 5;
+          const radius = point % 2 === 0 ? .5 : .22;
+          const px = x + width / 2 + Math.cos(angle) * width * radius;
+          const py = y + height / 2 + Math.sin(angle) * height * radius;
+          if (point === 0) context.moveTo(px, py);
+          else context.lineTo(px, py);
+        }
+        context.closePath();
+      } else if (shape.type === 'line') {
+        context.moveTo(x, y + height / 2);
+        context.lineTo(x + width, y + height / 2);
+      } else if (shape.type === 'rounded') {
+        const radius = Math.min(36, width / 4, height / 4);
+        context.roundRect(x, y, width, height, radius);
+      } else {
+        context.rect(x, y, width, height);
+      }
+    }
+
+    function drawShape(shape) {
+      canvasContext.save();
+      canvasContext.globalAlpha = shape.opacity / 100;
+      shapePath(canvasContext, shape);
+      if (shape.photo) {
+        canvasContext.save();
+        canvasContext.clip();
+        const photoSize = photoDimensions(shape.photo);
+        const scale = Math.max(shape.width / photoSize.width, shape.height / photoSize.height) * shape.photoZoom;
+        const imageWidth = photoSize.width * scale;
+        const imageHeight = photoSize.height * scale;
+        canvasContext.drawImage(shape.photo, shape.x + (shape.width - imageWidth) / 2, shape.y + (shape.height - imageHeight) / 2, imageWidth, imageHeight);
+        canvasContext.restore();
+        shapePath(canvasContext, shape);
+      }
+      if (shape.type !== 'line' && !shape.transparent) {
+        canvasContext.fillStyle = shape.fill;
+        canvasContext.fill();
+      }
+      canvasContext.strokeStyle = shape.stroke;
+      canvasContext.lineWidth = shape.strokeWidth;
+      canvasContext.stroke();
+      canvasContext.restore();
+    }
+
+    function getSelectedBounds(page) {
+      if (selectedLayer === 'background') return { left: 0, top: 0, right: invitationCanvas.width, bottom: invitationCanvas.height };
+      if (selectedLayer === 'photo') return { left: 78, top: 78, right: 1002, bottom: 698 };
+      if (selectedLayer.startsWith('shape:')) {
+        const shape = page.shapes.find((item) => item.id === selectedLayer.slice(6));
+        return shape ? { left: shape.x, top: shape.y, right: shape.x + shape.width, bottom: shape.y + shape.height } : null;
+      }
+      return renderedBounds.find((bounds) => bounds.key === selectedLayer) || null;
+    }
+
+    function drawSelectionGizmo(page) {
+      const bounds = getSelectedBounds(page);
+      if (!bounds) return;
+      const left = Math.max(0, bounds.left);
+      const top = Math.max(0, bounds.top);
+      const right = Math.min(invitationCanvas.width, bounds.right);
+      const bottom = Math.min(invitationCanvas.height, bounds.bottom);
+      canvasContext.save();
+      canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+      canvasContext.fillStyle = '#fff';
+      canvasContext.lineWidth = 3;
+      canvasContext.setLineDash([8, 6]);
+      canvasContext.strokeRect(left, top, right - left, bottom - top);
+      canvasContext.setLineDash([]);
+      for (const [x, y] of [
+        [left, top], [(left + right) / 2, top], [right, top],
+        [right, (top + bottom) / 2], [right, bottom], [(left + right) / 2, bottom],
+        [left, bottom], [left, (top + bottom) / 2]
+      ]) {
+        canvasContext.fillRect(x - 12, y - 12, 24, 24);
+        canvasContext.strokeRect(x - 12, y - 12, 24, 24);
+      }
+      canvasContext.restore();
+    }
+
+    function drawPhoto(page) {
+      const frame = { x: 78, y: 78, width: 924, height: 620 };
+      canvasContext.save();
+      canvasContext.beginPath();
+      canvasContext.rect(frame.x, frame.y, frame.width, frame.height);
+      canvasContext.clip();
+
+      const photoSize = page.photo ? photoDimensions(page.photo) : null;
+      if (page.photo && page.photo.complete !== false && photoSize.width > 0 && photoSize.height > 0) {
+        const quarterTurn = Math.abs(page.photoRotation % 180) === 90;
+        const fitWidth = quarterTurn ? photoSize.height : photoSize.width;
+        const fitHeight = quarterTurn ? photoSize.width : photoSize.height;
+        const baseScale = Math.max(frame.width / fitWidth, frame.height / fitHeight);
+        const scale = baseScale * page.photoZoom;
+        const imageWidth = photoSize.width * scale;
+        const imageHeight = photoSize.height * scale;
+        canvasContext.translate(frame.x + frame.width / 2, frame.y + frame.height / 2);
+        canvasContext.rotate(page.photoRotation * Math.PI / 180);
+        canvasContext.scale(page.flipX ? -1 : 1, page.flipY ? -1 : 1);
+        const imageX = page.photoX - imageWidth / 2;
+        const imageY = page.photoY - imageHeight / 2;
+        canvasContext.filter = getPhotoFilter(page);
+        canvasContext.drawImage(page.photo, imageX, imageY, imageWidth, imageHeight);
+        canvasContext.filter = 'none';
+        if (page.warmth !== 0) {
+          canvasContext.fillStyle = page.warmth > 0
+            ? `rgba(220, 142, 65, ${Math.abs(page.warmth) / 500})`
+            : `rgba(74, 112, 170, ${Math.abs(page.warmth) / 700})`;
+          canvasContext.fillRect(-frame.width / 2, -frame.height / 2, frame.width, frame.height);
+        }
+        if (page.tint !== 0) {
+          canvasContext.fillStyle = page.tint > 0
+            ? `rgba(155, 70, 105, ${Math.abs(page.tint) / 650})`
+            : `rgba(70, 135, 105, ${Math.abs(page.tint) / 650})`;
+          canvasContext.fillRect(-frame.width / 2, -frame.height / 2, frame.width, frame.height);
+        }
+        const highlightAlpha = Math.abs(page.highlights) / 500;
+        const shadowAlpha = Math.abs(page.shadows) / 500;
+        if (page.highlights !== 0) {
+          canvasContext.fillStyle = page.highlights > 0
+            ? `rgba(255, 248, 230, ${highlightAlpha})`
+            : `rgba(30, 22, 18, ${highlightAlpha})`;
+          canvasContext.fillRect(-frame.width / 2, -frame.height / 2, frame.width, frame.height);
+        }
+        if (page.shadows !== 0) {
+          canvasContext.fillStyle = page.shadows > 0
+            ? `rgba(255, 245, 225, ${shadowAlpha})`
+            : `rgba(24, 20, 20, ${shadowAlpha})`;
+          canvasContext.fillRect(-frame.width / 2, -frame.height / 2, frame.width, frame.height);
+        }
+      } else if (!page.background) {
+        const placeholder = canvasContext.createLinearGradient(frame.x, frame.y, frame.x + frame.width, frame.y + frame.height);
+        placeholder.addColorStop(0, '#e9dfd8');
+        placeholder.addColorStop(1, '#c9b6aa');
+        canvasContext.fillStyle = placeholder;
+        canvasContext.fillRect(frame.x, frame.y, frame.width, frame.height);
+        canvasContext.fillStyle = '#fffdfc';
+        canvasContext.textAlign = 'center';
+        canvasContext.font = '500 30px "DM Sans", sans-serif';
+        canvasContext.fillText('YOUR PHOTO', 540, 365);
+        canvasContext.font = '400 22px "DM Sans", sans-serif';
+        canvasContext.fillText('Upload an image to personalize your invitation', 540, 407, frame.width - 80);
+      }
+      canvasContext.restore();
+
+      if (snapGuides && snapGuides.layer === 'photo') {
+        canvasContext.save();
+        canvasContext.strokeStyle = '#4c89cb';
+        canvasContext.setLineDash([8, 8]);
+        canvasContext.beginPath();
+        canvasContext.moveTo(540, frame.y);
+        canvasContext.lineTo(540, frame.y + frame.height);
+        canvasContext.stroke();
+        canvasContext.restore();
+      }
+
+      return frame;
+    }
+
+    function drawCurvedText(text, style) {
+      const radius = Math.max(160, Math.min(style.width / 2, 420));
+      const characters = [...text];
+      const totalWidth = canvasContext.measureText(text).width + Math.max(0, characters.length - 1) * style.letterSpacing;
+      const angleSpan = Math.min(Math.PI * .85, totalWidth / radius);
+      let angle = -angleSpan / 2;
+      for (const character of characters) {
+        const characterWidth = canvasContext.measureText(character).width + style.letterSpacing;
+        const step = characterWidth / radius;
+        canvasContext.save();
+        canvasContext.translate(Math.sin(angle + step / 2) * radius, radius - Math.cos(angle + step / 2) * radius);
+        canvasContext.rotate(angle + step / 2);
+        canvasContext.fillText(character, 0, 0);
+        canvasContext.restore();
+        angle += step;
+      }
+    }
+
+    function drawTextLayer(page, key) {
+      const style = page.styles[key];
+      const text = (page.text[key] || '').trim();
+      if (!text) return null;
+      canvasContext.save();
+      canvasContext.translate(style.x, style.y);
+      canvasContext.rotate(style.rotation * Math.PI / 180);
+      canvasContext.globalAlpha = style.opacity / 100;
+      canvasContext.textAlign = style.align;
+      canvasContext.textBaseline = 'alphabetic';
+      canvasContext.font = `${style.italic ? 'italic ' : ''}${style.weight} ${style.size}px ${style.family}`;
+      canvasContext.fillStyle = style.color;
+      canvasContext.strokeStyle = style.color;
+      canvasContext.lineWidth = Math.max(2, style.size * .045);
+      canvasContext.letterSpacing = `${style.letterSpacing}px`;
+
+      const lines = wrapText(text, style.width);
+      const lineHeight = style.size * style.lineSpacing;
+      const effect = style.effect;
+      if (effect === 'shadow' || effect === 'lift') {
+        canvasContext.shadowColor = 'rgba(38, 29, 26, .32)';
+        canvasContext.shadowBlur = effect === 'lift' ? 12 : 5;
+        canvasContext.shadowOffsetY = effect === 'lift' ? 8 : 3;
+      } else if (effect === 'neon') {
+        canvasContext.shadowColor = style.color;
+        canvasContext.shadowBlur = 24;
+      }
+
+      const lineWidths = lines.map((line) => canvasContext.measureText(line).width);
+      const maxLineWidth = Math.min(style.width, Math.max(...lineWidths, 1));
+      const left = style.align === 'left' ? 0 : style.align === 'right' ? -maxLineWidth : -maxLineWidth / 2;
+      const firstBaseline = lines.length > 1 ? -((lines.length - 1) * lineHeight) / 2 : 0;
+      const top = firstBaseline - style.size;
+      const bottom = firstBaseline + (lines.length - 1) * lineHeight + style.size * .25;
+
+      if (effect === 'curve' && lines.length === 1) {
+        drawCurvedText(lines[0], style);
+      } else {
+        lines.forEach((line, index) => {
+          const baseline = firstBaseline + index * lineHeight;
+          if (effect === 'hollow') {
+            canvasContext.strokeText(line, 0, baseline);
+          } else if (effect === 'splice') {
+            canvasContext.fillStyle = '#d99685';
+            canvasContext.fillText(line, 4, baseline + 4);
+            canvasContext.fillStyle = style.color;
+            canvasContext.fillText(line, 0, baseline);
+          } else if (effect === 'echo') {
+            canvasContext.globalAlpha = style.opacity / 300;
+            canvasContext.fillText(line, -5, baseline);
+            canvasContext.fillText(line, 5, baseline);
+            canvasContext.globalAlpha = style.opacity / 100;
+            canvasContext.fillText(line, 0, baseline);
+          } else if (effect === 'glitch') {
+            canvasContext.fillStyle = '#c46b70';
+            canvasContext.fillText(line, -3, baseline);
+            canvasContext.fillStyle = '#587ba5';
+            canvasContext.fillText(line, 3, baseline);
+            canvasContext.fillStyle = style.color;
+            canvasContext.fillText(line, 0, baseline);
+          } else {
+            canvasContext.fillText(line, 0, baseline);
+          }
+          if (style.underline) {
+            const lineWidth = canvasContext.measureText(line).width;
+            const underlineX = style.align === 'left' ? 0 : style.align === 'right' ? -lineWidth : -lineWidth / 2;
+            canvasContext.beginPath();
+            canvasContext.lineWidth = Math.max(1, style.size / 18);
+            canvasContext.moveTo(underlineX, baseline + style.size * .12);
+            canvasContext.lineTo(underlineX + lineWidth, baseline + style.size * .12);
+            canvasContext.stroke();
+          }
+        });
+      }
+      canvasContext.restore();
+
+      return { key, left: style.x + left - 14, right: style.x + left + maxLineWidth + 14, top: style.y + top - 10, bottom: style.y + bottom + 10 };
+    }
+
+    function drawInvitation(page = currentPage(), showGuides = true) {
+      if (!canvasContext) {
+        setStatus('Your browser could not create the invitation preview canvas.', 'error');
+        return;
+      }
+      const width = invitationCanvas.width;
+      const height = invitationCanvas.height;
+      canvasContext.clearRect(0, 0, width, height);
+      canvasContext.fillStyle = '#fffdfc';
+      canvasContext.fillRect(0, 0, width, height);
+      drawBackground(page);
+      drawPhoto(page);
+
+      renderedBounds = [];
+      for (const key of page.layerOrder) {
+        const bounds = drawTextLayer(page, key);
+        if (bounds) renderedBounds.push(bounds);
+      }
+      for (const shape of page.shapes) drawShape(shape);
+      if (showGuides && snapGuides?.layer === selectedLayer && selectedLayer !== 'photo') {
+        canvasContext.save();
+        canvasContext.strokeStyle = '#4c89cb';
+        canvasContext.setLineDash([8, 8]);
+        canvasContext.beginPath();
+        canvasContext.moveTo(width / 2, 50);
+        canvasContext.lineTo(width / 2, height - 50);
+        canvasContext.stroke();
+        canvasContext.restore();
+      }
+      if (showGuides) drawSelectionGizmo(page);
+    }
+
+    function isTextLayer(key = selectedLayer) {
+      return Object.hasOwn(currentPage().styles, key);
+    }
+
+    function isSelectedLocked() {
+      const page = currentPage();
+      if (selectedLayer === 'photo') return page.photoLocked;
+      if (selectedLayer === 'background') return page.backgroundLocked;
+      if (selectedLayer.startsWith('shape:')) return page.shapes.find((shape) => shape.id === selectedLayer.slice(6))?.locked ?? true;
+      return page.styles[selectedLayer]?.locked ?? true;
+    }
+
+    function syncStyleControls() {
+      const page = currentPage();
+      const style = isTextLayer() ? page.styles[selectedLayer] : null;
+      const locked = isSelectedLocked();
+      textLayerSelect.value = style ? selectedLayer : 'photo';
+      const selectedTextContent = document.getElementById('selected-text-content');
+      selectedTextContent.disabled = !style || locked;
+      selectedTextContent.value = style ? page.text[selectedLayer] : '';
+      for (const control of Object.values(styleControls)) control.disabled = !style || locked;
+      document.getElementById('font-preset').disabled = !style || locked;
+      document.getElementById('text-style').disabled = !style || locked;
+      document.getElementById('toggle-lock').disabled = false;
+      document.getElementById('bring-forward').disabled = !style || locked;
+      document.getElementById('send-backward').disabled = !style || locked;
+      const isShape = selectedLayer.startsWith('shape:');
+      const shape = isShape ? page.shapes.find((item) => item.id === selectedLayer.slice(6)) : null;
+      document.getElementById('shape-bring-forward').disabled = !isShape || locked;
+      document.getElementById('shape-send-backward').disabled = !isShape || locked;
+      document.getElementById('shape-lock').disabled = !isShape;
+      document.getElementById('delete-shape').disabled = !shape?.removable || locked;
+      for (const control of [document.getElementById('shape-stroke'), document.getElementById('shape-stroke-width'), document.getElementById('shape-fill'), document.getElementById('shape-transparent'), document.getElementById('shape-photo-zoom'), document.getElementById('shape-photo-upload')]) {
+        control.disabled = !isShape || locked;
+      }
+      syncToolbarControls();
+      if (shape) {
+        document.getElementById('shape-stroke').value = shape.stroke;
+        document.getElementById('shape-stroke-width').value = shape.strokeWidth;
+        document.getElementById('shape-stroke-width').parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
+        document.getElementById('shape-fill').value = shape.fill;
+        document.getElementById('shape-transparent').checked = shape.transparent;
+        document.getElementById('shape-photo-zoom').value = shape.photoZoom;
+        document.getElementById('shape-photo-zoom').parentElement.querySelector('output').value = `${Math.round(shape.photoZoom * 100)}%`;
+        updateLockButton(document.getElementById('shape-lock'), shape.locked, 'selected shape');
+      } else {
+        updateLockButton(document.getElementById('shape-lock'), false, 'selected shape');
+      }
+      updateLockButton(document.getElementById('toggle-lock'), locked, 'selected item');
+      if (!style) return;
+
+      styleControls.size.value = style.size;
+      styleControls.color.value = style.color;
+      styleControls.weight.value = style.weight;
+      styleControls.alignment.value = style.align;
+      styleControls.lineSpacing.value = style.lineSpacing;
+      styleControls.letterSpacing.value = style.letterSpacing;
+      styleControls.effect.value = style.effect;
+      styleControls.rotation.value = style.rotation;
+      styleControls.opacity.value = style.opacity;
+      document.getElementById('text-style').value = style.preset || 'custom';
+      styleControls.size.parentElement.querySelector('output').value = `${style.size} px`;
+      styleControls.lineSpacing.parentElement.querySelector('output').value = style.lineSpacing;
+      styleControls.letterSpacing.parentElement.querySelector('output').value = `${style.letterSpacing} px`;
+      styleControls.rotation.parentElement.querySelector('output').value = `${style.rotation}°`;
+      styleControls.opacity.parentElement.querySelector('output').value = `${style.opacity}%`;
+    }
+
+    function syncToolbarControls() {
+      const style = isTextLayer() ? currentPage().styles[selectedLayer] : null;
+      for (const control of [toolbar.font, toolbar.size, toolbar.color, toolbar.bold, toolbar.italic, toolbar.underline, toolbar.alignment, toolbar.effect]) {
+        control.disabled = !style || style.locked;
+      }
+      document.getElementById('toolbar-size-down').disabled = !style || style.locked;
+      document.getElementById('toolbar-size-up').disabled = !style || style.locked;
+      if (!style) {
+        const locked = isSelectedLocked();
+        updateLockButton(toolbar.lock, locked, 'selected item');
+        updateLockButton(document.getElementById('canvas-lock'), locked, 'selected item');
+        document.getElementById('canvas-lock').disabled = selectedLayer === 'photo' && !currentPage().photo
+          || selectedLayer === 'background' && !currentPage().background;
+        document.getElementById('canvas-duplicate').disabled = true;
+        return;
+      }
+      const familyKey = Object.keys(fontFamilies).find((key) => fontFamilies[key] === style.family) || 'elegant';
+      toolbar.font.value = familyKey;
+      toolbar.size.value = style.size;
+      toolbar.color.value = style.color;
+      toolbar.bold.setAttribute('aria-pressed', String(Number(style.weight) >= 600));
+      toolbar.italic.setAttribute('aria-pressed', String(style.italic));
+      toolbar.underline.setAttribute('aria-pressed', String(style.underline));
+      toolbar.alignment.value = style.align;
+      toolbar.effect.value = style.effect;
+      updateLockButton(toolbar.lock, style.locked, 'selected item');
+      updateLockButton(document.getElementById('canvas-lock'), style.locked, 'selected item');
+      document.getElementById('canvas-lock').disabled = false;
+      document.getElementById('canvas-duplicate').disabled = style.locked;
+    }
+
+    function setEditorTab(tab) {
+      activeEditorTab = tab;
+      document.querySelectorAll('[data-editor-tab]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.editorTab === tab));
+      });
+      document.querySelectorAll('[data-editor-panel]').forEach((panel) => {
+        panel.hidden = !panel.dataset.editorPanel.split(/\s+/).includes(tab);
+      });
+      if (tab === 'text' || tab === 'elements' || tab === 'brand') {
+        document.querySelector('.editor-advanced').open = true;
+      }
+      if (tab === 'uploads' || tab === 'tools') {
+        document.querySelector('[aria-label="Photo editing"]').open = true;
+      }
+    }
+
+    function openLayerDetails(key) {
+      if (key === 'photo') return;
+      for (const details of document.querySelectorAll('[name="invitation-details"]')) {
+        const lockButton = details.querySelector('[data-lock-layer]');
+        if (lockButton && lockButton.dataset.lockLayer === key) {
+          details.open = true;
+          return;
+        }
+      }
+    }
+
+    function recordUndo() {
+      undoStack.push({ pageIndex: currentPageIndex, pages: pages.map(clonePage) });
+      if (undoStack.length > 40) undoStack.shift();
+      document.getElementById('editor-undo').disabled = false;
+    }
+
+    function restoreUndo() {
+      const previous = undoStack.pop();
+      if (!previous) {
+        setStatus('There are no more changes to undo.');
+        document.getElementById('editor-undo').disabled = true;
+        return;
+      }
+      currentPageIndex = previous.pageIndex;
+      pages = previous.pages;
+      selectedLayer = pages[currentPageIndex].layerOrder.includes(selectedLayer) ? selectedLayer : 'names';
+      updatePageSelect();
+      loadCurrentPage();
+      setStatus('Last change undone.', 'success');
+      document.getElementById('editor-undo').disabled = undoStack.length === 0;
+    }
+
+    function addPage() {
+      recordUndo();
+      pages.push(makePage());
+      currentPageIndex = pages.length - 1;
+      selectedLayer = 'names';
+      updatePageSelect();
+      syncPageControls();
+      drawInvitation();
+      setStatus(`Page ${currentPageIndex + 1} added.`, 'success');
+    }
+
+    function duplicateSelectedLayer() {
+      if (selectedLayer === 'photo') {
+        setStatus('Photo duplication is not available yet. Upload the image again to add another photo.', 'error');
+        return;
+      }
+      if (!isTextLayer()) {
+        setStatus('Only text items can be duplicated from the current workspace.', 'error');
+        return;
+      }
+      const page = currentPage();
+      const style = page.styles[selectedLayer];
+      if (style.locked) {
+        setStatus('Unlock this item before duplicating it.', 'error');
+        return;
+      }
+      recordUndo();
+      const key = `custom-${Date.now()}-${page.layerOrder.length}`;
+      page.text[key] = page.text[selectedLayer];
+      page.styles[key] = { ...style, x: Math.min(990, style.x + 24), y: Math.min(1290, style.y + 42), locked: false };
+      page.layerOrder.push(key);
+      selectedLayer = key;
+      syncLayerControls();
+      customTextList.lastElementChild.open = true;
+      syncStyleControls();
+      drawInvitation();
+      setStatus(`Additional text duplicated.`, 'success');
+    }
+
+    function pasteObject() {
+      if (!objectClipboard) {
+        setStatus('Copy a text item before pasting.', 'error');
+        return;
+      }
+      recordUndo();
+      const page = currentPage();
+      const key = `custom-${Date.now()}-${page.layerOrder.length}`;
+      page.text[key] = objectClipboard.text;
+      page.styles[key] = { ...objectClipboard.style, x: Math.min(990, objectClipboard.style.x + 24), y: Math.min(1290, objectClipboard.style.y + 42), locked: false };
+      page.layerOrder.push(key);
+      selectedLayer = key;
+      syncLayerControls();
+      customTextList.lastElementChild.open = true;
+      syncStyleControls();
+      drawInvitation();
+      setStatus('Text item pasted.', 'success');
+    }
+
+    function alignSelected(alignment) {
+      if (!isTextLayer()) return;
+      const style = currentPage().styles[selectedLayer];
+      if (style.locked) {
+        setStatus('Unlock this item before changing its position.', 'error');
+        return;
+      }
+      recordUndo();
+      if (alignment === 'left') { style.x = 90; style.align = 'left'; }
+      if (alignment === 'center') { style.x = invitationCanvas.width / 2; style.align = 'center'; }
+      if (alignment === 'right') { style.x = invitationCanvas.width - 90; style.align = 'right'; }
+      if (alignment === 'top') style.y = 110;
+      if (alignment === 'middle') style.y = invitationCanvas.height / 2;
+      if (alignment === 'bottom') style.y = invitationCanvas.height - 90;
+      syncStyleControls();
+      drawInvitation();
+    }
+
+    function showContextMenu(x, y) {
+      const canEditText = isTextLayer();
+      const canDelete = canEditText && !layerKeys.includes(selectedLayer);
+      contextMenu.querySelector('[data-context-action="copy"]').disabled = !canEditText;
+      contextMenu.querySelector('[data-context-action="copy-style"]').disabled = !canEditText;
+      contextMenu.querySelector('[data-context-action="paste"]').disabled = !objectClipboard;
+      contextMenu.querySelector('[data-context-action="paste-style"]').disabled = !styleClipboard || !canEditText;
+      contextMenu.querySelector('[data-context-action="duplicate"]').disabled = !canEditText || currentPage().styles[selectedLayer]?.locked;
+      contextMenu.querySelector('[data-context-action="delete"]').disabled = !canDelete;
+      contextMenu.querySelector('[data-context-action="forward"]').disabled = !canEditText || currentPage().styles[selectedLayer]?.locked;
+      contextMenu.querySelector('[data-context-action="backward"]').disabled = !canEditText || currentPage().styles[selectedLayer]?.locked;
+      for (const action of ['align-left', 'align-center', 'align-right', 'align-top', 'align-middle', 'align-bottom']) {
+        contextMenu.querySelector(`[data-context-action="${action}"]`).disabled = !canEditText || currentPage().styles[selectedLayer]?.locked;
+      }
+      contextMenu.querySelector('[data-context-action="lock"]').textContent = isSelectedLocked() ? 'Unlock' : 'Lock';
+      contextMenu.hidden = false;
+      const width = contextMenu.offsetWidth;
+      const height = contextMenu.offsetHeight;
+      contextMenu.style.left = `${Math.min(x, window.innerWidth - width - 8)}px`;
+      contextMenu.style.top = `${Math.min(y, window.innerHeight - height - 8)}px`;
+    }
+
+    function applyContextAction(action) {
+      const page = currentPage();
+      const style = isTextLayer() ? page.styles[selectedLayer] : null;
+      if (action === 'copy' && style) {
+        objectClipboard = { text: page.text[selectedLayer], style: { ...style } };
+        setStatus('Selected text copied.', 'success');
+      }
+      if (action === 'copy-style' && style) {
+        styleClipboard = { ...style };
+        setStatus('Selected text style copied.', 'success');
+      }
+      if (action === 'paste-style' && style && styleClipboard && !style.locked) {
+        recordUndo();
+        Object.assign(style, styleClipboard, { x: style.x, y: style.y, locked: style.locked });
+        syncStyleControls();
+        drawInvitation();
+      }
+      if (action === 'paste') pasteObject();
+      if (action === 'duplicate') duplicateSelectedLayer();
+      if (action === 'delete' && style && !layerKeys.includes(selectedLayer)) {
+        recordUndo();
+        const [removed] = page.layerOrder.splice(page.layerOrder.indexOf(selectedLayer), 1);
+        delete page.text[removed];
+        delete page.styles[removed];
+        selectedLayer = 'names';
+        syncLayerControls();
+        syncStyleControls();
+        drawInvitation();
+        setStatus('Additional text removed.', 'success');
+      }
+      if (action === 'forward' || action === 'backward') {
+        const order = page.layerOrder;
+        const index = order.indexOf(selectedLayer);
+        const target = action === 'forward' ? index + 1 : index - 1;
+        if (target >= 0 && target < order.length) {
+          recordUndo();
+          [order[index], order[target]] = [order[target], order[index]];
+          drawInvitation();
+        }
+      }
+      if (action.startsWith('align-')) alignSelected(action.slice('align-'.length));
+      if (action === 'lock') setLayerLocked(selectedLayer, !isSelectedLocked());
+      contextMenu.hidden = true;
+    }
+
+    function updatePageStrip() {
+      pageStrip.replaceChildren(...pages.map((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'editor-page-thumb';
+        button.type = 'button';
+        button.textContent = String(index + 1);
+        button.setAttribute('aria-label', `Open page ${index + 1}`);
+        if (index === currentPageIndex) button.setAttribute('aria-current', 'page');
+        button.addEventListener('click', () => {
+          currentPageIndex = index;
+          selectedLayer = 'names';
+          photoUpload.value = '';
+          loadCurrentPage();
+          updatePageStrip();
+          setStatus(`Page ${index + 1} selected.`);
+        });
+        return button;
+      }), Object.assign(document.createElement('button'), {
+        className: 'editor-page-thumb editor-page-add',
+        type: 'button',
+        textContent: '+ Add page',
+        onclick: () => addPage()
+      }));
+    }
+
+    function syncLayerControls() {
+      const page = currentPage();
+      const customKeys = page.layerOrder.filter((key) => !layerKeys.includes(key));
+      textLayerSelect.replaceChildren(
+        new Option('Photo', 'photo'),
+        ...page.layerOrder.map((key) => new Option(layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`, key))
+      );
+      const layerItems = [
+        ...[...page.shapes].reverse().map((shape) => ({
+          key: `shape:${shape.id}`,
+          label: `Shape · ${shape.type}`
+        })),
+        ...[...page.layerOrder].reverse().map((key) => ({
+          key,
+          label: layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`
+        })),
+        { key: 'photo', label: 'Photo' },
+        { key: 'background', label: 'Background' }
+      ];
+      layerList.replaceChildren(...layerItems.map(({ key, label }) => {
+        const button = document.createElement('button');
+        button.className = 'editor-layer-item';
+        button.type = 'button';
+        const locked = key === 'photo' ? page.photoLocked
+          : key === 'background' ? page.backgroundLocked
+            : key.startsWith('shape:') ? page.shapes.find((shape) => shape.id === key.slice(6)).locked
+              : page.styles[key].locked;
+        button.textContent = `${label}${locked ? ' · Locked' : ''}`;
+        button.setAttribute('aria-current', String(selectedLayer === key));
+        button.addEventListener('click', () => {
+          selectedLayer = key;
+          setEditorTab(key === 'photo' ? 'tools' : key === 'background' ? 'elements' : key.startsWith('shape:') ? 'elements' : 'text');
+          openLayerDetails(key);
+          if (key === 'background') document.querySelector('[aria-label="Background image"]').open = true;
+          if (key.startsWith('shape:')) document.querySelector('[aria-label="Frames and shapes"]').open = true;
+          if ([...textLayerSelect.options].some((option) => option.value === key)) textLayerSelect.value = key;
+          syncStyleControls();
+          syncLayerControls();
+          drawInvitation(currentPage(), true);
+        });
+        return button;
+      }));
+
+      customTextList.replaceChildren(...customKeys.map((key, index) => {
+        const details = document.createElement('details');
+        details.className = 'editor-accordion';
+        details.name = 'invitation-details';
+        const summary = document.createElement('summary');
+        summary.textContent = `Additional text ${index + 1}`;
+        const lockButton = document.createElement('button');
+        lockButton.className = 'editor-lock';
+        lockButton.type = 'button';
+        lockButton.dataset.lockLayer = key;
+        updateLockButton(lockButton, page.styles[key].locked, `additional text ${index + 1}`);
+        lockButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          setLayerLocked(key, !currentPage().styles[key].locked);
+        });
+        const content = document.createElement('div');
+        content.className = 'editor-accordion-content';
+        const label = document.createElement('label');
+        label.className = 'editor-field';
+        label.textContent = `Additional text ${index + 1}`;
+        const field = document.createElement('textarea');
+        field.maxLength = 110;
+        field.value = page.text[key];
+        field.disabled = page.styles[key].locked;
+        field.setAttribute('aria-label', `Additional text ${index + 1}`);
+        field.addEventListener('input', () => {
+          if (currentPage().styles[key].locked) return;
+          recordUndo();
+          currentPage().text[key] = field.value;
+          drawInvitation();
+        });
+        label.append(field);
+        content.append(label);
+        details.append(summary, lockButton, content);
+        return details;
+      }));
+
+      document.querySelectorAll('[data-lock-layer]').forEach((button) => {
+        const key = button.dataset.lockLayer;
+        const style = page.styles[key];
+        updateLockButton(button, style.locked, layerLabels[key] || button.title.replace(/^(Lock|Unlock) /, ''));
+      });
+    }
+
+    function syncPageControls() {
+      const page = currentPage();
+      for (const [key, field] of Object.entries(textFields)) {
+        field.value = page.text[key];
+        field.disabled = page.styles[key].locked;
+      }
+      photoControls.zoom.value = page.photoZoom;
+      photoControls.filter.value = page.filter;
+      photoControls.brightness.value = page.brightness;
+      photoControls.contrast.value = page.contrast;
+      photoControls.saturation.value = page.saturation;
+      photoControls.warmth.value = page.warmth;
+      photoControls.highlights.value = page.highlights;
+      photoControls.shadows.value = page.shadows;
+      photoControls.tint.value = page.tint;
+      photoControls.positionX.value = page.photoX;
+      photoControls.positionY.value = page.photoY;
+      document.getElementById('background-zoom').value = page.backgroundZoom;
+      document.getElementById('background-position-x').value = page.backgroundX;
+      document.getElementById('background-position-y').value = page.backgroundY;
+      whiteTransparencyToggle.checked = page.whiteTransparent;
+      whiteThresholdControl.value = page.whiteThreshold;
+      whiteThresholdControl.parentElement.querySelector('output').value = page.whiteThreshold;
+      photoControls.brightness.parentElement.querySelector('output').value = `${page.brightness}%`;
+      photoControls.contrast.parentElement.querySelector('output').value = `${page.contrast}%`;
+      photoControls.saturation.parentElement.querySelector('output').value = `${page.saturation}%`;
+      photoControls.warmth.parentElement.querySelector('output').value = page.warmth;
+      photoControls.highlights.parentElement.querySelector('output').value = page.highlights;
+      photoControls.shadows.parentElement.querySelector('output').value = page.shadows;
+      photoControls.tint.parentElement.querySelector('output').value = page.tint;
+      photoControls.positionX.parentElement.querySelector('output').value = page.photoX;
+      photoControls.positionY.parentElement.querySelector('output').value = page.photoY;
+      document.querySelector('#background-zoom + output').value = `${Math.round(page.backgroundZoom * 100)}%`;
+      document.getElementById('background-position-x').parentElement.querySelector('output').value = page.backgroundX;
+      document.getElementById('background-position-y').parentElement.querySelector('output').value = page.backgroundY;
+      document.getElementById('flip-photo').setAttribute('aria-pressed', String(page.flipX));
+      document.getElementById('flip-photo-vertical').setAttribute('aria-pressed', String(page.flipY));
+      pageSelect.value = String(currentPageIndex);
+      document.getElementById('font-preset').value = page.fontPreset;
+      syncLayerControls();
+      syncStyleControls();
+    }
+
+    function updatePageSelect() {
+      pageSelect.replaceChildren(...pages.map((_, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = `Page ${index + 1}`;
+        return option;
+      }));
+      pageSelect.value = String(currentPageIndex);
+      updatePageStrip();
+    }
+
+    function loadCurrentPage() {
+      syncPageControls();
+      drawInvitation();
+    }
+
+    function openTemplateEditor() {
+      previousFocus = document.activeElement;
+      setStatus('');
+      updatePageSelect();
+      loadCurrentPage();
+      editorDialog.showModal();
+    }
+
+    function clonePage(page) {
+      return {
+        ...page,
+        text: { ...page.text },
+        styles: Object.fromEntries(Object.entries(page.styles).map(([key, style]) => [key, { ...style }])),
+        layerOrder: [...page.layerOrder],
+        shapes: page.shapes.map((shape) => ({ ...shape }))
+      };
+    }
+
+    async function exportImage(type) {
+      try {
+        drawInvitation(currentPage(), false);
+        const mimeType = type === 'jpg' ? 'image/jpeg' : 'image/png';
+        const blob = await new Promise((resolve, reject) => {
+          invitationCanvas.toBlob((result) => result ? resolve(result) : reject(new Error('The browser could not render the invitation image.')), mimeType, .94);
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `lobola-invitation-page-${currentPageIndex + 1}.${type}`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        setStatus(`Page ${currentPageIndex + 1} downloaded as ${type.toUpperCase()} at 1080 × 1350 px.`, 'success');
+      } catch (error) {
+        setStatus(error.message || 'The invitation image could not be downloaded.', 'error');
+      } finally {
+        drawInvitation(currentPage(), true);
+      }
+    }
+
+    function asciiBytes(text) {
+      return new TextEncoder().encode(text);
+    }
+
+    function concatenateBytes(chunks) {
+      const size = chunks.reduce((total, chunk) => total + chunk.length, 0);
+      const result = new Uint8Array(size);
+      let offset = 0;
+      for (const chunk of chunks) {
+        result.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return result;
+    }
+
+    async function exportPdf(printQuality) {
+      const originalCanvas = document.createElement('canvas');
+      originalCanvas.width = invitationCanvas.width;
+      originalCanvas.height = invitationCanvas.height;
+      originalCanvas.getContext('2d').drawImage(invitationCanvas, 0, 0);
+      const pdfPages = [];
+      try {
+        for (const page of pages) {
+          drawInvitation(page, false);
+          const blob = await new Promise((resolve, reject) => {
+            invitationCanvas.toBlob((result) => result ? resolve(result) : reject(new Error('The browser could not render a PDF page.')), 'image/jpeg', printQuality ? .98 : .82);
+          });
+          pdfPages.push(new Uint8Array(await blob.arrayBuffer()));
+        }
+      } catch (error) {
+        setStatus(error.message || 'The PDF could not be rendered.', 'error');
+        return;
+      } finally {
+        canvasContext.clearRect(0, 0, invitationCanvas.width, invitationCanvas.height);
+        canvasContext.drawImage(originalCanvas, 0, 0);
+      }
+
+      const objects = new Map();
+      const pageReferences = [];
+      for (let index = 0; index < pdfPages.length; index += 1) {
+        const pageObject = 3 + index * 3;
+        const imageObject = pageObject + 1;
+        const contentObject = pageObject + 2;
+        pageReferences.push(`${pageObject} 0 R`);
+        const image = pdfPages[index];
+        const content = asciiBytes('q 648 0 0 810 0 0 cm /Im0 Do Q');
+        const pageWidth = printQuality ? 259.2 : 648;
+        const pageHeight = printQuality ? 324 : 810;
+        objects.set(pageObject, asciiBytes(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 ${imageObject} 0 R >> >> /Contents ${contentObject} 0 R >>`));
+        objects.set(imageObject, concatenateBytes([
+          asciiBytes(`<< /Type /XObject /Subtype /Image /Width 1080 /Height 1350 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.length} >>\nstream\n`),
+          image,
+          asciiBytes('\nendstream')
+        ]));
+        objects.set(contentObject, concatenateBytes([
+          asciiBytes(`<< /Length ${content.length} >>\nstream\n`),
+          content,
+          asciiBytes('\nendstream')
+        ]));
+      }
+      objects.set(1, asciiBytes('<< /Type /Catalog /Pages 2 0 R >>'));
+      objects.set(2, asciiBytes(`<< /Type /Pages /Kids [${pageReferences.join(' ')}] /Count ${pdfPages.length} >>`));
+
+      const objectCount = 2 + pdfPages.length * 3;
+      const parts = [asciiBytes('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n')];
+      const offsets = [0];
+      let byteLength = parts[0].length;
+      for (let id = 1; id <= objectCount; id += 1) {
+        offsets[id] = byteLength;
+        const objectBytes = concatenateBytes([
+          asciiBytes(`${id} 0 obj\n`),
+          objects.get(id),
+          asciiBytes('\nendobj\n')
+        ]);
+        parts.push(objectBytes);
+        byteLength += objectBytes.length;
+      }
+      const xrefOffset = byteLength;
+      let xref = `xref\n0 ${objectCount + 1}\n0000000000 65535 f \n`;
+      for (let id = 1; id <= objectCount; id += 1) xref += `${String(offsets[id]).padStart(10, '0')} 00000 n \n`;
+      xref += `trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+      parts.push(asciiBytes(xref));
+      const blob = new Blob([concatenateBytes(parts)], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `lobola-invitation-${printQuality ? 'print' : 'standard'}.pdf`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setStatus(`${pages.length}-page ${printQuality ? 'print-quality' : 'standard'} PDF downloaded.`, 'success');
+      drawInvitation(currentPage(), true);
+    }
+
+    function hitTextLayer(x, y) {
+      for (let index = renderedBounds.length - 1; index >= 0; index -= 1) {
+        const bounds = renderedBounds[index];
+        if (x >= bounds.left && x <= bounds.right && y >= bounds.top && y <= bounds.bottom) return bounds.key;
+      }
+      return null;
+    }
+
+    function updateStyleFromControls() {
+      if (!isTextLayer()) return;
+      const style = currentPage().styles[selectedLayer];
+      if (style.locked) return;
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      style.size = Number(styleControls.size.value);
+      style.color = styleControls.color.value;
+      style.weight = styleControls.weight.value;
+      style.align = styleControls.alignment.value;
+      style.lineSpacing = Number(styleControls.lineSpacing.value);
+      style.letterSpacing = Number(styleControls.letterSpacing.value);
+      style.effect = styleControls.effect.value;
+      style.rotation = Number(styleControls.rotation.value);
+      style.opacity = Number(styleControls.opacity.value);
+      style.preset = 'custom';
+      syncStyleControls();
+      drawInvitation();
+    }
+
+    function setPhotoControl(key, control, output, suffix = '') {
+      const value = control.type === 'range' ? Number(control.value) : control.value;
+      currentPage()[key] = value;
+      if (output) output.value = `${value}${suffix}`;
+      drawInvitation();
+    }
+
+    function setLayerLocked(key, locked) {
+      recordUndo();
+      if (key === 'photo') {
+        currentPage().photoLocked = locked;
+        syncStyleControls();
+        syncLayerControls();
+        drawInvitation();
+        return;
+      }
+      if (key === 'background') {
+        currentPage().backgroundLocked = locked;
+        syncStyleControls();
+        syncLayerControls();
+        drawInvitation();
+        return;
+      }
+      if (key.startsWith('shape:')) {
+        const shape = currentPage().shapes.find((item) => item.id === key.slice(6));
+        if (!shape) return;
+        shape.locked = locked;
+        syncStyleControls();
+        syncLayerControls();
+        drawInvitation();
+        return;
+      }
+      currentPage().styles[key].locked = locked;
+      const field = textFields[key];
+      if (field) field.disabled = locked;
+      if (key === selectedLayer) syncStyleControls();
+      syncLayerControls();
+      openLayerDetails(key);
+      drawInvitation();
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('is-open', !isExpanded);
+    });
+
+    categoryToggle.addEventListener('click', () => {
+      const isExpanded = categoryToggle.getAttribute('aria-expanded') === 'true';
+      categoryToggle.setAttribute('aria-expanded', String(!isExpanded));
+      categoryProducts.hidden = isExpanded;
+    });
+
+    productButton.addEventListener('click', openTemplateEditor);
+    closeEditorButton.addEventListener('click', () => editorDialog.close());
+    editorDialog.addEventListener('close', () => {
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    });
+    document.getElementById('invitation-form').addEventListener('submit', (event) => event.preventDefault());
+    document.querySelectorAll('[data-editor-tab]').forEach((button) => {
+      button.addEventListener('click', () => {
+        setEditorTab(button.dataset.editorTab);
+        if (button.dataset.editorTab === 'text' && selectedLayer === 'photo') {
+          selectedLayer = 'names';
+          syncStyleControls();
+        }
+        if (button.dataset.editorTab === 'uploads' || button.dataset.editorTab === 'tools') {
+          selectedLayer = 'photo';
+          syncStyleControls();
+        }
+      });
+    });
+    setEditorTab(activeEditorTab);
+
+    document.getElementById('editor-home').addEventListener('click', () => editorDialog.close());
+    document.getElementById('editor-file').addEventListener('click', () => setEditorTab('apps'));
+    document.getElementById('editor-size-lock').addEventListener('click', () => {
+      setStatus('This template is fixed at 1080 × 1350 px and cannot be resized.');
+    });
+    document.getElementById('editor-undo').addEventListener('click', restoreUndo);
+    document.getElementById('editor-share').addEventListener('click', async () => {
+      if (!navigator.share) {
+        setEditorTab('apps');
+        setStatus('Direct sharing is not supported here. Download a PNG, JPG, or PDF to share your invitation.', 'error');
+        return;
+      }
+      try {
+        const blob = await new Promise((resolve, reject) => {
+          invitationCanvas.toBlob((result) => result ? resolve(result) : reject(new Error('The invitation image could not be prepared for sharing.')), 'image/png');
+        });
+        const file = new File([blob], `lobola-invitation-page-${currentPageIndex + 1}.png`, { type: 'image/png' });
+        if (navigator.canShare && !navigator.canShare({ files: [file] })) throw new Error('This browser cannot share the invitation image directly. Download it from Export instead.');
+        await navigator.share({ title: 'Lobola Invitation', files: [file] });
+      } catch (error) {
+        if (error.name !== 'AbortError') setStatus(`Sharing failed: ${error.message}`, 'error');
+      }
+    });
+
+    const formatSelection = (mutate) => {
+      if (!isTextLayer()) return;
+      const style = currentPage().styles[selectedLayer];
+      if (style.locked) return;
+      recordUndo();
+      mutate(style);
+      style.preset = 'custom';
+      syncStyleControls();
+      drawInvitation();
+    };
+    toolbar.font.addEventListener('change', () => formatSelection((style) => {
+      style.family = fontFamilies[toolbar.font.value];
+      currentPage().fontPreset = toolbar.font.value;
+    }));
+    toolbar.size.addEventListener('change', () => {
+      const size = Number(toolbar.size.value);
+      if (!Number.isFinite(size)) {
+        syncToolbarControls();
+        setStatus('Enter a valid font size between 20 and 110.', 'error');
+        return;
+      }
+      formatSelection((style) => { style.size = Math.max(20, Math.min(110, size)); });
+    });
+    document.getElementById('toolbar-size-down').addEventListener('click', () => formatSelection((style) => { style.size = Math.max(20, style.size - 2); }));
+    document.getElementById('toolbar-size-up').addEventListener('click', () => formatSelection((style) => { style.size = Math.min(110, style.size + 2); }));
+    toolbar.color.addEventListener('input', () => formatSelection((style) => { style.color = toolbar.color.value; }));
+    toolbar.bold.addEventListener('click', () => formatSelection((style) => { style.weight = Number(style.weight) >= 600 ? '400' : '700'; }));
+    toolbar.italic.addEventListener('click', () => formatSelection((style) => { style.italic = !style.italic; }));
+    toolbar.underline.addEventListener('click', () => formatSelection((style) => { style.underline = !style.underline; }));
+    toolbar.alignment.addEventListener('change', () => formatSelection((style) => { style.align = toolbar.alignment.value; }));
+    toolbar.effect.addEventListener('change', () => formatSelection((style) => { style.effect = toolbar.effect.value; }));
+    document.getElementById('toolbar-position').addEventListener('click', () => {
+      const panel = selectedLayer === 'photo' ? 'tools' : selectedLayer === 'background' || selectedLayer.startsWith('shape:') ? 'elements' : 'text';
+      setEditorTab(panel);
+      document.getElementById(panel === 'text' ? 'bring-forward' : panel === 'elements' ? 'shape-bring-forward' : 'photo-position-x').scrollIntoView({ block: 'nearest' });
+    });
+    toolbar.lock.addEventListener('click', () => setLayerLocked(selectedLayer, !isSelectedLocked()));
+    document.getElementById('canvas-duplicate').addEventListener('click', duplicateSelectedLayer);
+    document.getElementById('canvas-add-page').addEventListener('click', addPage);
+    contextMenu.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-context-action]');
+      if (button && !button.disabled) applyContextAction(button.dataset.contextAction);
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!contextMenu.hidden && !contextMenu.contains(event.target)) contextMenu.hidden = true;
+    });
+
+    Object.entries(textFields).forEach(([key, field]) => {
+      field.addEventListener('input', () => {
+        if (currentPage().styles[key].locked) return;
+        recordUndo();
+        currentPage().text[key] = field.value;
+        if (selectedLayer === key) document.getElementById('selected-text-content').value = field.value;
+        drawInvitation();
+      });
+    });
+
+    document.getElementById('selected-text-content').addEventListener('input', (event) => {
+      if (!isTextLayer() || isSelectedLocked()) return;
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      const key = selectedLayer;
+      currentPage().text[key] = event.currentTarget.value;
+      if (textFields[key]) textFields[key].value = event.currentTarget.value;
+      const customKeys = currentPage().layerOrder.filter((layer) => !layerKeys.includes(layer));
+      const customIndex = customKeys.indexOf(key);
+      if (customIndex >= 0) document.querySelectorAll('#custom-text-list textarea')[customIndex].value = event.currentTarget.value;
+      drawInvitation();
+    });
+    document.getElementById('selected-text-content').addEventListener('change', () => { controlUndoRecorded = false; });
+
+    textLayerSelect.addEventListener('change', (event) => {
+      selectedLayer = event.target.value;
+      setEditorTab(selectedLayer === 'photo' ? 'tools' : 'text');
+      openLayerDetails(selectedLayer);
+      syncLayerControls();
+      syncStyleControls();
+      drawInvitation();
+    });
+
+    document.querySelectorAll('[data-lock-layer]').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const key = button.dataset.lockLayer;
+        setLayerLocked(key, !currentPage().styles[key].locked);
+      });
+    });
+
+    document.getElementById('add-text').addEventListener('click', () => {
+      const page = currentPage();
+      recordUndo();
+      const key = `custom-${Date.now()}-${page.layerOrder.length}`;
+      const customCount = page.layerOrder.filter((layer) => !layerKeys.includes(layer)).length;
+      page.text[key] = 'Your text';
+      page.styles[key] = {
+        ...layerDefaults.message,
+        y: 1240 - customCount * 48,
+        size: 32,
+        preset: 'custom'
+      };
+      page.layerOrder.push(key);
+      selectedLayer = key;
+      syncLayerControls();
+      customTextList.lastElementChild.open = true;
+      syncStyleControls();
+      drawInvitation();
+      setStatus('Additional text added. Edit its wording below and drag it on the design to position it.', 'success');
+    });
+
+    for (const control of Object.values(styleControls)) {
+      control.addEventListener('input', updateStyleFromControls);
+      control.addEventListener('change', () => {
+        updateStyleFromControls();
+        controlUndoRecorded = false;
+      });
+    }
+
+    document.getElementById('font-preset').addEventListener('change', (event) => {
+      const family = fontFamilies[event.target.value];
+      recordUndo();
+      currentPage().fontPreset = event.target.value;
+      for (const key of currentPage().layerOrder) {
+        if (!currentPage().styles[key].locked) currentPage().styles[key].family = family;
+      }
+      const toolbarFont = Object.keys(fontFamilies).find((key) => fontFamilies[key] === currentPage().styles[selectedLayer]?.family);
+      if (toolbarFont) toolbar.font.value = toolbarFont;
+      drawInvitation();
+    });
+
+    document.getElementById('text-style').addEventListener('change', (event) => {
+      if (selectedLayer === 'photo') return;
+      if (currentPage().styles[selectedLayer].locked) return;
+      recordUndo();
+      const style = currentPage().styles[selectedLayer];
+      const presets = {
+        headline: { family: fontFamilies.elegant, size: 76, weight: '400', color: '#292320', lineSpacing: 1.1, letterSpacing: 0, effect: 'none' },
+        subheading: { family: fontFamilies.classic, size: 38, weight: '500', color: '#895b49', lineSpacing: 1.2, letterSpacing: 1, effect: 'none' },
+        body: { family: fontFamilies.modern, size: 27, weight: '400', color: '#292320', lineSpacing: 1.4, letterSpacing: 0, effect: 'none' },
+        accent: { family: fontFamilies.modern, size: 34, weight: '500', color: '#895b49', lineSpacing: 1.2, letterSpacing: 2, effect: 'none' }
+      };
+      style.preset = event.target.value;
+      if (presets[style.preset]) Object.assign(style, presets[style.preset]);
+      syncStyleControls();
+      drawInvitation();
+    });
+
+    pageSelect.addEventListener('change', () => {
+      currentPageIndex = Number(pageSelect.value);
+      selectedLayer = 'names';
+      photoUpload.value = '';
+      loadCurrentPage();
+      updatePageStrip();
+      setStatus(`Page ${currentPageIndex + 1} selected.`);
+    });
+
+    document.getElementById('add-page').addEventListener('click', addPage);
+
+    document.getElementById('duplicate-page').addEventListener('click', () => {
+      recordUndo();
+      pages.splice(currentPageIndex + 1, 0, clonePage(currentPage()));
+      currentPageIndex += 1;
+      selectedLayer = 'names';
+      updatePageSelect();
+      syncPageControls();
+      drawInvitation();
+      setStatus(`Page ${currentPageIndex + 1} duplicated.`);
+    });
+
+    for (const [key, control] of Object.entries(photoControls)) {
+      control.addEventListener('input', () => {
+        if (!controlUndoRecorded) {
+          recordUndo();
+          controlUndoRecorded = true;
+        }
+        const suffix = key === 'brightness' || key === 'contrast' || key === 'saturation' ? '%' : '';
+        const pageKey = key === 'zoom' ? 'photoZoom'
+          : key === 'positionX' ? 'photoX'
+            : key === 'positionY' ? 'photoY' : key;
+        setPhotoControl(pageKey, control, control.parentElement.querySelector('output'), suffix);
+      });
+      control.addEventListener('change', () => {
+        const suffix = key === 'brightness' || key === 'contrast' || key === 'saturation' ? '%' : '';
+        const pageKey = key === 'zoom' ? 'photoZoom'
+          : key === 'positionX' ? 'photoX'
+            : key === 'positionY' ? 'photoY' : key;
+        setPhotoControl(pageKey, control, control.parentElement.querySelector('output'), suffix);
+        controlUndoRecorded = false;
+      });
+    }
+
+    whiteTransparencyToggle.addEventListener('change', () => {
+      const page = currentPage();
+      recordUndo();
+      page.whiteTransparent = whiteTransparencyToggle.checked;
+      refreshRenderablePhoto(page);
+      drawInvitation();
+      if (page.whiteTransparent && page.photo) setStatus('White background removed from the uploaded photo.', 'success');
+    });
+
+    whiteThresholdControl.addEventListener('input', () => {
+      const page = currentPage();
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      page.whiteThreshold = Number(whiteThresholdControl.value);
+      whiteThresholdControl.parentElement.querySelector('output').value = page.whiteThreshold;
+      if (page.whiteTransparent) refreshRenderablePhoto(page);
+      drawInvitation();
+    });
+    whiteThresholdControl.addEventListener('change', () => { controlUndoRecorded = false; });
+
+    for (const [id, key] of [
+    ['background-zoom', 'backgroundZoom'],
+    ['background-position-x', 'backgroundX'],
+    ['background-position-y', 'backgroundY']
+    ]) {
+    const control = document.getElementById(id);
+    control.addEventListener('input', () => {
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      const value = Number(control.value);
+      currentPage()[key] = value;
+      control.parentElement.querySelector('output').value = key === 'backgroundZoom' ? `${Math.round(value * 100)}%` : value;
+      drawInvitation();
+    });
+    control.addEventListener('change', () => { controlUndoRecorded = false; });
+    }
+
+    document.getElementById('insert-shape').addEventListener('click', () => {
+    recordUndo();
+    const shape = {
+      id: `shape-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+      type: document.getElementById('shape-type').value,
+      x: document.getElementById('shape-type').value === 'circle' ? 380 : 330,
+      y: 250,
+      width: document.getElementById('shape-type').value === 'circle' ? 320 : 420,
+      height: document.getElementById('shape-type').value === 'circle' ? 320 : 300,
+      stroke: document.getElementById('shape-stroke').value,
+      strokeWidth: Number(document.getElementById('shape-stroke-width').value),
+      fill: document.getElementById('shape-fill').value,
+      transparent: document.getElementById('shape-transparent').checked,
+      photo: null,
+      photoZoom: 1,
+      opacity: 100,
+      locked: false,
+      removable: true
+    };
+    currentPage().shapes.push(shape);
+    selectedLayer = `shape:${shape.id}`;
+    setEditorTab('elements');
+    syncLayerControls();
+    syncStyleControls();
+    drawInvitation();
+    setStatus(`${shape.type} frame added. Drag its handles to resize it.`, 'success');
+    });
+
+    for (const id of ['shape-stroke', 'shape-stroke-width', 'shape-fill', 'shape-transparent', 'shape-photo-zoom']) {
+    const control = document.getElementById(id);
+    control.addEventListener('input', () => {
+      const shape = currentPage().shapes.find((item) => `shape:${item.id}` === selectedLayer);
+      if (!shape || shape.locked) return;
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      if (id === 'shape-stroke') shape.stroke = control.value;
+      if (id === 'shape-stroke-width') {
+        shape.strokeWidth = Number(control.value);
+        control.parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
+      }
+      if (id === 'shape-fill') shape.fill = control.value;
+      if (id === 'shape-transparent') shape.transparent = control.checked;
+      if (id === 'shape-photo-zoom') {
+        shape.photoZoom = Number(control.value);
+        control.parentElement.querySelector('output').value = `${Math.round(shape.photoZoom * 100)}%`;
+      }
+      drawInvitation();
+    });
+    control.addEventListener('change', () => { controlUndoRecorded = false; });
+    }
+
+    document.getElementById('shape-lock').addEventListener('click', () => {
+    if (!selectedLayer.startsWith('shape:')) return;
+    setLayerLocked(selectedLayer, !isSelectedLocked());
+    });
+    document.getElementById('toggle-lock').addEventListener('click', () => {
+    setLayerLocked(selectedLayer, !isSelectedLocked());
+    });
+    document.getElementById('canvas-lock').addEventListener('click', () => {
+    setLayerLocked(selectedLayer, !isSelectedLocked());
+    });
+    document.getElementById('delete-shape').addEventListener('click', () => {
+    const shape = currentPage().shapes.find((item) => `shape:${item.id}` === selectedLayer);
+    if (!shape?.removable || isSelectedLocked()) return;
+    recordUndo();
+    const shapeId = selectedLayer.slice(6);
+    currentPage().shapes = currentPage().shapes.filter((shape) => shape.id !== shapeId);
+    selectedLayer = 'photo';
+    syncLayerControls();
+    syncStyleControls();
+    drawInvitation();
+    setStatus('Shape removed.', 'success');
+    });
+
+    document.getElementById('shape-bring-forward').addEventListener('click', () => moveShapeLayer(1));
+    document.getElementById('shape-send-backward').addEventListener('click', () => moveShapeLayer(-1));
+
+    document.getElementById('shape-photo-upload').addEventListener('change', () => {
+      const [file] = document.getElementById('shape-photo-upload').files;
+      const shape = currentPage().shapes.find((item) => `shape:${item.id}` === selectedLayer);
+      if (!file || !shape) return;
+      if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+        setStatus('Choose a raster image for this picture frame.', 'error');
+        document.getElementById('shape-photo-upload').value = '';
+        return;
+      }
+      recordUndo();
+      const objectUrl = URL.createObjectURL(file);
+      const image = new Image();
+      image.onload = () => {
+        shape.photo = image;
+        shape.photoZoom = 1;
+        URL.revokeObjectURL(objectUrl);
+        syncStyleControls();
+        drawInvitation();
+        setStatus('Picture added inside the selected frame.', 'success');
+      };
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        setStatus('The selected picture could not be opened. Try another image.', 'error');
+      };
+      image.src = objectUrl;
+    });
+
+    function moveShapeLayer(direction) {
+    if (!selectedLayer.startsWith('shape:') || isSelectedLocked()) return;
+    const shapes = currentPage().shapes;
+    const index = shapes.findIndex((shape) => `shape:${shape.id}` === selectedLayer);
+    const target = index + direction;
+    if (target < 0 || target >= shapes.length) return;
+    recordUndo();
+    [shapes[index], shapes[target]] = [shapes[target], shapes[index]];
+    syncLayerControls();
+    drawInvitation();
+    }
+
+    document.getElementById('rotate-photo').addEventListener('click', () => {
+      recordUndo();
+      currentPage().photoRotation = (currentPage().photoRotation + 90) % 360;
+      drawInvitation();
+    });
+
+    document.getElementById('flip-photo').addEventListener('click', (event) => {
+      recordUndo();
+      currentPage().flipX = !currentPage().flipX;
+      event.currentTarget.setAttribute('aria-pressed', String(currentPage().flipX));
+      drawInvitation();
+    });
+
+    document.getElementById('flip-photo-vertical').addEventListener('click', (event) => {
+      recordUndo();
+      currentPage().flipY = !currentPage().flipY;
+      event.currentTarget.setAttribute('aria-pressed', String(currentPage().flipY));
+      drawInvitation();
+    });
+
+    document.getElementById('bring-forward').addEventListener('click', () => {
+      const order = currentPage().layerOrder;
+      const index = order.indexOf(selectedLayer);
+      if (index >= 0 && index < order.length - 1) {
+        recordUndo();
+        [order[index], order[index + 1]] = [order[index + 1], order[index]];
+      }
+      syncLayerControls();
+      drawInvitation();
+    });
+
+    document.getElementById('send-backward').addEventListener('click', () => {
+      const order = currentPage().layerOrder;
+      const index = order.indexOf(selectedLayer);
+      if (index > 0) {
+        recordUndo();
+        [order[index], order[index - 1]] = [order[index - 1], order[index]];
+      }
+      syncLayerControls();
+      drawInvitation();
+    });
+
+    document.getElementById('toggle-phone').addEventListener('click', (event) => {
+      phonePreview = !phonePreview;
+      previewFigure.classList.toggle('is-phone', phonePreview);
+      event.currentTarget.setAttribute('aria-pressed', String(phonePreview));
+      previewCaption.textContent = phonePreview
+        ? `Preview · Page ${currentPageIndex + 1} · 1080 × 1350 px`
+        : `Live preview · Page ${currentPageIndex + 1} · 1080 × 1350 px · drag photo or text to reposition`;
+    });
+
+    document.getElementById('download-png').addEventListener('click', () => exportImage('png'));
+    document.getElementById('download-jpg').addEventListener('click', () => exportImage('jpg'));
+    document.getElementById('download-pdf-standard').addEventListener('click', () => exportPdf(false));
+    document.getElementById('download-pdf-print').addEventListener('click', () => exportPdf(true));
+
+    function hitShape(x, y) {
+      for (let index = currentPage().shapes.length - 1; index >= 0; index -= 1) {
+        const shape = currentPage().shapes[index];
+        shapePath(canvasContext, shape);
+        if ((shape.photo || !shape.transparent) && shape.type !== 'line' && canvasContext.isPointInPath(x, y)) return shape;
+        canvasContext.lineWidth = shape.strokeWidth + 24;
+        if (canvasContext.isPointInStroke(x, y)) return shape;
+      }
+      return null;
+    }
+
+    function hitResizeHandle(bounds, x, y) {
+      const handles = [
+        ['nw', bounds.left, bounds.top], ['n', (bounds.left + bounds.right) / 2, bounds.top],
+        ['ne', bounds.right, bounds.top], ['e', bounds.right, (bounds.top + bounds.bottom) / 2],
+        ['se', bounds.right, bounds.bottom], ['s', (bounds.left + bounds.right) / 2, bounds.bottom],
+        ['sw', bounds.left, bounds.bottom], ['w', bounds.left, (bounds.top + bounds.bottom) / 2]
+      ];
+      return handles.find(([, handleX, handleY]) => Math.hypot(x - handleX, y - handleY) <= 30)?.[0] || null;
+    }
+
+    invitationCanvas.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      const rect = invitationCanvas.getBoundingClientRect();
+      const x = (event.clientX - rect.left) * invitationCanvas.width / rect.width;
+      const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
+      const selectedBounds = getSelectedBounds(currentPage());
+      const resizeHandle = selectedBounds && hitResizeHandle(selectedBounds, x, y);
+      if (resizeHandle && !isSelectedLocked()) {
+        const page = currentPage();
+        const selectedShape = selectedLayer.startsWith('shape:') ? page.shapes.find((shape) => shape.id === selectedLayer.slice(6)) : null;
+        dragState = {
+          type: 'resize',
+          handle: resizeHandle,
+          startX: x,
+          startY: y,
+          startBounds: selectedBounds,
+          startSize: isTextLayer() ? page.styles[selectedLayer].size : 0,
+          startTextWidth: isTextLayer() ? page.styles[selectedLayer].width : 0,
+          startPhotoZoom: page.photoZoom,
+          startBackgroundZoom: page.backgroundZoom,
+          shapeId: selectedShape?.id,
+          startShape: selectedShape ? { x: selectedShape.x, y: selectedShape.y, width: selectedShape.width, height: selectedShape.height } : null
+        };
+        recordUndo();
+        invitationCanvas.setPointerCapture(event.pointerId);
+        return;
+      }
+      const photoFrame = { x: 78, y: 78, width: 924, height: 620 };
+      const shape = hitShape(x, y);
+      if (shape) {
+        selectedLayer = `shape:${shape.id}`;
+        setEditorTab('elements');
+        if (!shape.locked) dragState = { type: 'shape', id: shape.id, startX: x, startY: y, shapeX: shape.x, shapeY: shape.y };
+      } else if (x >= photoFrame.x && x <= photoFrame.x + photoFrame.width && y >= photoFrame.y && y <= photoFrame.y + photoFrame.height) {
+        selectedLayer = 'photo';
+        setEditorTab('tools');
+        if (currentPage().photo && !currentPage().photoLocked) dragState = { type: 'photo', startX: x, startY: y, photoX: currentPage().photoX, photoY: currentPage().photoY };
+      } else {
+        const hit = hitTextLayer(x, y);
+        if (hit) {
+          selectedLayer = hit;
+          setEditorTab('text');
+          openLayerDetails(hit);
+          const style = currentPage().styles[hit];
+          if (!style.locked) dragState = { type: 'text', key: hit, startX: x, startY: y, textX: style.x, textY: style.y };
+        } else if (currentPage().background && !currentPage().backgroundLocked) {
+          selectedLayer = 'background';
+          setEditorTab('elements');
+          dragState = { type: 'background', startX: x, startY: y, backgroundX: currentPage().backgroundX, backgroundY: currentPage().backgroundY };
+        } else {
+          return;
+        }
+      }
+      syncLayerControls();
+      syncStyleControls();
+      if (dragState) recordUndo();
+      invitationCanvas.setPointerCapture(event.pointerId);
+      drawInvitation(currentPage(), true);
+    });
+
+    invitationCanvas.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      const rect = invitationCanvas.getBoundingClientRect();
+      const x = (event.clientX - rect.left) * invitationCanvas.width / rect.width;
+      const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
+      const shape = hitShape(x, y);
+      if (shape) {
+        selectedLayer = `shape:${shape.id}`;
+        setEditorTab('elements');
+      } else if (x >= 78 && x <= 1002 && y >= 78 && y <= 698) {
+        selectedLayer = 'photo';
+        setEditorTab('tools');
+      } else {
+        const hit = hitTextLayer(x, y);
+        if (hit) {
+          selectedLayer = hit;
+          setEditorTab('text');
+          openLayerDetails(hit);
+        } else if (currentPage().background) {
+          selectedLayer = 'background';
+          setEditorTab('elements');
+        } else return;
+      }
+      syncLayerControls();
+      syncStyleControls();
+      drawInvitation(currentPage(), true);
+      showContextMenu(event.clientX, event.clientY);
+    });
+
+    invitationCanvas.addEventListener('pointermove', (event) => {
+      if (!dragState) return;
+      const rect = invitationCanvas.getBoundingClientRect();
+      const x = (event.clientX - rect.left) * invitationCanvas.width / rect.width;
+      const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
+      const deltaX = x - dragState.startX;
+      const deltaY = y - dragState.startY;
+      if (dragState.type === 'resize') {
+        const { handle, startBounds } = dragState;
+        const horizontalDirection = handle.includes('w') ? -1 : handle.includes('e') ? 1 : 0;
+        const verticalDirection = handle.includes('n') ? -1 : handle.includes('s') ? 1 : 0;
+        const horizontalScale = horizontalDirection ? (startBounds.right - startBounds.left + deltaX * horizontalDirection) / (startBounds.right - startBounds.left) : 1;
+        const verticalScale = verticalDirection ? (startBounds.bottom - startBounds.top + deltaY * verticalDirection) / (startBounds.bottom - startBounds.top) : 1;
+        const scale = Math.max(.1, Math.min(5, horizontalDirection && verticalDirection
+          ? (horizontalScale + verticalScale) / 2
+          : horizontalDirection ? horizontalScale : verticalScale));
+        if (dragState.shapeId) {
+          const shape = currentPage().shapes.find((item) => item.id === dragState.shapeId);
+          const start = dragState.startShape;
+          if (shape.type === 'circle') {
+            const size = Math.max(40, Math.min(900, Math.min(start.width, start.height) * scale));
+            shape.width = size;
+            shape.height = size;
+            shape.x = horizontalDirection < 0 ? start.x + start.width - size : start.x;
+            shape.y = verticalDirection < 0 ? start.y + start.height - size : start.y;
+          } else {
+            shape.width = Math.max(40, start.width * Math.max(.1, horizontalDirection ? horizontalScale : scale));
+            shape.height = Math.max(40, start.height * Math.max(.1, verticalDirection ? verticalScale : scale));
+            if (horizontalDirection < 0) shape.x = start.x + start.width - shape.width;
+            if (verticalDirection < 0) shape.y = start.y + start.height - shape.height;
+          }
+        } else if (isTextLayer()) {
+          const style = currentPage().styles[selectedLayer];
+          style.size = Math.max(20, Math.min(220, dragState.startSize * scale));
+          style.width = Math.max(120, dragState.startTextWidth * scale);
+        } else if (selectedLayer === 'photo') {
+          currentPage().photoZoom = Math.max(.2, Math.min(2.5, dragState.startPhotoZoom * scale));
+        } else if (selectedLayer === 'background') {
+          currentPage().backgroundZoom = Math.max(.2, Math.min(5, dragState.startBackgroundZoom * scale));
+        }
+      } else if (dragState.type === 'photo') {
+        currentPage().photoX = Math.max(-462, Math.min(462, dragState.photoX + deltaX));
+        currentPage().photoY = Math.max(-310, Math.min(310, dragState.photoY + deltaY));
+        snapGuides = { layer: 'photo' };
+      } else if (dragState.type === 'background') {
+        currentPage().backgroundX = Math.max(-1080, Math.min(1080, dragState.backgroundX + deltaX));
+        currentPage().backgroundY = Math.max(-1350, Math.min(1350, dragState.backgroundY + deltaY));
+      } else if (dragState.type === 'shape') {
+        const shape = currentPage().shapes.find((item) => item.id === dragState.id);
+        shape.x = dragState.shapeX + deltaX;
+        shape.y = dragState.shapeY + deltaY;
+      } else {
+        const style = currentPage().styles[dragState.key];
+        const rawX = dragState.textX + deltaX;
+        const rawY = dragState.textY + deltaY;
+        const snappedX = Math.round(rawX / 18) * 18;
+        const snappedY = Math.round(rawY / 18) * 18;
+        const alignCenter = Math.abs(snappedX - invitationCanvas.width / 2) < 12;
+        style.x = alignCenter ? invitationCanvas.width / 2 : snappedX;
+        style.y = snappedY;
+        snapGuides = alignCenter ? { layer: dragState.key } : null;
+      }
+      drawInvitation(currentPage(), true);
+    });
+
+    function finishCanvasDrag(event) {
+      if (!dragState) return;
+      dragState = null;
+      snapGuides = null;
+      syncStyleControls();
+      drawInvitation(currentPage(), true);
+      if (event && invitationCanvas.hasPointerCapture(event.pointerId)) invitationCanvas.releasePointerCapture(event.pointerId);
+    }
+
+    invitationCanvas.addEventListener('pointerup', finishCanvasDrag);
+    invitationCanvas.addEventListener('pointercancel', finishCanvasDrag);
+
+    document.addEventListener('keydown', (event) => {
+      if (!editorDialog.open || event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+      const modifier = event.ctrlKey || event.metaKey;
+      if (modifier && event.key.toLowerCase() === 'c') {
+        if (isTextLayer()) {
+          objectClipboard = { text: currentPage().text[selectedLayer], style: { ...currentPage().styles[selectedLayer] } };
+          event.preventDefault();
+          setStatus('Selected text copied.');
+        }
+      } else if (modifier && event.key.toLowerCase() === 'v') {
+        event.preventDefault();
+        pasteObject();
+      } else if (modifier && event.key.toLowerCase() === 'd') {
+        event.preventDefault();
+        duplicateSelectedLayer();
+      } else if (event.key === 'Delete' && isTextLayer() && !layerKeys.includes(selectedLayer)) {
+        event.preventDefault();
+        applyContextAction('delete');
+      } else if (event.key === 'Delete' && selectedLayer.startsWith('shape:') && currentPage().shapes.find((shape) => shape.id === selectedLayer.slice(6))?.removable && !isSelectedLocked()) {
+        event.preventDefault();
+        document.getElementById('delete-shape').click();
+      } else if (event.altKey && event.shiftKey && event.key.toLowerCase() === 'l') {
+        event.preventDefault();
+        setLayerLocked(selectedLayer, !isSelectedLocked());
+      } else if (event.key === 'Escape') {
+        contextMenu.hidden = true;
+      }
+    });
+
+    photoUpload.addEventListener('change', () => {
+      const [file] = photoUpload.files;
+      if (!file) return;
+      if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+        setStatus('Please choose a raster image such as PNG, JPG, WebP, or GIF.', 'error');
+        photoUpload.value = '';
+        return;
+      }
+
+      recordUndo();
+      const targetPage = currentPage();
+      const objectUrl = URL.createObjectURL(file);
+      const photoImage = new Image();
+      photoImage.onload = () => {
+        targetPage.sourcePhoto = photoImage;
+        refreshRenderablePhoto(targetPage);
+        targetPage.photoX = 0;
+        targetPage.photoY = 0;
+        URL.revokeObjectURL(objectUrl);
+        if (targetPage === currentPage()) {
+          selectedLayer = 'photo';
+          setEditorTab('tools');
+          syncLayerControls();
+          syncStyleControls();
+          setStatus('Photo added to your invitation.', 'success');
+          drawInvitation();
+        }
+      };
+      photoImage.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        photoUpload.value = '';
+        if (targetPage === currentPage()) setStatus('The selected image could not be opened. Try another image.', 'error');
+      };
+      photoImage.src = objectUrl;
+    });
+
+    backgroundUpload.addEventListener('change', () => {
+      const [file] = backgroundUpload.files;
+      if (!file) return;
+      if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+        setStatus('Choose a raster image for the background.', 'error');
+        backgroundUpload.value = '';
+        return;
+      }
+      recordUndo();
+      const targetPage = currentPage();
+      const objectUrl = URL.createObjectURL(file);
+      const image = new Image();
+      image.onload = () => {
+        targetPage.background = image;
+        targetPage.backgroundLocked = false;
+        targetPage.backgroundX = 0;
+        targetPage.backgroundY = 0;
+        targetPage.backgroundZoom = 1;
+        URL.revokeObjectURL(objectUrl);
+        if (targetPage === currentPage()) {
+          selectedLayer = 'background';
+          setEditorTab('elements');
+          document.querySelector('[aria-label="Background image"]').open = true;
+          syncPageControls();
+          setStatus('Background image added. Drag it or use the resize handles to position and scale it.', 'success');
+          drawInvitation();
+        }
+      };
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        backgroundUpload.value = '';
+        if (targetPage === currentPage()) setStatus('The background image could not be opened. Try another image.', 'error');
+      };
+      image.src = objectUrl;
+    });
+
+    document.getElementById('remove-background').addEventListener('click', () => {
+      if (!currentPage().background) return;
+      recordUndo();
+      currentPage().background = null;
+      currentPage().backgroundLocked = false;
+      selectedLayer = 'names';
+      backgroundUpload.value = '';
+      syncPageControls();
+      setStatus('Background image removed.', 'success');
+    });
+
+    musicUpload.addEventListener('change', () => {
+      const [file] = musicUpload.files;
+      if (!file) return;
+      if (!file.type.startsWith('audio/')) {
+        setStatus('Choose an audio file such as MP3, WAV, or M4A.', 'error');
+        musicUpload.value = '';
+        return;
+      }
+      musicFile = file;
+      if (musicObjectUrl) URL.revokeObjectURL(musicObjectUrl);
+      musicObjectUrl = URL.createObjectURL(file);
+      musicPreview.src = musicObjectUrl;
+      musicPreview.hidden = false;
+      document.getElementById('download-mp4').disabled = false;
+      setStatus('Music ready. MP4 export will trim it to 25 seconds and fade the last 2 seconds.', 'success');
+    });
+
+    async function exportMp4() {
+      if (!musicFile) {
+        setStatus('Upload music before exporting an MP4.', 'error');
+        return;
+      }
+      const supportedTypes = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4'];
+      const mimeType = supportedTypes.find((type) => window.MediaRecorder?.isTypeSupported(type));
+      if (!mimeType || !invitationCanvas.captureStream) {
+        setStatus('MP4 recording is not supported by this browser. Use a browser with MediaRecorder MP4 (H.264/AAC) support.', 'error');
+        return;
+      }
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        setStatus('This browser does not support audio processing for MP4 export.', 'error');
+        return;
+      }
+      const button = document.getElementById('download-mp4');
+      button.disabled = true;
+      let audioContext;
+      try {
+        audioContext = new AudioContextClass();
+        await audioContext.resume();
+        const decodedAudio = await audioContext.decodeAudioData(await musicFile.arrayBuffer());
+        let duration = Math.min(decodedAudio.duration, 25);
+        if (!Number.isFinite(duration) || duration <= 0) throw new Error('The selected audio file has no playable audio.');
+        drawInvitation(currentPage(), false);
+        const sizeLimit = 3 * 1024 * 1024;
+        let blob;
+        for (let attempt = 0; attempt < 6; attempt += 1) {
+          const destination = audioContext.createMediaStreamDestination();
+          const source = audioContext.createBufferSource();
+          const gain = audioContext.createGain();
+          const canvasStream = invitationCanvas.captureStream(1);
+          const stream = new MediaStream([...canvasStream.getVideoTracks(), ...destination.stream.getAudioTracks()]);
+          const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 2500000, audioBitsPerSecond: 128000 });
+          const chunks = [];
+          const fadeDuration = Math.min(2, duration);
+          source.buffer = decodedAudio;
+          source.connect(gain);
+          gain.connect(destination);
+          gain.gain.setValueAtTime(1, audioContext.currentTime);
+          gain.gain.setValueAtTime(1, audioContext.currentTime + duration - fadeDuration);
+          gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+          const recording = new Promise((resolve, reject) => {
+            recorder.addEventListener('dataavailable', (event) => {
+              if (event.data.size) chunks.push(event.data);
+            });
+            recorder.addEventListener('error', (event) => reject(event.error || new Error('The MP4 recording failed.')));
+            recorder.addEventListener('stop', () => resolve(new Blob(chunks, { type: mimeType })), { once: true });
+          });
+          recorder.start(250);
+          source.start(0, 0, duration);
+          await new Promise((resolve) => source.addEventListener('ended', resolve, { once: true }));
+          await new Promise((resolve) => setTimeout(resolve, 150));
+          if (recorder.state !== 'inactive') recorder.stop();
+          blob = await recording;
+          canvasStream.getTracks().forEach((track) => track.stop());
+          destination.stream.getTracks().forEach((track) => track.stop());
+          source.disconnect();
+          gain.disconnect();
+          if (blob.size <= sizeLimit) break;
+          if (attempt === 5 || duration <= .75) throw new Error('The browser could not encode an MP4 below 3 MB, even after shortening the audio.');
+          duration = Math.max(.75, duration * Math.min(.75, Math.sqrt(sizeLimit / blob.size) * .9));
+        }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `lobola-invitation-page-${currentPageIndex + 1}.mp4`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        setStatus(`MP4 downloaded (${(blob.size / (1024 * 1024)).toFixed(2)} MB, ${duration.toFixed(1)} seconds). Artwork is 1080 × 1350 px; music fades out at the end.`, 'success');
+      } catch (error) {
+        setStatus(`MP4 export failed: ${error.message}`, 'error');
+      } finally {
+        await audioContext?.close();
+        button.disabled = !musicFile;
+        drawInvitation(currentPage(), true);
+      }
+    }
+
+    document.getElementById('download-mp4').addEventListener('click', exportMp4);
+
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('is-open');
+      }
+    });
+  </script>
 </body>
 </html>
