@@ -4,902 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#fffdfc">
-  <meta name="description" content="Beautiful, editable digital invitations for your lobola celebration. Make every detail feel like you.">
-  <title>Lobola Invitation — Editable Digital Templates</title>
+  <meta name="description" content="Browse editable lobola invitation cards and templates for your celebration. Explore digital designs for lobola, Umembeso and Mahlabiso occasions.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://lobolainvitation.co.za/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lobolainvitation.co.za/">
+  <meta property="og:site_name" content="Lobola Invitation">
+  <meta property="og:title" content="Lobola Invitation Cards &amp; Templates | Editable Designs">
+  <meta property="og:description" content="Browse editable lobola invitation cards and templates for your celebration. Explore digital designs for lobola, Umembeso and Mahlabiso occasions.">
+  <meta property="og:locale" content="en_ZA">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lobola Invitation Cards &amp; Templates | Editable Designs">
+  <meta name="twitter:description" content="Browse editable lobola invitation cards and templates for your celebration. Explore digital designs for lobola, Umembeso and Mahlabiso occasions.">
+  <title>Lobola Invitation Cards &amp; Templates | Editable Designs</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Lobola Invitation",
+          "url": "https://lobolainvitation.co.za/",
+          "description": "Editable digital invitation templates for lobola celebrations."
+        },
+        {
+          "@type": "Organization",
+          "name": "Lobola Invitation",
+          "url": "https://lobolainvitation.co.za/",
+          "email": "hello@lobolainvitation.co.za",
+          "sameAs": [
+            "https://www.instagram.com/lobolainvitation/",
+            "https://www.facebook.com/lobolainvitation/"
+          ]
+        }
+      ]
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      color-scheme: light;
-      --paper: #fffdfc;
-      --ink: #292320;
-      --muted: #786d68;
-      --line: #e8dfda;
-      --accent: #895b49;
-      --gutter: clamp(18px, 4vw, 54px);
-    }
-
-    * { box-sizing: border-box; }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      min-width: 320px;
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: "DM Sans", sans-serif;
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; }
-
-    .site-header {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      align-items: center;
-      padding: 20px 0 0;
-    }
-
-    .menu-toggle {
-      justify-self: start;
-      margin-left: var(--gutter);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 32px;
-      padding: 0 9px;
-      border: 0;
-      border-radius: 4px;
-      background: var(--accent);
-      color: var(--paper);
-      font: 500 12px "DM Sans", sans-serif;
-      letter-spacing: .12em;
-      cursor: pointer;
-    }
-
-    .menu-toggle svg { width: 18px; height: 18px; }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .brand-logo {
-      display: block;
-      width: 140px;
-      height: 140px;
-      object-fit: contain;
-    }
-
-    .brand-tagline {
-      margin-top: 4px;
-      color: var(--muted);
-      font: 400 11px/1.4 "DM Sans", sans-serif;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .header-note {
-      grid-column: 3;
-      grid-row: 1;
-      justify-self: end;
-      margin-right: var(--gutter);
-      display: flex;
-      align-items: center;
-      gap: 17px;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 34px;
-      color: var(--accent);
-      transition: color .2s ease, transform .2s ease;
-    }
-
-    .social-link:hover {
-      color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .social-link svg {
-      display: block;
-      width: 22px;
-      height: 22px;
-    }
-
-    .menu-panel {
-      position: absolute;
-      z-index: 2;
-      top: 80px;
-      left: var(--gutter);
-      display: none;
-      min-width: 190px;
-      padding: 9px 0;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      box-shadow: 0 12px 28px rgb(37 34 31 / 9%);
-    }
-
-    .menu-panel.is-open { display: grid; }
-
-    .menu-panel a {
-      padding: 11px 16px;
-      font-size: 16px;
-      text-decoration: none;
-    }
-
-    .menu-panel a:hover,
-    .menu-panel a:focus-visible { color: var(--accent); }
-
-    main { padding: 0 var(--gutter); }
-
-    .categories {
-      display: grid;
-      justify-items: center;
-      gap: 32px;
-      padding: 32px 0 24px;
-    }
-
-    .category-card {
-      display: flex;
-      width: min(100%, 320px);
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      font: inherit;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .category-card img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      border-radius: 3px;
-      object-fit: cover;
-      transition: transform .5s cubic-bezier(.2, .65, .3, 1);
-    }
-
-    .category-card:hover img { transform: scale(1.015); }
-
-    .category-button {
-      display: inline-flex;
-      min-height: 42px;
-      align-items: center;
-      justify-content: center;
-      padding: 0 22px;
-      border: 1px solid var(--accent);
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 14px;
-      letter-spacing: .08em;
-      transition: background .2s ease, color .2s ease;
-    }
-
-    .category-card:hover .category-button,
-    .category-card:focus-visible .category-button {
-      background: var(--accent);
-      color: var(--paper);
-    }
-
-    .product-list {
-      display: grid;
-      width: min(100%, 320px);
-      justify-items: center;
-    }
-
-    .product-list[hidden] { display: none; }
-
-    .product-card {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      font: inherit;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .product-card img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      border-radius: 3px;
-      object-fit: cover;
-    }
-
-    .product-name {
-      display: inline-flex;
-      min-height: 42px;
-      align-items: center;
-      justify-content: center;
-      padding: 0 22px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--ink);
-      font-size: 14px;
-      letter-spacing: .08em;
-    }
-
-    .product-card:hover .product-name,
-    .product-card:focus-visible .product-name {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .editor-dialog {
-      width: min(1450px, calc(100vw - 32px));
-      max-width: none;
-      max-height: calc(100dvh - 32px);
-      padding: 0;
-      overflow: auto;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      color: var(--ink);
-      box-shadow: 0 24px 80px rgb(37 34 31 / 22%);
-    }
-
-    .editor-dialog::backdrop { background: rgb(37 34 31 / 62%); }
-
-    .editor-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 24px 28px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .editor-commandbar {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 14px;
-      min-height: 52px;
-      padding: 8px 16px;
-      background: var(--accent);
-      color: var(--paper);
-      font: 500 13px "DM Sans", sans-serif;
-    }
-
-    .editor-commandbar-group { display: flex; align-items: center; gap: 8px; }
-    .editor-commandbar-group:last-child { justify-content: flex-end; }
-    .editor-commandbar button {
-      min-height: 34px;
-      padding: 0 10px;
-      border: 1px solid rgb(255 255 255 / 38%);
-      border-radius: 7px;
-      background: rgb(255 255 255 / 10%);
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-    }
-    .editor-commandbar button:hover { background: rgb(255 255 255 / 20%); }
-    .editor-commandbar button:disabled { opacity: .45; cursor: not-allowed; }
-    .editor-document-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
-
-    .editor-formatbar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 6px;
-      min-height: 54px;
-      padding: 7px 12px;
-      border-bottom: 1px solid var(--line);
-      background: #fff;
-      box-shadow: 0 3px 10px rgb(37 34 31 / 7%);
-    }
-
-    .editor-formatbar select,
-    .editor-formatbar input[type="number"],
-    .editor-formatbar input[type="color"],
-    .editor-formatbar button {
-      min-height: 34px;
-      padding: 4px 8px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fff;
-      color: var(--ink);
-      font: 500 13px "DM Sans", sans-serif;
-    }
-
-    .editor-formatbar select { max-width: 170px; }
-    .editor-formatbar input[type="number"] { width: 58px; }
-    .editor-formatbar input[type="color"] { width: 40px; padding: 3px; cursor: pointer; }
-    .editor-formatbar button { min-width: 34px; cursor: pointer; }
-    .editor-formatbar button[aria-pressed="true"] { border-color: var(--accent); background: #f4eeeb; }
-    .editor-formatbar button:disabled,
-    .editor-formatbar select:disabled,
-    .editor-formatbar input:disabled { opacity: .45; cursor: not-allowed; }
-
-    .editor-header h2 {
-      margin: 0 0 5px;
-      font: 500 22px/1.3 "Manrope", sans-serif;
-    }
-
-    .editor-header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .editor-close {
-      flex: 0 0 auto;
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      background: transparent;
-      color: var(--ink);
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .editor-close:hover { border-color: var(--accent); }
-
-    .editor-workspace {
-      display: grid;
-      grid-template-columns: 64px minmax(220px, 280px) minmax(320px, 1fr);
-      align-items: start;
-      gap: 0;
-      min-height: min(72vh, 850px);
-      padding: 0;
-      background: #f2f3f7;
-    }
-
-    .editor-rail {
-      position: sticky;
-      top: 0;
-      display: grid;
-      align-content: start;
-      gap: 4px;
-      min-height: 100%;
-      padding: 9px 5px;
-      border-right: 1px solid #e0e1e7;
-      background: #fbfbfd;
-    }
-
-    .editor-rail button {
-      display: grid;
-      justify-items: center;
-      gap: 4px;
-      min-height: 56px;
-      padding: 6px 2px;
-      border: 0;
-      border-radius: 7px;
-      background: transparent;
-      color: #565765;
-      font: 500 10px "DM Sans", sans-serif;
-      cursor: pointer;
-    }
-
-    .editor-rail button:hover,
-    .editor-rail button[aria-pressed="true"] { background: #f4eeeb; color: var(--accent); }
-    .editor-rail svg { width: 20px; height: 20px; }
-
-    .editor-tools {
-      display: grid;
-      gap: 14px;
-      align-content: start;
-      max-height: min(72vh, 850px);
-      padding: 18px 14px;
-      border-right: 1px solid #e0e1e7;
-      background: #fff;
-      overflow: auto;
-    }
-
-    .editor-tools > [hidden] { display: none !important; }
-    .editor-tools .editor-section { background: #fff; }
-    .editor-canvas-area {
-      display: grid;
-      align-content: start;
-      justify-items: center;
-      gap: 14px;
-      min-width: 0;
-      max-height: min(72vh, 850px);
-      padding: 24px 20px;
-      overflow: auto;
-    }
-
-    .editor-canvas-actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      width: 100%;
-    }
-
-    .editor-context-menu {
-      position: fixed;
-      z-index: 10;
-      display: grid;
-      width: 210px;
-      padding: 6px;
-      border: 1px solid #e4e4ea;
-      border-radius: 9px;
-      background: #fff;
-      box-shadow: 0 12px 35px rgb(30 30 40 / 20%);
-      max-height: min(80vh, 520px);
-      overflow: auto;
-    }
-
-    .editor-context-menu[hidden] { display: none; }
-    .editor-context-menu button {
-      min-height: 36px;
-      padding: 7px 10px;
-      border: 0;
-      border-radius: 5px;
-      background: transparent;
-      color: var(--ink);
-      font: 400 13px "DM Sans", sans-serif;
-      text-align: left;
-      cursor: pointer;
-    }
-    .editor-context-menu button:hover { background: #f4eeeb; }
-    .editor-context-menu button:disabled { color: #999; cursor: not-allowed; }
-
-    .editor-pages-strip {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      width: 100%;
-    }
-
-    .editor-page-thumb {
-      display: grid;
-      place-items: center;
-      width: 54px;
-      height: 68px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: #fff;
-      color: var(--muted);
-      font: 12px "DM Sans", sans-serif;
-      cursor: pointer;
-    }
-
-    .editor-page-thumb[aria-current="page"] { border: 2px solid var(--accent); color: var(--ink); }
-
-    .editor-upload audio { width: 100%; }
-
-    .editor-section input[type="file"] { max-width: 100%; }
-    .editor-page-add { min-width: 84px; }
-
-    .editor-size {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .editor-size strong { color: var(--ink); }
-
-    .editor-section {
-      display: grid;
-      gap: 11px;
-      padding: 15px;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-    }
-
-    .editor-section h3 {
-      margin: 0;
-      font: 600 13px "DM Sans", sans-serif;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .editor-section > summary {
-      cursor: pointer;
-      font: 600 13px "DM Sans", sans-serif;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .editor-accordion {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      border: 1px solid var(--line);
-      border-radius: 3px;
-      background: #fff;
-    }
-
-    .editor-accordion > summary {
-      grid-column: 1;
-      grid-row: 1;
-      align-self: center;
-      padding: 13px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .editor-accordion > .editor-lock {
-      grid-column: 2;
-      grid-row: 1;
-      align-self: center;
-      margin-right: 10px;
-    }
-
-    .editor-accordion-content {
-      grid-column: 1 / -1;
-      padding: 0 12px 12px;
-    }
-    .editor-accordion-content .editor-field { margin: 0; }
-    .editor-accordion-content :disabled { cursor: not-allowed; opacity: .65; }
-
-    .editor-lock {
-      display: inline-grid;
-      width: 34px;
-      height: 34px;
-      flex: 0 0 auto;
-      place-items: center;
-      padding: 0;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    .editor-lock:hover,
-    .editor-lock[aria-pressed="true"] {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .editor-lock svg { width: 18px; height: 18px; }
-    .editor-advanced { margin-top: 2px; }
-    .editor-advanced[open] { display: grid; }
-    .editor-advanced > summary { margin-bottom: 3px; }
-    .custom-text-list { display: grid; gap: 8px; }
-    .editor-layer-list { display: grid; gap: 5px; }
-    .editor-layer-item {
-      width: 100%;
-      min-height: 34px;
-      padding: 6px 9px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: #fff;
-      color: var(--ink);
-      font: 400 12px "DM Sans", sans-serif;
-      text-align: left;
-      cursor: pointer;
-    }
-    .editor-layer-item[aria-current="true"] { border-color: #7352e8; background: #f2efff; }
-
-    .editor-pages,
-    .editor-actions,
-    .editor-layer-actions,
-    .editor-photo-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .editor-pages select { flex: 1 1 100px; }
-
-    .editor-tool-button,
-    .editor-pages select,
-    .editor-style select,
-    .editor-style input[type="number"],
-    .editor-style input[type="color"] {
-      min-height: 38px;
-      padding: 7px 9px;
-      border: 1px solid var(--line);
-      border-radius: 3px;
-      background: #fff;
-      color: var(--ink);
-      font: 400 14px "DM Sans", sans-serif;
-    }
-
-    .editor-tool-button { cursor: pointer; }
-    .editor-tool-button.editor-lock { width: 38px; min-height: 38px; padding: 0; }
-    .editor-tool-button:hover { border-color: var(--accent); color: var(--accent); }
-    .editor-tool-button[aria-pressed="true"] { border-color: var(--accent); background: #f4eeeb; }
-
-    .editor-field {
-      display: grid;
-      gap: 7px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .editor-style {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 104px;
-      align-items: center;
-      gap: 8px 12px;
-      font-size: 14px;
-    }
-
-    .editor-style input[type="range"] { width: 100%; accent-color: var(--accent); }
-    .editor-style input[type="range"] { grid-column: 1; }
-    .editor-style output { grid-column: 2; }
-    .editor-style input[type="color"] { width: 100%; padding: 4px; }
-    .editor-style select { width: 100%; }
-    .editor-style output { color: var(--muted); text-align: right; }
-
-    .editor-field {
-      display: grid;
-      gap: 7px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .editor-field input,
-    .editor-field textarea {
-      width: 100%;
-      min-height: 44px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 3px;
-      background: #fff;
-      color: var(--ink);
-      font: 400 16px/1.45 "DM Sans", sans-serif;
-    }
-
-    .editor-field input[type="checkbox"] {
-      width: 18px;
-      min-height: 18px;
-      accent-color: var(--accent);
-    }
-
-    .editor-field textarea {
-      min-height: 82px;
-      resize: vertical;
-    }
-
-    .editor-field input:focus-visible,
-    .editor-field textarea:focus-visible,
-    .editor-close:focus-visible,
-    .editor-download:focus-visible,
-    .editor-tool-button:focus-visible,
-    .editor-pages select:focus-visible,
-    .editor-style select:focus-visible,
-    .editor-style input:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .editor-upload {
-      display: grid;
-      gap: 8px;
-      padding: 15px;
-      border: 1px dashed var(--accent);
-      border-radius: 3px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .editor-upload label {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .editor-upload input {
-      width: 100%;
-      color: var(--muted);
-      font: inherit;
-    }
-
-    .editor-download {
-      min-height: 48px;
-      padding: 0 18px;
-      border: 0;
-      border-radius: 4px;
-      background: var(--accent);
-      color: var(--paper);
-      font: 500 15px "DM Sans", sans-serif;
-      cursor: pointer;
-    }
-
-    .editor-download:hover { background: var(--ink); }
-
-    .editor-status {
-      min-height: 22px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .editor-status[data-state="error"] { color: #a32f27; }
-    .editor-status[data-state="success"] { color: #376b45; }
-
-    .editor-preview {
-      display: grid;
-      justify-items: center;
-      gap: 9px;
-      min-width: 0;
-      margin: 0;
-    }
-
-    .editor-preview canvas {
-      display: block;
-      width: min(100%, 500px);
-      height: auto;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      box-shadow: 0 8px 25px rgb(37 34 31 / 11%);
-      touch-action: none;
-      cursor: crosshair;
-    }
-
-    .editor-preview.is-phone {
-      width: 300px;
-      max-width: 100%;
-      justify-self: center;
-      padding: 12px;
-      border: 7px solid #24211f;
-      border-radius: 38px;
-      background: #24211f;
-      box-shadow: 0 12px 35px rgb(37 34 31 / 22%);
-    }
-
-    .editor-preview.is-phone::before {
-      content: "";
-      width: 72px;
-      height: 8px;
-      border-radius: 999px;
-      background: #5d5854;
-    }
-
-    .editor-preview figcaption {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    .editor-preview.is-phone figcaption { color: #fffdfc; }
-
-    .details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 45px;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 105px 20px 100px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .section-label {
-      margin: 5px 0 13px;
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    .details h1 {
-      max-width: 420px;
-      margin: 0;
-      font: 300 clamp(30px, 4vw, 44px)/1.2 "Manrope", sans-serif;
-      letter-spacing: -.055em;
-    }
-
-    .details-copy {
-      align-self: center;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .details-copy p { margin: 0 0 17px; }
-
-    .text-link {
-      display: inline-block;
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    .site-footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 20px var(--gutter) 27px;
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: .06em;
-    }
-
-    .site-footer a { text-decoration: none; }
-    .site-footer a:hover { color: var(--ink); }
-
-    @media (max-width: 760px) {
-      .brand-logo { width: 120px; height: 120px; }
-      .header-note { gap: 11px; }
-      .details { padding: 78px 8px; }
-      .editor-workspace { grid-template-columns: 56px minmax(0, 1fr); }
-      .editor-tools { max-height: 38vh; grid-column: 2; grid-row: 1; }
-      .editor-canvas-area { grid-column: 1 / -1; grid-row: 2; max-height: 58vh; }
-      .editor-rail { grid-column: 1; grid-row: 1; }
-      .editor-formatbar { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
-    }
-
-    @media (max-width: 520px) {
-      .site-header {
-        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-        padding-top: 16px;
-      }
-
-      .menu-toggle {
-        width: 32px;
-        min-height: 32px;
-        justify-content: center;
-        padding: 0;
-        font-size: 0;
-      }
-
-      .brand-logo { width: 104px; height: 104px; }
-      .brand-tagline { font-size: 9px; letter-spacing: .13em; }
-      .header-note { gap: 4px; }
-      .social-link { width: 22px; height: 30px; }
-      .social-link svg { width: 19px; height: 19px; }
-      .details { grid-template-columns: 1fr; gap: 22px; padding: 66px 4px; }
-      .details-copy { font-size: 16px; }
-      .site-footer { flex-direction: column; gap: 9px; text-align: center; }
-      .editor-dialog {
-        width: calc(100vw - 16px);
-        max-height: calc(100dvh - 16px);
-      }
-      .editor-header { padding: 18px; }
-      .editor-header h2 { font-size: 19px; }
-      .editor-workspace { gap: 0; padding: 0; }
-      .editor-header p { max-width: 230px; line-height: 1.5; }
-      .editor-style { grid-template-columns: minmax(0, 1fr) 92px; }
-      .editor-commandbar { grid-template-columns: 1fr auto; }
-      .editor-document-name { display: none; }
-      .editor-tools { max-height: 42vh; padding: 12px 8px; overflow: auto; }
-      .editor-canvas-area { max-height: 52vh; padding: 14px 8px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="site-header">
@@ -911,10 +55,11 @@
     </button>
     <nav class="menu-panel" id="site-menu" aria-label="Main navigation">
       <a href="#categories">The collection</a>
-      <a href="#about">How it works</a>
-      <a href="#contact">Get in touch</a>
+      <a href="#about">About us</a>
+      <a href="#contact">Contact us</a>
+      <a class="admin-link" href="/admin">Admin</a>
     </nav>
-    <a class="brand" href="#" aria-label="Lobola Invitation home">
+    <a class="brand" href="/" aria-label="Lobola Invitation home">
       <img class="brand-logo" src="https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/284088209_104493135614872_3978818778956920310_n.jpg?stp=dst-jpg_tt6&amp;cstp=mx1154x1154&amp;ctp=s200x200&amp;_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=2d3e12&amp;_nc_ohc=ENEKrX1DM9cQ7kNvwGkf2_o&amp;_nc_oc=Adq_gO_ZqLS97sTeYycWqPiwxwkmPTg4HcoeG1rud5G_WX23LRtL4ybAS67B__nA8fw&amp;_nc_zt=24&amp;_nc_ht=scontent-jnb2-1.xx&amp;_nc_gid=fXKYgnKTf0nKccF_cBYDEg&amp;_nc_ss=7b2a8&amp;oh=00_AQN2ox7Rbe65ag-KXq4yjIpuZgJ4KQsi8CEySRFopO6_yQ&amp;oe=6AD6D1C5" alt="Lobola Invitation logo">
       <span class="brand-tagline">Editable Digital Templates</span>
     </a>
@@ -941,28 +86,88 @@
   </header>
 
   <main>
+    <section class="home-intro" aria-labelledby="home-title">
+      <p class="section-label">Editable digital invitation templates</p>
+      <h1 id="home-title">Lobola Invitation Cards &amp; Templates</h1>
+      <p>
+        Browse digital invitation designs for your lobola celebration. Explore editable lobola
+        invitation cards and templates, and find published designs for occasions such as Umembeso
+        and Mahlabiso when available.
+      </p>
+      <a class="text-link" href="#categories">Browse lobola invitation templates</a>
+    </section>
+
     <section class="categories" id="categories" aria-label="Invitation categories">
       <button class="category-card" type="button" aria-expanded="false" aria-controls="products-lobola-template">
         <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Bride holding a bouquet on her wedding day">
         <span class="category-button">Lobola Invitation Template</span>
       </button>
       <div class="product-list" id="products-lobola-template" aria-label="Products in Lobola Invitation Template" hidden>
+        <div class="product-list-heading">
+          <button class="text-link category-back" type="button">← All categories</button>
+          <h2>Lobola Invitation Template</h2>
+          <p>Browse invitation designs in this category.</p>
+        </div>
+        <div class="instagram-gallery">
         <button class="product-card" id="open-editor" type="button" aria-haspopup="dialog" aria-controls="template-editor">
           <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="A wedding couple celebrating outdoors">
-          <span class="product-name">Product 1</span>
+          <span class="product-overlay" aria-hidden="true">Preview &amp; edit</span>
+          <span class="product-info">
+            <span class="product-name">Lobola Invitation Template</span>
+            <span class="product-description">Personalize the invitation in the editor.</span>
+          </span>
         </button>
+        </div>
       </div>
     </section>
 
     <section class="details" id="about">
       <div>
-        <p class="section-label">A little more personal</p>
-        <h1>Beautiful invitations, made yours.</h1>
+        <p class="section-label">About us</p>
+        <h2>About Lobola Invitation</h2>
       </div>
       <div class="details-copy">
-        <p>Set the tone for your lobola celebration with a digital invitation that feels like you. Choose a design, add your details, and share your special day with the people who matter most.</p>
-        <a class="text-link" href="#contact">Let’s make it yours</a>
+        <p>
+          Lobola Invitation is a digital collection of editable invitation templates for lobola
+          celebrations and meaningful family occasions. Browse the available designs to find an
+          invitation style that suits your special day.
+        </p>
+        <p>
+          Open a published template to preview it, personalize the wording and add your own photos
+          in the browser. Designs for Umembeso, Mahlabiso and related occasions appear when they
+          are available in the collection.
+        </p>
+        <a class="text-link" href="#categories">Explore invitation templates</a>
       </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-heading">
+        <p class="section-label">Contact us</p>
+        <h2 id="contact-title">Contact Lobola Invitation</h2>
+        <p>
+          Have a question about an editable lobola invitation template, a published design or the
+          online editor? Get in touch using one of the options below.
+        </p>
+      </div>
+      <div class="contact-options">
+        <a class="contact-option" href="mailto:hello@lobolainvitation.co.za?subject=Lobola%20Invitation%20enquiry">
+          <span class="contact-option-label">Email</span>
+          <span>hello@lobolainvitation.co.za</span>
+        </a>
+        <a class="contact-option" href="https://www.instagram.com/lobolainvitation/" target="_blank" rel="noopener noreferrer">
+          <span class="contact-option-label">Instagram</span>
+          <span>@lobolainvitation</span>
+        </a>
+        <a class="contact-option" href="https://www.facebook.com/lobolainvitation/" target="_blank" rel="noopener noreferrer">
+          <span class="contact-option-label">Facebook</span>
+          <span>Lobola Invitation</span>
+        </a>
+      </div>
+      <p class="contact-note">
+        For a question about a specific invitation, include the design name or page link. For
+        editor help, describe what you were trying to do.
+      </p>
     </section>
   </main>
 
@@ -970,23 +175,29 @@
     <div class="editor-header">
       <div>
         <h2 id="editor-title">Customize your invitation</h2>
-        <p>Fill in the details to build your invitation. Open optional design editing only when you want to make more changes.</p>
+        <p>Double-click text on the invitation to edit it in place. Select text to format just that selection with the text toolbar.</p>
       </div>
-      <button class="editor-close" id="close-editor" type="button">Close</button>
+      <button class="editor-close editor-icon-button" id="close-editor" type="button" aria-label="Close editor" title="Close editor">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
     </div>
     <div class="editor-commandbar" aria-label="Document controls">
       <div class="editor-commandbar-group">
-        <button type="button" id="editor-home">Home</button>
-        <button type="button" id="editor-file">File</button>
-        <button type="button" id="editor-size-lock" aria-pressed="true">1080 × 1350 px</button>
+        <button class="editor-icon-button" type="button" id="editor-home" aria-label="Home" title="Home">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
       </div>
       <span class="editor-document-name">Lobola Invitation — Product 1</span>
       <div class="editor-commandbar-group">
-        <button type="button" id="editor-undo" aria-label="Undo" disabled>Undo</button>
-        <button type="button" id="editor-share">Share</button>
+        <button class="editor-icon-button" type="button" id="editor-undo" aria-label="Undo" title="Undo" disabled>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h9a7 7 0 0 1 0 14h-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="editor-icon-button" type="button" id="editor-share" aria-label="Share" title="Share">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/><path d="m8.7 10.5 6.6-4M8.7 13.5l6.6 4" stroke="currentColor" stroke-width="1.8"/></svg>
+        </button>
       </div>
     </div>
-    <div class="editor-formatbar" id="editor-formatbar" aria-label="Selected item formatting">
+    <div class="editor-formatbar" id="editor-formatbar" aria-label="Selected item formatting" hidden>
       <label class="visually-hidden" for="toolbar-font">Font family</label>
       <select id="toolbar-font" aria-label="Font family">
         <option value="elegant">Playfair Display</option>
@@ -1002,9 +213,11 @@
       <button id="toolbar-bold" type="button" aria-label="Bold" aria-pressed="false"><strong>B</strong></button>
       <button id="toolbar-italic" type="button" aria-label="Italic" aria-pressed="false"><em>I</em></button>
       <button id="toolbar-underline" type="button" aria-label="Underline" aria-pressed="false"><u>U</u></button>
-      <select id="toolbar-align" aria-label="Text alignment">
-        <option value="left">Align left</option><option value="center">Align center</option><option value="right">Align right</option>
-      </select>
+      <div class="editor-align-tools" role="group" aria-label="Text alignment">
+        <button type="button" data-toolbar-align="left" aria-label="Align left" title="Align left"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16M4 9h10M4 13h16M4 17h10M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <button type="button" data-toolbar-align="center" aria-label="Align center" title="Align center"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16M7 9h10M4 13h16M7 17h10M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <button type="button" data-toolbar-align="right" aria-label="Align right" title="Align right"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16M10 9h10M4 13h16M10 17h10M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      </div>
       <select id="toolbar-effect" aria-label="Text effect">
         <option value="none">Effects</option><option value="shadow">Shadow</option><option value="lift">Lift</option>
         <option value="hollow">Hollow</option><option value="splice">Splice</option><option value="echo">Echo</option>
@@ -1015,30 +228,14 @@
     </div>
     <div class="editor-workspace">
       <nav class="editor-rail" aria-label="Editor tools">
-        <button type="button" data-editor-tab="templates" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8"/></svg>Templates</button>
-        <button type="button" data-editor-tab="elements" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M14 6h6M17 3v6M5 17h14M8 14v6" stroke="currentColor" stroke-width="1.8"/></svg>Elements</button>
+        <button type="button" data-editor-tab="insert" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16M5 5h4M15 5h4M5 19h4M15 19h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Insert</button>
         <button type="button" data-editor-tab="text" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6V4h16v2M12 4v16M8 20h8" stroke="currentColor" stroke-width="1.8"/></svg>Text</button>
-        <button type="button" data-editor-tab="brand" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 12 5l7 14M8 14h8" stroke="currentColor" stroke-width="1.8"/></svg>Brand</button>
-        <button type="button" data-editor-tab="uploads" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" stroke="currentColor" stroke-width="1.8"/></svg>Uploads</button>
-        <button type="button" data-editor-tab="tools" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6 4 4M4 20l4-.8L19 8a2.8 2.8 0 0 0-4-4L4 15z" stroke="currentColor" stroke-width="1.8"/></svg>Picture</button>
-        <button type="button" data-editor-tab="projects" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3zM3 7V5h7l2 2" stroke="currentColor" stroke-width="1.8"/></svg>Pages</button>
-        <button type="button" data-editor-tab="apps" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>Export</button>
+        <button type="button" data-editor-tab="pictures" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="9" r="1.5" stroke="currentColor" stroke-width="1.8"/><path d="m4 18 5-5 3 3 3-4 5 6" stroke="currentColor" stroke-width="1.8"/></svg>Pictures</button>
+        <button type="button" data-editor-tab="uploads" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" stroke="currentColor" stroke-width="1.8"/></svg>Music</button>
+        <button type="button" data-editor-tab="apps" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Export</button>
       </nav>
       <form class="editor-tools" id="invitation-form">
-        <p class="editor-size">Fixed template size: <strong>1080 × 1350 px</strong></p>
-        <section class="editor-section" aria-label="Page controls" data-editor-panel="templates projects">
-          <h3>Pages</h3>
-          <div class="editor-pages">
-            <label class="visually-hidden" for="page-select">Current page</label>
-            <select id="page-select" aria-label="Current page">
-              <option value="0">Page 1</option>
-            </select>
-            <button class="editor-tool-button" id="add-page" type="button">Add page</button>
-            <button class="editor-tool-button" id="duplicate-page" type="button">Duplicate</button>
-          </div>
-        </section>
-
-        <details class="editor-section" aria-label="Photo editing" data-editor-panel="uploads tools">
+        <details class="editor-section" aria-label="Photo editing" data-editor-panel="pictures">
           <summary>Photo</summary>
           <div class="editor-upload">
             <label for="photo-upload">Upload your photograph</label>
@@ -1057,6 +254,24 @@
             Zoom / crop
             <input id="photo-zoom" type="range" min="0.2" max="2.5" step="0.05" value="1">
           </label>
+          <label class="editor-style">Photo opacity <input id="photo-opacity" type="range" min="0" max="100" value="100"><output for="photo-opacity">100%</output></label>
+          <label class="editor-style">Photo blend mode
+            <select id="photo-blend-mode">
+              <option value="source-over">Normal</option><option value="multiply">Multiply</option><option value="screen">Screen</option>
+              <option value="overlay">Overlay</option><option value="darken">Darken</option><option value="lighten">Lighten</option>
+              <option value="soft-light">Soft light</option><option value="hard-light">Hard light</option>
+            </select>
+          </label>
+          <label class="editor-style">Picture border color <input id="photo-border-color" type="color" value="#fffdfc"></label>
+          <label class="editor-style">Picture border thickness <input id="photo-border-width" type="range" min="0" max="40" value="0"><output for="photo-border-width">0 px</output></label>
+          <label class="editor-style" for="photo-corner-style">Picture corner style
+            <select id="photo-corner-style">
+              <option value="rounded">Rounded</option>
+              <option value="inverted">Inverted rounded</option>
+              <option value="chamfered">Chamfered</option>
+            </select>
+          </label>
+          <label class="editor-style">Corner size <input id="photo-corner-radius" type="range" min="0" max="160" value="0"><output for="photo-corner-radius">0 px</output></label>
           <label class="editor-style">
             Photo filter
             <select id="photo-filter">
@@ -1083,7 +298,7 @@
           </div>
         </details>
 
-        <details class="editor-section" aria-label="Background image" data-editor-panel="templates elements uploads tools">
+        <details class="editor-section" aria-label="Background image" data-editor-panel="pictures">
           <summary>Background</summary>
           <div class="editor-upload">
             <label for="background-upload">Upload a background image</label>
@@ -1093,9 +308,17 @@
           <label class="editor-style">Background size <input id="background-zoom" type="range" min="0.2" max="5" step="0.05" value="1"><output for="background-zoom">100%</output></label>
           <label class="editor-style">Background horizontal position <input id="background-position-x" type="range" min="-1080" max="1080" value="0"><output for="background-position-x">0</output></label>
           <label class="editor-style">Background vertical position <input id="background-position-y" type="range" min="-1350" max="1350" value="0"><output for="background-position-y">0</output></label>
+          <label class="editor-style">Background transparency <input id="background-opacity" type="range" min="0" max="100" value="100"><output for="background-opacity">100%</output></label>
+          <label class="editor-style">Background blend mode
+            <select id="background-blend-mode">
+              <option value="source-over">Normal</option><option value="multiply">Multiply</option><option value="screen">Screen</option>
+              <option value="overlay">Overlay</option><option value="darken">Darken</option><option value="lighten">Lighten</option>
+              <option value="soft-light">Soft light</option><option value="hard-light">Hard light</option>
+            </select>
+          </label>
         </details>
 
-        <details class="editor-section" aria-label="Frames and shapes" data-editor-panel="elements">
+        <details class="editor-section editor-shapes-section" aria-label="Frames and shapes" data-editor-panel="insert">
           <summary>Insert frame / shape</summary>
           <label class="editor-field" for="shape-type">Shape
             <select id="shape-type">
@@ -1112,6 +335,15 @@
           <button class="editor-tool-button" id="insert-shape" type="button">Insert frame</button>
           <label class="editor-style">Border color <input id="shape-stroke" type="color" value="#895b49"></label>
           <label class="editor-style">Border thickness <input id="shape-stroke-width" type="range" min="1" max="40" value="8"><output for="shape-stroke-width">8 px</output></label>
+          <label class="editor-style" for="shape-corner-style">Corner style
+            <select id="shape-corner-style">
+              <option value="rounded">Rounded</option>
+              <option value="inverted">Inverted rounded</option>
+              <option value="chamfered">Chamfered</option>
+            </select>
+          </label>
+          <label class="editor-style">Outer corner size <input id="shape-corner-radius" type="range" min="0" max="200" value="24"><output for="shape-corner-radius">24 px</output></label>
+          <label class="editor-style">Inner corner radius <input id="shape-inner-corner-radius" type="range" min="0" max="200" value="14"><output for="shape-inner-corner-radius">14 px</output></label>
           <label class="editor-style">Fill color <input id="shape-fill" type="color" value="#fffdfc"></label>
           <label class="editor-style"><input id="shape-transparent" type="checkbox" checked> Transparent fill</label>
           <div class="editor-upload">
@@ -1119,6 +351,14 @@
             <input id="shape-photo-upload" type="file" accept="image/*">
           </div>
           <label class="editor-style">Picture crop / size <input id="shape-photo-zoom" type="range" min="1" max="3" step="0.05" value="1"><output for="shape-photo-zoom">100%</output></label>
+          <label class="editor-style">Picture opacity <input id="shape-photo-opacity" type="range" min="0" max="100" value="100"><output for="shape-photo-opacity">100%</output></label>
+          <label class="editor-style">Picture blend mode
+            <select id="shape-photo-blend-mode">
+              <option value="source-over">Normal</option><option value="multiply">Multiply</option><option value="screen">Screen</option>
+              <option value="overlay">Overlay</option><option value="darken">Darken</option><option value="lighten">Lighten</option>
+              <option value="soft-light">Soft light</option><option value="hard-light">Hard light</option>
+            </select>
+          </label>
           <div class="editor-layer-actions">
             <button class="editor-tool-button" id="shape-bring-forward" type="button">Bring forward</button>
             <button class="editor-tool-button" id="shape-send-backward" type="button">Send backward</button>
@@ -1128,60 +368,17 @@
           <p class="editor-size">Select a shape to resize it with the canvas handles. Drag it to reposition.</p>
         </details>
 
-        <section class="editor-section" aria-label="Text editing" data-editor-panel="templates text elements">
-          <h3>Invitation details</h3>
-          <details class="editor-accordion" name="invitation-details" open>
-            <summary>Couple’s names</summary>
-            <button class="editor-lock" type="button" data-lock-layer="names" aria-label="Lock Couple’s names" aria-pressed="false" title="Lock Couple’s names"></button>
-            <div class="editor-accordion-content">
-              <label class="editor-field">Couple’s names
-                <input id="couple-names" type="text" maxlength="40" value="Nomsa &amp; Thabo">
-              </label>
-            </div>
-          </details>
-          <details class="editor-accordion" name="invitation-details">
-            <summary>Invitation message</summary>
-            <button class="editor-lock" type="button" data-lock-layer="message" aria-label="Lock invitation message" aria-pressed="false" title="Lock invitation message"></button>
-            <div class="editor-accordion-content">
-              <label class="editor-field">Invitation message
-                <textarea id="invitation-message" maxlength="110">Together with our families, we invite you to celebrate our lobola.</textarea>
-              </label>
-            </div>
-          </details>
-          <details class="editor-accordion" name="invitation-details">
-            <summary>Date</summary>
-            <button class="editor-lock" type="button" data-lock-layer="date" aria-label="Lock date" aria-pressed="false" title="Lock date"></button>
-            <div class="editor-accordion-content">
-              <label class="editor-field">Date
-                <input id="event-date" type="text" maxlength="42" value="Saturday, 12 December 2026">
-              </label>
-            </div>
-          </details>
-          <details class="editor-accordion" name="invitation-details">
-            <summary>Time</summary>
-            <button class="editor-lock" type="button" data-lock-layer="time" aria-label="Lock time" aria-pressed="false" title="Lock time"></button>
-            <div class="editor-accordion-content">
-              <label class="editor-field">Time
-                <input id="event-time" type="text" maxlength="30" value="12:00">
-              </label>
-            </div>
-          </details>
-          <details class="editor-accordion" name="invitation-details">
-            <summary>Venue</summary>
-            <button class="editor-lock" type="button" data-lock-layer="venue" aria-label="Lock venue" aria-pressed="false" title="Lock venue"></button>
-            <div class="editor-accordion-content">
-              <label class="editor-field">Venue
-                <input id="event-venue" type="text" maxlength="48" value="Venue name, City">
-              </label>
-            </div>
-          </details>
-          <div id="custom-text-list" class="custom-text-list" aria-label="Additional text"></div>
-        </section>
+        <details class="editor-section editor-text-disclosure" aria-label="Invitation text" data-editor-panel="text">
+          <summary>Invitation text</summary>
+          <div id="template-text-items" class="editor-layer-list" aria-label="Invitation text, ordered from top to bottom"></div>
+        </details>
 
-        <details class="editor-section editor-advanced" aria-label="Optional design editing" data-editor-panel="text elements brand">
-          <summary>Design editing (optional)</summary>
-          <label class="editor-field" for="selected-text-content">Selected text
-            <textarea id="selected-text-content" maxlength="180"></textarea>
+        <details class="editor-section editor-advanced" aria-label="Add Text" data-editor-panel="text">
+          <summary>Add Text
+            <svg class="editor-add-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <label class="editor-field" for="selected-text-content">Selected text · click to edit on the invitation
+            <textarea id="selected-text-content" maxlength="180" readonly></textarea>
           </label>
           <button class="editor-tool-button" id="add-text" type="button">Add Text</button>
           <label class="editor-field" for="text-layer">Select text layer
@@ -1194,8 +391,6 @@
               <option value="venue">Venue</option>
             </select>
           </label>
-          <h3>Layers</h3>
-          <div id="editor-layer-list" class="editor-layer-list" aria-label="Design layers"></div>
           <label class="editor-style">Font combination
             <select id="font-preset">
               <option value="elegant">Elegant serif</option>
@@ -1217,9 +412,6 @@
           <label class="editor-style">Font weight
             <select id="text-weight"><option value="400">Regular</option><option value="500">Medium</option><option value="600">Semi-bold</option><option value="700">Bold</option></select>
           </label>
-          <label class="editor-style">Alignment
-            <select id="text-alignment"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select>
-          </label>
           <label class="editor-style">Line spacing <input id="text-line-spacing" type="range" min="0.8" max="2.2" step="0.05" value="1.2"><output for="text-line-spacing">1.2</output></label>
           <label class="editor-style">Letter spacing <input id="text-letter-spacing" type="range" min="0" max="14" step="0.5" value="0"><output for="text-letter-spacing">0 px</output></label>
           <label class="editor-style">Text effect
@@ -1234,7 +426,6 @@
           <div class="editor-layer-actions">
             <button class="editor-tool-button" id="bring-forward" type="button">Bring forward</button>
             <button class="editor-tool-button" id="send-backward" type="button">Send backward</button>
-            <button class="editor-tool-button editor-lock" id="toggle-lock" type="button" aria-pressed="false" aria-label="Lock selected text" title="Lock selected text"></button>
           </div>
           <p class="editor-size">Drag text on the artwork to position it. Snapping guides appear while moving.</p>
         </details>
@@ -1245,14 +436,19 @@
             <button class="editor-tool-button" id="toggle-phone" type="button" aria-pressed="false">Preview</button>
             <button class="editor-tool-button" id="download-png" type="button">PNG</button>
             <button class="editor-tool-button" id="download-jpg" type="button">JPG</button>
-            <button class="editor-tool-button" id="download-pdf-standard" type="button">PDF standard</button>
             <button class="editor-tool-button" id="download-pdf-print" type="button">PDF print</button>
           </div>
+        </section>
+        <section class="editor-section" aria-label="Uploads" data-editor-panel="uploads">
           <div class="editor-upload">
             <label for="music-upload">Add music to MP4</label>
             <input id="music-upload" type="file" accept="audio/*">
             <audio id="music-preview" controls hidden></audio>
             <p class="editor-size">MP4 keeps the artwork at 1080 × 1350 px, trims audio to fit a 3 MB limit, and fades the ending.</p>
+          </div>
+        </section>
+        <section class="editor-section" aria-label="Export options" data-editor-panel="apps">
+          <div class="editor-actions">
             <button class="editor-tool-button" id="download-mp4" type="button" disabled>Download MP4 (max 3 MB)</button>
           </div>
         </section>
@@ -1260,13 +456,16 @@
       </form>
       <section class="editor-canvas-area" aria-label="Invitation canvas workspace">
         <figure class="editor-preview" id="editor-preview">
-          <canvas id="invitation-canvas" width="1080" height="1350" role="img" aria-label="Live preview of the fixed-size lobola invitation template"></canvas>
-          <figcaption id="preview-caption">Live preview · 1080 × 1350 px · click to select, drag to move</figcaption>
+          <canvas id="invitation-canvas" width="1080" height="1350" role="img" aria-label="Invitation design. Double-click any text to edit it in place."></canvas>
+          <div class="canvas-text-editor" id="canvas-text-editor" contenteditable="plaintext-only" role="textbox" aria-label="Edit invitation text on the design" spellcheck="false" hidden></div>
+          <figcaption id="preview-caption">Live preview · 1080 × 1350 px · double-click text to edit; drag to move</figcaption>
         </figure>
         <div class="editor-canvas-actions">
+          <button class="editor-tool-button" id="canvas-hand-tool" type="button" aria-label="Hand tool" aria-pressed="false" title="Move the selected element by dragging it or its gizmo outline">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M8 11V5a2 2 0 0 1 4 0v5-3a2 2 0 0 1 4 0v4-2a2 2 0 0 1 4 0v6c0 4-2.5 7-7 7h-1c-2 0-3.5-.8-4.8-2.2L4 16a2 2 0 0 1 3-2l2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <button class="editor-tool-button" id="canvas-lock" type="button" aria-label="Lock selected item"></button>
           <button class="editor-tool-button" id="canvas-duplicate" type="button">Duplicate</button>
-          <button class="editor-tool-button" id="canvas-add-page" type="button">+ Add page</button>
         </div>
         <div class="editor-pages-strip" id="editor-pages-strip" aria-label="Invitation pages"></div>
       </section>
@@ -1290,17 +489,30 @@
     </menu>
   </dialog>
 
-  <footer class="site-footer" id="contact">
+  <footer class="site-footer">
     <span>&copy; 2026 Lobola Invitation</span>
     <span>Editable digital templates for your special day</span>
-    <a href="mailto:hello@lobolainvitation.co.za">Get in touch</a>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#categories">Templates</a>
+      <a href="#about">About us</a>
+      <a href="#contact">Contact us</a>
+      <a class="admin-link" href="/admin">Admin</a>
+    </nav>
   </footer>
 
   <script>
+    document.querySelectorAll('.admin-link').forEach((link) => {
+      link.href = window.location.protocol === 'file:'
+        ? 'http://localhost:3000/admin'
+        : new URL('/admin', window.location.href).href;
+    });
+
     const menuToggle = document.querySelector('.menu-toggle');
     const menu = document.getElementById('site-menu');
     const categoryToggle = document.querySelector('.category-card');
     const categoryProducts = document.getElementById('products-lobola-template');
+    const categoryBack = categoryProducts.querySelector('.category-back');
+    const categoriesSection = document.getElementById('categories');
     const productButton = document.getElementById('open-editor');
     const editorDialog = document.getElementById('template-editor');
     const closeEditorButton = document.getElementById('close-editor');
@@ -1312,12 +524,19 @@
     let musicObjectUrl = null;
     const invitationCanvas = document.getElementById('invitation-canvas');
     const previewFigure = document.getElementById('editor-preview');
+    const inlineTextEditor = document.getElementById('canvas-text-editor');
     const previewCaption = document.getElementById('preview-caption');
     const editorStatus = document.getElementById('editor-status');
-    const pageSelect = document.getElementById('page-select');
+    const canvasFormats = {
+      standard: { width: 1080, height: 1350, label: 'Standard portrait' },
+      'hd-mobile': { width: 1080, height: 1920, label: 'HD Mobile' },
+      'hd-landscape': { width: 1920, height: 1080, label: 'HD Landscape' }
+    };
+    let canvasFormat = 'standard';
+    let canvasWidth = canvasFormats.standard.width;
+    let canvasHeight = canvasFormats.standard.height;
     const textLayerSelect = document.getElementById('text-layer');
-    const customTextList = document.getElementById('custom-text-list');
-    const layerList = document.getElementById('editor-layer-list');
+    const templateTextList = document.getElementById('template-text-items');
     const contextMenu = document.getElementById('editor-context-menu');
     const pageStrip = document.getElementById('editor-pages-strip');
     const toolbar = {
@@ -1327,23 +546,17 @@
       bold: document.getElementById('toolbar-bold'),
       italic: document.getElementById('toolbar-italic'),
       underline: document.getElementById('toolbar-underline'),
-      alignment: document.getElementById('toolbar-align'),
+      alignment: [...document.querySelectorAll('[data-toolbar-align]')],
       effect: document.getElementById('toolbar-effect'),
       lock: document.getElementById('toolbar-lock')
     };
+    const editorFormatbar = document.getElementById('editor-formatbar');
     const canvasContext = invitationCanvas.getContext('2d');
-    const textFields = {
-      names: document.getElementById('couple-names'),
-      message: document.getElementById('invitation-message'),
-      date: document.getElementById('event-date'),
-      time: document.getElementById('event-time'),
-      venue: document.getElementById('event-venue')
-    };
+    const textFields = {};
     const styleControls = {
       size: document.getElementById('text-size'),
       color: document.getElementById('text-color'),
       weight: document.getElementById('text-weight'),
-      alignment: document.getElementById('text-alignment'),
       lineSpacing: document.getElementById('text-line-spacing'),
       letterSpacing: document.getElementById('text-letter-spacing'),
       effect: document.getElementById('text-effect'),
@@ -1352,6 +565,12 @@
     };
     const photoControls = {
       zoom: document.getElementById('photo-zoom'),
+      opacity: document.getElementById('photo-opacity'),
+      blendMode: document.getElementById('photo-blend-mode'),
+      borderColor: document.getElementById('photo-border-color'),
+      borderWidth: document.getElementById('photo-border-width'),
+      cornerRadius: document.getElementById('photo-corner-radius'),
+      cornerStyle: document.getElementById('photo-corner-style'),
       filter: document.getElementById('photo-filter'),
       brightness: document.getElementById('photo-brightness'),
       contrast: document.getElementById('photo-contrast'),
@@ -1401,9 +620,24 @@
       venue: 'Venue name, City',
       footer: 'LOBOLA INVITATION'
     };
-    const makePage = () => ({
+    const makePage = () => {
+      const scaleX = canvasWidth / 1080;
+      const scaleY = canvasHeight / 1350;
+      const fontScale = Math.min(scaleX, scaleY);
+      const styles = Object.fromEntries(layerKeys.map((key) => {
+        const style = layerDefaults[key];
+        return [key, {
+          ...style,
+          x: style.x * scaleX,
+          y: style.y * scaleY,
+          width: style.width * scaleX,
+          size: style.size * fontScale,
+          letterSpacing: style.letterSpacing * fontScale
+        }];
+      }));
+      return ({
       text: { ...defaultText },
-      styles: Object.fromEntries(layerKeys.map((key) => [key, { ...layerDefaults[key] }])),
+      styles,
       layerOrder: [...layerKeys],
       fontPreset: 'elegant',
       photo: null,
@@ -1411,16 +645,28 @@
       photoLocked: false,
       photoX: 0,
       photoY: 0,
+      photoFrameX: 78 * scaleX,
+      photoFrameY: 78 * scaleY,
+      photoFrameWidth: 924 * scaleX,
+      photoFrameHeight: 620 * scaleY,
       photoZoom: 1,
+      photoOpacity: 100,
+      photoBlendMode: 'source-over',
+      photoBorderColor: '#fffdfc',
+      photoBorderWidth: 0,
+      photoCornerRadius: 0,
+      photoCornerStyle: 'rounded',
       photoRotation: 0,
       background: null,
       backgroundLocked: false,
       backgroundX: 0,
       backgroundY: 0,
       backgroundZoom: 1,
+      backgroundOpacity: 100,
+      backgroundBlendMode: 'source-over',
       shapes: [
-        { id: 'template-border', type: 'rectangle', x: 34, y: 34, width: 1012, height: 1282, stroke: '#895b49', strokeWidth: 3, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1 },
-        { id: 'template-divider', type: 'line', x: 260, y: 819, width: 560, height: 2, stroke: '#e8dfda', strokeWidth: 2, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1 }
+        { id: 'template-border', type: 'rectangle', x: 34 * scaleX, y: 34 * scaleY, width: 1012 * scaleX, height: 1282 * scaleY, stroke: '#895b49', strokeWidth: 3 * fontScale, cornerRadius: 22 * fontScale, innerCornerRadius: 19 * fontScale, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1, photoOpacity: 100, photoBlendMode: 'source-over' },
+        { id: 'template-divider', type: 'line', x: 260 * scaleX, y: 819 * scaleY, width: 560 * scaleX, height: 2 * fontScale, stroke: '#e8dfda', strokeWidth: 2 * fontScale, fill: '#fffdfc', transparent: true, opacity: 100, locked: true, removable: false, photo: null, photoZoom: 1 }
       ],
       flipX: false,
       filter: 'none',
@@ -1434,20 +680,54 @@
       whiteTransparent: false,
       whiteThreshold: 230,
       flipY: false
-    });
+      });
+    };
     let pages = [makePage()];
     let currentPageIndex = 0;
     let selectedLayer = 'names';
+    let textEditingActive = false;
+    let inlineEditingLayer = null;
+    let savedInlineSelection = null;
     let dragState = null;
+    let moveToolActive = false;
+    let selectionGizmoActive = false;
+    let mobileEditLayer = null;
+    let lastTouchTap = null;
     let snapGuides = null;
     let renderedBounds = [];
     let previousFocus = null;
     let phonePreview = false;
-    let activeEditorTab = 'templates';
+    let activeEditorTab = 'insert';
     let objectClipboard = null;
     let styleClipboard = null;
     const undoStack = [];
     let controlUndoRecorded = false;
+
+    function updateCanvasDescription() {
+      const dimensions = `${canvasWidth} × ${canvasHeight} px`;
+      previewCaption.textContent = `Live preview · Page ${currentPageIndex + 1} · ${dimensions} · double-click text to edit; drag to move`;
+      invitationCanvas.setAttribute('aria-label', `Invitation design, ${dimensions}. Double-click any text to edit it in place.`);
+    }
+
+    function setCanvasFormat(format) {
+      canvasFormat = Object.hasOwn(canvasFormats, format) ? format : 'standard';
+      ({ width: canvasWidth, height: canvasHeight } = canvasFormats[canvasFormat]);
+      invitationCanvas.width = canvasWidth;
+      invitationCanvas.height = canvasHeight;
+      for (const [id, max] of [
+        ['background-position-x', canvasWidth],
+        ['background-position-y', canvasHeight],
+        ['photo-position-x', Math.round((canvasFormats[canvasFormat].width / 1080) * 462)],
+        ['photo-position-y', Math.round((canvasFormats[canvasFormat].height / 1350) * 310)]
+      ]) {
+        const input = document.getElementById(id);
+        input.min = String(-max);
+        input.max = String(max);
+        input.value = '0';
+      }
+      updateCanvasDescription();
+      document.querySelector('.editor-size').textContent = `MP4 exports ${canvasFormats[canvasFormat].label} artwork at ${canvasWidth} × ${canvasHeight} px, trims audio to fit a 3 MB limit, and fades the ending.`;
+    }
 
     const currentPage = () => pages[currentPageIndex];
 
@@ -1455,7 +735,6 @@
       editorStatus.textContent = message;
       editorStatus.dataset.state = state;
     }
-
     function photoDimensions(photo) {
       return {
         width: photo.naturalWidth || photo.width,
@@ -1510,9 +789,9 @@
 
     function lockIcon(locked) {
       const shackle = locked
-        ? '<path d="M8 10V7a4 4 0 0 1 8 0v3"></path>'
-        : '<path d="M8 10V7a4 4 0 0 1 7.7-1.5"></path>';
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.8"></rect>${shackle}<circle cx="12" cy="15.5" r="1" fill="currentColor"></circle></svg>`;
+        ? '<path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>'
+        : '<path d="M8 10V7a4 4 0 0 1 7.75-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>';
+      return `<svg class="editor-lock-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7.5 10.5h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>${shackle}<circle cx="12" cy="15" r="1.15" fill="currentColor"></circle><path d="M12 16.15v2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>`;
     }
 
     function updateLockButton(button, locked, label) {
@@ -1562,6 +841,8 @@
       canvasContext.beginPath();
       canvasContext.rect(0, 0, invitationCanvas.width, invitationCanvas.height);
       canvasContext.clip();
+      canvasContext.globalAlpha = page.backgroundOpacity / 100;
+      canvasContext.globalCompositeOperation = page.backgroundBlendMode;
       canvasContext.drawImage(page.background,
         (invitationCanvas.width - imageWidth) / 2 + page.backgroundX,
         (invitationCanvas.height - imageHeight) / 2 + page.backgroundY,
@@ -1569,47 +850,129 @@
       canvasContext.restore();
     }
 
-    function shapePath(context, shape) {
+    function roundedPolygonPath(context, vertices, cornerRadii, startPath = true, cornerStyle = 'rounded') {
+      const incoming = [];
+      const outgoing = [];
+      for (let index = 0; index < vertices.length; index += 1) {
+        const point = vertices[index];
+        const previous = vertices[(index + vertices.length - 1) % vertices.length];
+        const next = vertices[(index + 1) % vertices.length];
+        const incomingLength = Math.hypot(previous.x - point.x, previous.y - point.y);
+        const outgoingLength = Math.hypot(next.x - point.x, next.y - point.y);
+        const radius = Math.max(0, Math.min(cornerRadii[index] || 0, incomingLength / 2, outgoingLength / 2));
+        incoming.push({
+          x: point.x + (previous.x - point.x) * radius / Math.max(1, incomingLength),
+          y: point.y + (previous.y - point.y) * radius / Math.max(1, incomingLength)
+        });
+        outgoing.push({
+          x: point.x + (next.x - point.x) * radius / Math.max(1, outgoingLength),
+          y: point.y + (next.y - point.y) * radius / Math.max(1, outgoingLength)
+        });
+      }
+      if (startPath) context.beginPath();
+      context.moveTo(incoming[0].x, incoming[0].y);
+      for (let index = 0; index < vertices.length; index += 1) {
+        const nextIndex = (index + 1) % vertices.length;
+        if (cornerStyle === 'chamfered') {
+          context.lineTo(outgoing[index].x, outgoing[index].y);
+        } else {
+          const vertex = vertices[index];
+          const nextVertex = vertices[nextIndex];
+          const control = cornerStyle === 'inverted'
+            ? {
+              x: incoming[index].x + outgoing[index].x - vertex.x,
+              y: incoming[index].y + outgoing[index].y - vertex.y
+            }
+            : vertex;
+          context.quadraticCurveTo(control.x, control.y, outgoing[index].x, outgoing[index].y);
+        }
+        context.lineTo(incoming[nextIndex].x, incoming[nextIndex].y);
+      }
+      context.closePath();
+    }
+
+    function rectangleCornerPath(context, x, y, width, height, radius, cornerStyle = 'rounded', startPath = true) {
+      const inset = Math.max(0, Math.min(radius, width / 2, height / 2));
+      const vertices = [
+        { x: x + width, y },
+        { x: x + width, y: y + height },
+        { x, y: y + height },
+        { x, y }
+      ];
+      roundedPolygonPath(context, vertices, Array(4).fill(inset), startPath, cornerStyle);
+    }
+
+    function shapePath(context, shape, startPath = true) {
       const x = shape.x;
       const y = shape.y;
       const width = shape.width;
       const height = shape.height;
-      context.beginPath();
+      if (startPath) context.beginPath();
       if (shape.type === 'circle') {
         const radius = Math.min(width, height) / 2;
         context.arc(x + width / 2, y + height / 2, radius, 0, Math.PI * 2);
       } else if (shape.type === 'ellipse') {
         context.ellipse(x + width / 2, y + height / 2, width / 2, height / 2, 0, 0, Math.PI * 2);
       } else if (shape.type === 'triangle') {
-        context.moveTo(x + width / 2, y);
-        context.lineTo(x + width, y + height);
-        context.lineTo(x, y + height);
-        context.closePath();
+        roundedPolygonPath(context, [
+          { x: x + width / 2, y },
+          { x: x + width, y: y + height },
+          { x, y: y + height }
+        ], Array(3).fill(shape.cornerRadius || 0), startPath, shape.cornerStyle);
       } else if (shape.type === 'diamond') {
-        context.moveTo(x + width / 2, y);
-        context.lineTo(x + width, y + height / 2);
-        context.lineTo(x + width / 2, y + height);
-        context.lineTo(x, y + height / 2);
-        context.closePath();
+        roundedPolygonPath(context, [
+          { x: x + width / 2, y },
+          { x: x + width, y: y + height / 2 },
+          { x: x + width / 2, y: y + height },
+          { x, y: y + height / 2 }
+        ], Array(4).fill(shape.cornerRadius || 0), startPath, shape.cornerStyle);
       } else if (shape.type === 'star') {
+        const vertices = [];
         for (let point = 0; point < 10; point += 1) {
           const angle = -Math.PI / 2 + point * Math.PI / 5;
           const radius = point % 2 === 0 ? .5 : .22;
-          const px = x + width / 2 + Math.cos(angle) * width * radius;
-          const py = y + height / 2 + Math.sin(angle) * height * radius;
-          if (point === 0) context.moveTo(px, py);
-          else context.lineTo(px, py);
+          vertices.push({
+            x: x + width / 2 + Math.cos(angle) * width * radius,
+            y: y + height / 2 + Math.sin(angle) * height * radius
+          });
         }
-        context.closePath();
+        roundedPolygonPath(context, vertices, vertices.map((_, index) => index % 2 === 0 ? shape.cornerRadius || 0 : shape.innerCornerRadius || 0), startPath, shape.cornerStyle);
       } else if (shape.type === 'line') {
         context.moveTo(x, y + height / 2);
         context.lineTo(x + width, y + height / 2);
-      } else if (shape.type === 'rounded') {
-        const radius = Math.min(36, width / 4, height / 4);
-        context.roundRect(x, y, width, height, radius);
+      } else if (shape.type === 'rounded' || shape.type === 'rectangle') {
+        const radius = Math.min(shape.cornerRadius ?? 36, width / 2, height / 2);
+        if (radius > 0) rectangleCornerPath(context, x, y, width, height, radius, shape.cornerStyle || 'rounded', startPath);
+        else context.rect(x, y, width, height);
       } else {
         context.rect(x, y, width, height);
       }
+    }
+
+    function drawShapeBorder(shape) {
+      if (shape.type !== 'rectangle' && shape.type !== 'rounded') {
+        shapePath(canvasContext, shape);
+        canvasContext.strokeStyle = shape.stroke;
+        canvasContext.lineWidth = shape.strokeWidth;
+        canvasContext.stroke();
+        return;
+      }
+      const inset = Math.min(shape.strokeWidth, shape.width / 2, shape.height / 2);
+      canvasContext.beginPath();
+      shapePath(canvasContext, shape, false);
+      const innerRadius = Math.max(0, Math.min(shape.innerCornerRadius ?? shape.cornerRadius ?? 0, shape.width / 2 - inset, shape.height / 2 - inset));
+      const inner = {
+        ...shape,
+        x: shape.x + inset,
+        y: shape.y + inset,
+        width: shape.width - inset * 2,
+        height: shape.height - inset * 2,
+        cornerRadius: innerRadius,
+        cornerStyle: shape.cornerStyle
+      };
+      shapePath(canvasContext, inner, false);
+      canvasContext.fillStyle = shape.stroke;
+      canvasContext.fill('evenodd');
     }
 
     function drawShape(shape) {
@@ -1619,6 +982,8 @@
       if (shape.photo) {
         canvasContext.save();
         canvasContext.clip();
+        canvasContext.globalAlpha = shape.photoOpacity / 100;
+        canvasContext.globalCompositeOperation = shape.photoBlendMode || 'source-over';
         const photoSize = photoDimensions(shape.photo);
         const scale = Math.max(shape.width / photoSize.width, shape.height / photoSize.height) * shape.photoZoom;
         const imageWidth = photoSize.width * scale;
@@ -1631,15 +996,25 @@
         canvasContext.fillStyle = shape.fill;
         canvasContext.fill();
       }
-      canvasContext.strokeStyle = shape.stroke;
-      canvasContext.lineWidth = shape.strokeWidth;
-      canvasContext.stroke();
+      if (shape.strokeWidth > 0) drawShapeBorder(shape);
       canvasContext.restore();
+    }
+
+    function getPhotoFrame(page) {
+      return {
+        x: page.photoFrameX,
+        y: page.photoFrameY,
+        width: page.photoFrameWidth || 924,
+        height: page.photoFrameHeight || 620
+      };
     }
 
     function getSelectedBounds(page) {
       if (selectedLayer === 'background') return { left: 0, top: 0, right: invitationCanvas.width, bottom: invitationCanvas.height };
-      if (selectedLayer === 'photo') return { left: 78, top: 78, right: 1002, bottom: 698 };
+      if (selectedLayer === 'photo') {
+        const frame = getPhotoFrame(page);
+        return { left: frame.x, top: frame.y, right: frame.x + frame.width, bottom: frame.y + frame.height };
+      }
       if (selectedLayer.startsWith('shape:')) {
         const shape = page.shapes.find((item) => item.id === selectedLayer.slice(6));
         return shape ? { left: shape.x, top: shape.y, right: shape.x + shape.width, bottom: shape.y + shape.height } : null;
@@ -1673,10 +1048,9 @@
     }
 
     function drawPhoto(page) {
-      const frame = { x: 78, y: 78, width: 924, height: 620 };
+      const frame = getPhotoFrame(page);
       canvasContext.save();
-      canvasContext.beginPath();
-      canvasContext.rect(frame.x, frame.y, frame.width, frame.height);
+      rectangleCornerPath(canvasContext, frame.x, frame.y, frame.width, frame.height, page.photoCornerRadius, page.photoCornerStyle || 'rounded');
       canvasContext.clip();
 
       const photoSize = page.photo ? photoDimensions(page.photo) : null;
@@ -1694,7 +1068,11 @@
         const imageX = page.photoX - imageWidth / 2;
         const imageY = page.photoY - imageHeight / 2;
         canvasContext.filter = getPhotoFilter(page);
+        canvasContext.globalAlpha = page.photoOpacity / 100;
+        canvasContext.globalCompositeOperation = page.photoBlendMode;
         canvasContext.drawImage(page.photo, imageX, imageY, imageWidth, imageHeight);
+        canvasContext.globalAlpha = 1;
+        canvasContext.globalCompositeOperation = 'source-over';
         canvasContext.filter = 'none';
         if (page.warmth !== 0) {
           canvasContext.fillStyle = page.warmth > 0
@@ -1731,19 +1109,27 @@
         canvasContext.fillStyle = '#fffdfc';
         canvasContext.textAlign = 'center';
         canvasContext.font = '500 30px "DM Sans", sans-serif';
-        canvasContext.fillText('YOUR PHOTO', 540, 365);
+        canvasContext.fillText('YOUR PHOTO', invitationCanvas.width / 2, frame.y + frame.height / 2 - 10);
         canvasContext.font = '400 22px "DM Sans", sans-serif';
-        canvasContext.fillText('Upload an image to personalize your invitation', 540, 407, frame.width - 80);
+        canvasContext.fillText('Upload an image to personalize your invitation', invitationCanvas.width / 2, frame.y + frame.height / 2 + 32, frame.width - 80);
       }
       canvasContext.restore();
+      if (page.photoBorderWidth > 0) {
+        canvasContext.save();
+        rectangleCornerPath(canvasContext, frame.x, frame.y, frame.width, frame.height, page.photoCornerRadius, page.photoCornerStyle || 'rounded');
+        canvasContext.strokeStyle = page.photoBorderColor;
+        canvasContext.lineWidth = page.photoBorderWidth;
+        canvasContext.stroke();
+        canvasContext.restore();
+      }
 
       if (snapGuides && snapGuides.layer === 'photo') {
         canvasContext.save();
         canvasContext.strokeStyle = '#4c89cb';
-        canvasContext.setLineDash([8, 8]);
+        canvasContext.lineWidth = 1;
         canvasContext.beginPath();
-        canvasContext.moveTo(540, frame.y);
-        canvasContext.lineTo(540, frame.y + frame.height);
+        canvasContext.moveTo(invitationCanvas.width / 2, frame.y);
+        canvasContext.lineTo(invitationCanvas.width / 2, frame.y + frame.height);
         canvasContext.stroke();
         canvasContext.restore();
       }
@@ -1769,10 +1155,107 @@
       }
     }
 
-    function drawTextLayer(page, key) {
+    function getTextRunStyle(style, offset) {
+      const run = style.runs?.find((item) => offset >= item.start && offset < item.end);
+      return run ? { ...style, ...run } : style;
+    }
+
+    function drawRichTextLayer(style, text, lineHeight) {
+      const lines = [{ chars: [], width: 0 }];
+      const tokens = text.match(/\n|[^\S\n]+|[^\s]+\s*/gu) || [];
+      let offset = 0;
+      canvasContext.letterSpacing = '0px';
+      canvasContext.textAlign = 'left';
+      for (const token of tokens) {
+        if (token === '\n') {
+          lines.push({ chars: [], width: 0 });
+          offset += 1;
+          continue;
+        }
+        const tokenChars = [];
+        let tokenWidth = 0;
+        for (const character of token) {
+          const runStyle = getTextRunStyle(style, offset);
+          canvasContext.font = `${runStyle.italic ? 'italic ' : ''}${runStyle.weight} ${runStyle.size}px ${runStyle.family}`;
+          const advance = canvasContext.measureText(character).width + runStyle.letterSpacing;
+          tokenChars.push({ character, advance, style: runStyle });
+          tokenWidth += advance;
+          offset += character.length;
+        }
+        if (lines.at(-1).chars.length && lines.at(-1).width + tokenWidth > style.width) lines.push({ chars: [], width: 0 });
+        for (const item of tokenChars) {
+          if (item.character === ' ' && !lines.at(-1).chars.length) continue;
+          lines.at(-1).chars.push(item);
+          lines.at(-1).width += item.advance;
+        }
+      }
+      const maxLineWidth = Math.min(style.width, Math.max(...lines.map((line) => line.width), 1));
+      const firstBaseline = lines.length > 1 ? -((lines.length - 1) * lineHeight) / 2 : 0;
+      lines.forEach((line, lineIndex) => {
+        const baseline = firstBaseline + lineIndex * lineHeight;
+        let x = style.align === 'left' ? 0 : style.align === 'right' ? -line.width : -line.width / 2;
+        for (let index = 0; index < line.chars.length;) {
+          const runStyle = line.chars[index].style;
+          let end = index + 1;
+          while (end < line.chars.length && ['family', 'size', 'color', 'weight', 'italic', 'underline', 'effect']
+            .every((property) => line.chars[end].style[property] === runStyle[property])) end += 1;
+          const runText = line.chars.slice(index, end).map((item) => item.character).join('');
+          canvasContext.font = `${runStyle.italic ? 'italic ' : ''}${runStyle.weight} ${runStyle.size}px ${runStyle.family}`;
+          canvasContext.letterSpacing = '0px';
+          const runWidth = canvasContext.measureText(runText).width + runStyle.letterSpacing * Math.max(0, [...runText].length - 1);
+          canvasContext.fillStyle = runStyle.color;
+          canvasContext.strokeStyle = runStyle.color;
+          canvasContext.shadowColor = 'transparent';
+          canvasContext.shadowBlur = 0;
+          canvasContext.shadowOffsetY = 0;
+          if (runStyle.effect === 'shadow' || runStyle.effect === 'lift' || runStyle.effect === 'neon') {
+            canvasContext.shadowColor = runStyle.effect === 'neon' ? runStyle.color : 'rgba(38, 29, 26, .32)';
+            canvasContext.shadowBlur = runStyle.effect === 'lift' ? 12 : runStyle.effect === 'neon' ? 24 : 5;
+            canvasContext.shadowOffsetY = runStyle.effect === 'lift' ? 8 : runStyle.effect === 'shadow' ? 3 : 0;
+          }
+          canvasContext.letterSpacing = `${runStyle.letterSpacing}px`;
+          if (runStyle.effect === 'hollow') {
+            canvasContext.lineWidth = Math.max(2, runStyle.size * .045);
+            canvasContext.strokeText(runText, x, baseline);
+          } else {
+            if (runStyle.effect === 'splice') {
+              canvasContext.fillStyle = '#d99685';
+              canvasContext.fillText(runText, x + 4, baseline + 4);
+              canvasContext.fillStyle = runStyle.color;
+            } else if (runStyle.effect === 'echo') {
+              canvasContext.globalAlpha = style.opacity / 300;
+              canvasContext.fillText(runText, x - 5, baseline);
+              canvasContext.fillText(runText, x + 5, baseline);
+              canvasContext.globalAlpha = style.opacity / 100;
+            } else if (runStyle.effect === 'glitch') {
+              canvasContext.fillStyle = '#c46b70';
+              canvasContext.fillText(runText, x - 3, baseline);
+              canvasContext.fillStyle = '#587ba5';
+              canvasContext.fillText(runText, x + 3, baseline);
+              canvasContext.fillStyle = runStyle.color;
+            }
+            canvasContext.fillText(runText, x, baseline);
+          }
+          if (runStyle.underline) {
+            canvasContext.beginPath();
+            canvasContext.lineWidth = Math.max(1, runStyle.size / 18);
+            canvasContext.moveTo(x, baseline + runStyle.size * .12);
+            canvasContext.lineTo(x + runWidth, baseline + runStyle.size * .12);
+            canvasContext.stroke();
+          }
+          x += runWidth;
+          index = end;
+        }
+      });
+      canvasContext.letterSpacing = `${style.letterSpacing}px`;
+      return { maxLineWidth, firstBaseline };
+    }
+
+    function drawTextLayer(page, key, hideForInlineEditor) {
       const style = page.styles[key];
-      const text = (page.text[key] || '').trim();
-      if (!text) return null;
+      const rawText = page.text[key] || '';
+      const text = style.runs?.length ? rawText : rawText.trim();
+      if (!text.trim()) return null;
       canvasContext.save();
       canvasContext.translate(style.x, style.y);
       canvasContext.rotate(style.rotation * Math.PI / 180);
@@ -1797,14 +1280,28 @@
         canvasContext.shadowBlur = 24;
       }
 
-      const lineWidths = lines.map((line) => canvasContext.measureText(line).width);
+      const lineMetrics = lines.map((line) => canvasContext.measureText(line));
+      const lineWidths = lineMetrics.map((metrics) => metrics.width);
       const maxLineWidth = Math.min(style.width, Math.max(...lineWidths, 1));
+      const ascent = Math.max(...lineMetrics.map((metrics) => metrics.actualBoundingBoxAscent || style.size * .8));
+      const descent = Math.max(...lineMetrics.map((metrics) => metrics.actualBoundingBoxDescent || style.size * .2));
       const left = style.align === 'left' ? 0 : style.align === 'right' ? -maxLineWidth : -maxLineWidth / 2;
       const firstBaseline = lines.length > 1 ? -((lines.length - 1) * lineHeight) / 2 : 0;
-      const top = firstBaseline - style.size;
-      const bottom = firstBaseline + (lines.length - 1) * lineHeight + style.size * .25;
+      const bounds = {
+        key,
+        left: style.x + left - 4,
+        right: style.x + left + maxLineWidth + 4,
+        top: style.y + firstBaseline - ascent - 4,
+        bottom: style.y + firstBaseline + (lines.length - 1) * lineHeight + descent + 4
+      };
 
-      if (effect === 'curve' && lines.length === 1) {
+      if (inlineEditingLayer === key && hideForInlineEditor) {
+        canvasContext.restore();
+        return bounds;
+      }
+      if (style.runs?.length) {
+        drawRichTextLayer(style, text, lineHeight);
+      } else if (effect === 'curve' && lines.length === 1) {
         drawCurvedText(lines[0], style);
       } else {
         lines.forEach((line, index) => {
@@ -1845,7 +1342,7 @@
       }
       canvasContext.restore();
 
-      return { key, left: style.x + left - 14, right: style.x + left + maxLineWidth + 14, top: style.y + top - 10, bottom: style.y + bottom + 10 };
+      return bounds;
     }
 
     function drawInvitation(page = currentPage(), showGuides = true) {
@@ -1863,21 +1360,22 @@
 
       renderedBounds = [];
       for (const key of page.layerOrder) {
-        const bounds = drawTextLayer(page, key);
+        const bounds = drawTextLayer(page, key, showGuides);
         if (bounds) renderedBounds.push(bounds);
       }
       for (const shape of page.shapes) drawShape(shape);
       if (showGuides && snapGuides?.layer === selectedLayer && selectedLayer !== 'photo') {
         canvasContext.save();
         canvasContext.strokeStyle = '#4c89cb';
-        canvasContext.setLineDash([8, 8]);
+        canvasContext.lineWidth = 1;
         canvasContext.beginPath();
         canvasContext.moveTo(width / 2, 50);
         canvasContext.lineTo(width / 2, height - 50);
         canvasContext.stroke();
         canvasContext.restore();
       }
-      if (showGuides) drawSelectionGizmo(page);
+      if (showGuides && selectionGizmoActive) drawSelectionGizmo(page);
+      if (inlineEditingLayer) updateInlineTextEditorPosition();
     }
 
     function isTextLayer(key = selectedLayer) {
@@ -1903,38 +1401,60 @@
       for (const control of Object.values(styleControls)) control.disabled = !style || locked;
       document.getElementById('font-preset').disabled = !style || locked;
       document.getElementById('text-style').disabled = !style || locked;
-      document.getElementById('toggle-lock').disabled = false;
       document.getElementById('bring-forward').disabled = !style || locked;
       document.getElementById('send-backward').disabled = !style || locked;
       const isShape = selectedLayer.startsWith('shape:');
       const shape = isShape ? page.shapes.find((item) => item.id === selectedLayer.slice(6)) : null;
+      for (const control of Object.values(photoControls)) control.disabled = selectedLayer !== 'photo' || page.photoLocked;
+      for (const id of ['background-zoom', 'background-position-x', 'background-position-y', 'background-opacity', 'background-blend-mode']) {
+        document.getElementById(id).disabled = selectedLayer !== 'background' || !page.background || page.backgroundLocked;
+      }
       document.getElementById('shape-bring-forward').disabled = !isShape || locked;
       document.getElementById('shape-send-backward').disabled = !isShape || locked;
       document.getElementById('shape-lock').disabled = !isShape;
       document.getElementById('delete-shape').disabled = !shape?.removable || locked;
-      for (const control of [document.getElementById('shape-stroke'), document.getElementById('shape-stroke-width'), document.getElementById('shape-fill'), document.getElementById('shape-transparent'), document.getElementById('shape-photo-zoom'), document.getElementById('shape-photo-upload')]) {
+      const shapeCornersEnabled = shape && ['rectangle', 'rounded', 'triangle', 'diamond', 'star'].includes(shape.type);
+      for (const control of [
+        document.getElementById('shape-stroke'), document.getElementById('shape-stroke-width'),
+        document.getElementById('shape-corner-style'), document.getElementById('shape-corner-radius'), document.getElementById('shape-inner-corner-radius'),
+        document.getElementById('shape-fill'), document.getElementById('shape-transparent'),
+        document.getElementById('shape-photo-zoom'), document.getElementById('shape-photo-upload'),
+        document.getElementById('shape-photo-opacity'), document.getElementById('shape-photo-blend-mode')
+      ]) {
         control.disabled = !isShape || locked;
+      }
+      document.getElementById('shape-corner-radius').disabled = !shapeCornersEnabled || locked;
+      document.getElementById('shape-corner-style').disabled = !shapeCornersEnabled || locked;
+      document.getElementById('shape-inner-corner-radius').disabled = !shape || !['rectangle', 'rounded', 'star'].includes(shape.type) || locked;
+      for (const control of [document.getElementById('shape-photo-opacity'), document.getElementById('shape-photo-blend-mode')]) {
+        control.disabled = !shape?.photo || locked;
       }
       syncToolbarControls();
       if (shape) {
         document.getElementById('shape-stroke').value = shape.stroke;
         document.getElementById('shape-stroke-width').value = shape.strokeWidth;
         document.getElementById('shape-stroke-width').parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
+        document.getElementById('shape-corner-style').value = shape.cornerStyle || 'rounded';
+        document.getElementById('shape-corner-radius').value = shape.cornerRadius ?? 0;
+        document.getElementById('shape-inner-corner-radius').value = shape.innerCornerRadius ?? 0;
+        document.getElementById('shape-corner-radius').parentElement.querySelector('output').value = `${shape.cornerRadius ?? 0} px`;
+        document.getElementById('shape-inner-corner-radius').parentElement.querySelector('output').value = `${shape.innerCornerRadius ?? 0} px`;
         document.getElementById('shape-fill').value = shape.fill;
         document.getElementById('shape-transparent').checked = shape.transparent;
         document.getElementById('shape-photo-zoom').value = shape.photoZoom;
         document.getElementById('shape-photo-zoom').parentElement.querySelector('output').value = `${Math.round(shape.photoZoom * 100)}%`;
+        document.getElementById('shape-photo-opacity').value = shape.photoOpacity ?? 100;
+        document.getElementById('shape-photo-opacity').parentElement.querySelector('output').value = `${shape.photoOpacity ?? 100}%`;
+        document.getElementById('shape-photo-blend-mode').value = shape.photoBlendMode || 'source-over';
         updateLockButton(document.getElementById('shape-lock'), shape.locked, 'selected shape');
       } else {
         updateLockButton(document.getElementById('shape-lock'), false, 'selected shape');
       }
-      updateLockButton(document.getElementById('toggle-lock'), locked, 'selected item');
       if (!style) return;
 
       styleControls.size.value = style.size;
       styleControls.color.value = style.color;
       styleControls.weight.value = style.weight;
-      styleControls.alignment.value = style.align;
       styleControls.lineSpacing.value = style.lineSpacing;
       styleControls.letterSpacing.value = style.letterSpacing;
       styleControls.effect.value = style.effect;
@@ -1949,10 +1469,15 @@
     }
 
     function syncToolbarControls() {
-      const style = isTextLayer() ? currentPage().styles[selectedLayer] : null;
-      for (const control of [toolbar.font, toolbar.size, toolbar.color, toolbar.bold, toolbar.italic, toolbar.underline, toolbar.alignment, toolbar.effect]) {
+      const baseStyle = isTextLayer() ? currentPage().styles[selectedLayer] : null;
+      const selection = inlineEditingLayer === selectedLayer ? getInlineSelection() : null;
+      const selectionOffset = selection ? getTextOffset(inlineTextEditor, selection.startContainer, selection.startOffset) : -1;
+      const style = baseStyle && selection ? getTextRunStyle(baseStyle, selectionOffset) : baseStyle;
+      editorFormatbar.hidden = !(textEditingActive && selectionGizmoActive && style);
+      for (const control of [toolbar.font, toolbar.size, toolbar.color, toolbar.bold, toolbar.italic, toolbar.underline, toolbar.effect]) {
         control.disabled = !style || style.locked;
       }
+      for (const control of toolbar.alignment) control.disabled = !style || style.locked;
       document.getElementById('toolbar-size-down').disabled = !style || style.locked;
       document.getElementById('toolbar-size-up').disabled = !style || style.locked;
       if (!style) {
@@ -1971,7 +1496,9 @@
       toolbar.bold.setAttribute('aria-pressed', String(Number(style.weight) >= 600));
       toolbar.italic.setAttribute('aria-pressed', String(style.italic));
       toolbar.underline.setAttribute('aria-pressed', String(style.underline));
-      toolbar.alignment.value = style.align;
+      for (const button of toolbar.alignment) {
+        button.setAttribute('aria-pressed', String(button.dataset.toolbarAlign === style.align));
+      }
       toolbar.effect.value = style.effect;
       updateLockButton(toolbar.lock, style.locked, 'selected item');
       updateLockButton(document.getElementById('canvas-lock'), style.locked, 'selected item');
@@ -1987,16 +1514,27 @@
       document.querySelectorAll('[data-editor-panel]').forEach((panel) => {
         panel.hidden = !panel.dataset.editorPanel.split(/\s+/).includes(tab);
       });
-      if (tab === 'text' || tab === 'elements' || tab === 'brand') {
-        document.querySelector('.editor-advanced').open = true;
+      if (tab === 'text' || tab === 'insert') {
+        document.querySelectorAll('.editor-tools details').forEach((details) => {
+          details.open = false;
+        });
       }
-      if (tab === 'uploads' || tab === 'tools') {
+      if (tab === 'insert') document.querySelector('.editor-shapes-section').open = true;
+      if (tab === 'pictures') {
         document.querySelector('[aria-label="Photo editing"]').open = true;
       }
     }
 
+    function activateShapeSection() {
+      setEditorTab('insert');
+      document.querySelectorAll('.editor-tools details').forEach((details) => {
+        details.open = details.classList.contains('editor-shapes-section');
+      });
+    }
+
     function openLayerDetails(key) {
       if (key === 'photo') return;
+      document.querySelector('.editor-text-disclosure').open = true;
       for (const details of document.querySelectorAll('[name="invitation-details"]')) {
         const lockButton = details.querySelector('[data-lock-layer]');
         if (lockButton && lockButton.dataset.lockLayer === key) {
@@ -2028,17 +1566,6 @@
       document.getElementById('editor-undo').disabled = undoStack.length === 0;
     }
 
-    function addPage() {
-      recordUndo();
-      pages.push(makePage());
-      currentPageIndex = pages.length - 1;
-      selectedLayer = 'names';
-      updatePageSelect();
-      syncPageControls();
-      drawInvitation();
-      setStatus(`Page ${currentPageIndex + 1} added.`, 'success');
-    }
-
     function duplicateSelectedLayer() {
       if (selectedLayer === 'photo') {
         setStatus('Photo duplication is not available yet. Upload the image again to add another photo.', 'error');
@@ -2060,8 +1587,10 @@
       page.styles[key] = { ...style, x: Math.min(990, style.x + 24), y: Math.min(1290, style.y + 42), locked: false };
       page.layerOrder.push(key);
       selectedLayer = key;
+      textEditingActive = true;
+      selectionGizmoActive = true;
       syncLayerControls();
-      customTextList.lastElementChild.open = true;
+      openLayerDetails(key);
       syncStyleControls();
       drawInvitation();
       setStatus(`Additional text duplicated.`, 'success');
@@ -2079,8 +1608,10 @@
       page.styles[key] = { ...objectClipboard.style, x: Math.min(990, objectClipboard.style.x + 24), y: Math.min(1290, objectClipboard.style.y + 42), locked: false };
       page.layerOrder.push(key);
       selectedLayer = key;
+      textEditingActive = true;
+      selectionGizmoActive = true;
       syncLayerControls();
-      customTextList.lastElementChild.open = true;
+      openLayerDetails(key);
       syncStyleControls();
       drawInvitation();
       setStatus('Text item pasted.', 'success');
@@ -2182,18 +1713,119 @@
         button.addEventListener('click', () => {
           currentPageIndex = index;
           selectedLayer = 'names';
+          textEditingActive = false;
+          selectionGizmoActive = false;
           photoUpload.value = '';
           loadCurrentPage();
           updatePageStrip();
           setStatus(`Page ${index + 1} selected.`);
         });
         return button;
-      }), Object.assign(document.createElement('button'), {
-        className: 'editor-page-thumb editor-page-add',
-        type: 'button',
-        textContent: '+ Add page',
-        onclick: () => addPage()
       }));
+    }
+
+    function syncTemplateTextItems() {
+      const page = currentPage();
+      const customKeys = page.layerOrder.filter((key) => !layerKeys.includes(key));
+      const orderedTextKeys = [...page.layerOrder].sort((left, right) => page.styles[left].y - page.styles[right].y);
+      const openTextLayers = new Set([...templateTextList.querySelectorAll('details[name="invitation-details"][open]')]
+        .map((details) => details.querySelector('[data-lock-layer]')?.dataset.lockLayer)
+        .filter(Boolean));
+      for (const key of Object.keys(textFields)) delete textFields[key];
+      templateTextList.replaceChildren(...orderedTextKeys.map((key) => {
+        const label = layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`;
+        const details = document.createElement('details');
+        details.className = 'editor-accordion';
+        details.name = 'invitation-details';
+        details.open = openTextLayers.has(key);
+        const summary = document.createElement('summary');
+        summary.setAttribute('aria-current', String(selectedLayer === key));
+        const labelElement = document.createElement('span');
+        labelElement.className = 'editor-accordion-label';
+        labelElement.textContent = label;
+        const preview = document.createElement('span');
+        preview.className = 'editor-accordion-preview';
+        preview.dataset.textPreview = key;
+        summary.append(labelElement, preview);
+        const lockButton = document.createElement('button');
+        lockButton.className = 'editor-lock';
+        lockButton.type = 'button';
+        lockButton.dataset.lockLayer = key;
+        updateLockButton(lockButton, page.styles[key].locked, label);
+        lockButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          setLayerLocked(key, !currentPage().styles[key].locked);
+        });
+        summary.append(lockButton);
+        const content = document.createElement('div');
+        content.className = 'editor-accordion-content';
+        const fieldLabel = document.createElement('label');
+        fieldLabel.className = 'editor-field';
+        fieldLabel.textContent = `${label} text`;
+        const field = document.createElement(key === 'message' || !layerKeys.includes(key) ? 'textarea' : 'input');
+        if (field instanceof HTMLInputElement) field.type = 'text';
+        field.maxLength = key === 'names' ? 40 : key === 'message' || !layerKeys.includes(key) ? 110 : key === 'date' ? 42 : key === 'time' ? 30 : 48;
+        field.value = page.text[key];
+        field.readOnly = true;
+        field.className = 'editor-text-layer-value';
+        field.title = 'Click to edit this text on the invitation using the text toolbar.';
+        field.disabled = page.styles[key].locked;
+        field.setAttribute('aria-label', `${label} text`);
+        textFields[key] = field;
+        field.addEventListener('click', () => {
+          if (!currentPage().styles[key].locked) startInlineTextEditing(key);
+        });
+        field.addEventListener('focus', () => {
+          selectedLayer = key;
+          textEditingActive = true;
+          selectionGizmoActive = true;
+          syncStyleControls();
+          updateTextItemSelection();
+          drawInvitation(currentPage(), true);
+        });
+        field.addEventListener('input', () => {
+          if (currentPage().styles[key].locked) return;
+          recordUndo();
+          currentPage().text[key] = field.value;
+          currentPage().styles[key].runs = [];
+          const selectedContent = document.getElementById('selected-text-content');
+          if (selectedLayer === key) selectedContent.value = field.value;
+          updateTextItemPreview(key);
+          drawInvitation();
+        });
+        fieldLabel.append(field);
+        content.append(fieldLabel);
+        details.append(summary, content);
+        summary.addEventListener('click', (event) => {
+          event.preventDefault();
+          selectedLayer = key;
+          textEditingActive = true;
+          selectionGizmoActive = true;
+          details.open = !details.open;
+          if (details.open) document.querySelector('.editor-text-disclosure').open = true;
+          if (inlineEditingLayer && inlineEditingLayer !== key) finishInlineTextEditing();
+          syncStyleControls();
+          updateTextItemSelection();
+          drawInvitation(currentPage(), true);
+        });
+        updateTextItemPreview(key, preview);
+        return details;
+      }));
+    }
+
+    function updateTextItemPreview(key, preview = templateTextList.querySelector(`[data-text-preview="${CSS.escape(key)}"]`)) {
+      if (!preview) return;
+      const text = (currentPage().text[key] || '').replace(/\s+/g, ' ').trim();
+      preview.textContent = text ? ` · ${text.slice(0, 22)}${text.length > 22 ? '…' : ''}` : '';
+    }
+
+    function updateTextItemSelection() {
+      templateTextList.querySelectorAll('.editor-accordion > summary').forEach((summary) => {
+        const details = summary.parentElement;
+        const selected = details.querySelector('[data-lock-layer]')?.dataset.lockLayer === selectedLayer;
+        summary.setAttribute('aria-current', String(selected));
+      });
     }
 
     function syncLayerControls() {
@@ -2203,79 +1835,8 @@
         new Option('Photo', 'photo'),
         ...page.layerOrder.map((key) => new Option(layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`, key))
       );
-      const layerItems = [
-        ...[...page.shapes].reverse().map((shape) => ({
-          key: `shape:${shape.id}`,
-          label: `Shape · ${shape.type}`
-        })),
-        ...[...page.layerOrder].reverse().map((key) => ({
-          key,
-          label: layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`
-        })),
-        { key: 'photo', label: 'Photo' },
-        { key: 'background', label: 'Background' }
-      ];
-      layerList.replaceChildren(...layerItems.map(({ key, label }) => {
-        const button = document.createElement('button');
-        button.className = 'editor-layer-item';
-        button.type = 'button';
-        const locked = key === 'photo' ? page.photoLocked
-          : key === 'background' ? page.backgroundLocked
-            : key.startsWith('shape:') ? page.shapes.find((shape) => shape.id === key.slice(6)).locked
-              : page.styles[key].locked;
-        button.textContent = `${label}${locked ? ' · Locked' : ''}`;
-        button.setAttribute('aria-current', String(selectedLayer === key));
-        button.addEventListener('click', () => {
-          selectedLayer = key;
-          setEditorTab(key === 'photo' ? 'tools' : key === 'background' ? 'elements' : key.startsWith('shape:') ? 'elements' : 'text');
-          openLayerDetails(key);
-          if (key === 'background') document.querySelector('[aria-label="Background image"]').open = true;
-          if (key.startsWith('shape:')) document.querySelector('[aria-label="Frames and shapes"]').open = true;
-          if ([...textLayerSelect.options].some((option) => option.value === key)) textLayerSelect.value = key;
-          syncStyleControls();
-          syncLayerControls();
-          drawInvitation(currentPage(), true);
-        });
-        return button;
-      }));
-
-      customTextList.replaceChildren(...customKeys.map((key, index) => {
-        const details = document.createElement('details');
-        details.className = 'editor-accordion';
-        details.name = 'invitation-details';
-        const summary = document.createElement('summary');
-        summary.textContent = `Additional text ${index + 1}`;
-        const lockButton = document.createElement('button');
-        lockButton.className = 'editor-lock';
-        lockButton.type = 'button';
-        lockButton.dataset.lockLayer = key;
-        updateLockButton(lockButton, page.styles[key].locked, `additional text ${index + 1}`);
-        lockButton.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          setLayerLocked(key, !currentPage().styles[key].locked);
-        });
-        const content = document.createElement('div');
-        content.className = 'editor-accordion-content';
-        const label = document.createElement('label');
-        label.className = 'editor-field';
-        label.textContent = `Additional text ${index + 1}`;
-        const field = document.createElement('textarea');
-        field.maxLength = 110;
-        field.value = page.text[key];
-        field.disabled = page.styles[key].locked;
-        field.setAttribute('aria-label', `Additional text ${index + 1}`);
-        field.addEventListener('input', () => {
-          if (currentPage().styles[key].locked) return;
-          recordUndo();
-          currentPage().text[key] = field.value;
-          drawInvitation();
-        });
-        label.append(field);
-        content.append(label);
-        details.append(summary, lockButton, content);
-        return details;
-      }));
+      textLayerSelect.value = isTextLayer() ? selectedLayer : 'photo';
+      syncTemplateTextItems();
 
       document.querySelectorAll('[data-lock-layer]').forEach((button) => {
         const key = button.dataset.lockLayer;
@@ -2291,6 +1852,12 @@
         field.disabled = page.styles[key].locked;
       }
       photoControls.zoom.value = page.photoZoom;
+      photoControls.opacity.value = page.photoOpacity;
+      photoControls.blendMode.value = page.photoBlendMode;
+      photoControls.borderColor.value = page.photoBorderColor;
+      photoControls.borderWidth.value = page.photoBorderWidth;
+      photoControls.cornerRadius.value = page.photoCornerRadius;
+      photoControls.cornerStyle.value = page.photoCornerStyle || 'rounded';
       photoControls.filter.value = page.filter;
       photoControls.brightness.value = page.brightness;
       photoControls.contrast.value = page.contrast;
@@ -2316,35 +1883,37 @@
       photoControls.tint.parentElement.querySelector('output').value = page.tint;
       photoControls.positionX.parentElement.querySelector('output').value = page.photoX;
       photoControls.positionY.parentElement.querySelector('output').value = page.photoY;
+      photoControls.opacity.parentElement.querySelector('output').value = `${page.photoOpacity}%`;
+      photoControls.borderWidth.parentElement.querySelector('output').value = `${page.photoBorderWidth} px`;
+      photoControls.cornerRadius.parentElement.querySelector('output').value = `${page.photoCornerRadius} px`;
       document.querySelector('#background-zoom + output').value = `${Math.round(page.backgroundZoom * 100)}%`;
+      document.getElementById('background-opacity').value = page.backgroundOpacity;
+      document.getElementById('background-blend-mode').value = page.backgroundBlendMode;
+      document.querySelector('#background-opacity + output').value = `${page.backgroundOpacity}%`;
       document.getElementById('background-position-x').parentElement.querySelector('output').value = page.backgroundX;
       document.getElementById('background-position-y').parentElement.querySelector('output').value = page.backgroundY;
       document.getElementById('flip-photo').setAttribute('aria-pressed', String(page.flipX));
       document.getElementById('flip-photo-vertical').setAttribute('aria-pressed', String(page.flipY));
-      pageSelect.value = String(currentPageIndex);
       document.getElementById('font-preset').value = page.fontPreset;
       syncLayerControls();
       syncStyleControls();
     }
 
     function updatePageSelect() {
-      pageSelect.replaceChildren(...pages.map((_, index) => {
-        const option = document.createElement('option');
-        option.value = String(index);
-        option.textContent = `Page ${index + 1}`;
-        return option;
-      }));
-      pageSelect.value = String(currentPageIndex);
       updatePageStrip();
     }
 
     function loadCurrentPage() {
+      syncLayerControls();
       syncPageControls();
       drawInvitation();
     }
 
     function openTemplateEditor() {
       previousFocus = document.activeElement;
+      textEditingActive = false;
+      selectionGizmoActive = false;
+      syncToolbarControls();
       setStatus('');
       updatePageSelect();
       loadCurrentPage();
@@ -2355,7 +1924,7 @@
       return {
         ...page,
         text: { ...page.text },
-        styles: Object.fromEntries(Object.entries(page.styles).map(([key, style]) => [key, { ...style }])),
+        styles: Object.fromEntries(Object.entries(page.styles).map(([key, style]) => [key, { ...style, runs: style.runs?.map((run) => ({ ...run })) }])),
         layerOrder: [...page.layerOrder],
         shapes: page.shapes.map((shape) => ({ ...shape }))
       };
@@ -2374,7 +1943,7 @@
         link.download = `lobola-invitation-page-${currentPageIndex + 1}.${type}`;
         link.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
-        setStatus(`Page ${currentPageIndex + 1} downloaded as ${type.toUpperCase()} at 1080 × 1350 px.`, 'success');
+        setStatus(`Page ${currentPageIndex + 1} downloaded as ${type.toUpperCase()} at ${canvasWidth} × ${canvasHeight} px.`, 'success');
       } catch (error) {
         setStatus(error.message || 'The invitation image could not be downloaded.', 'error');
       } finally {
@@ -2427,12 +1996,12 @@
         const contentObject = pageObject + 2;
         pageReferences.push(`${pageObject} 0 R`);
         const image = pdfPages[index];
-        const content = asciiBytes('q 648 0 0 810 0 0 cm /Im0 Do Q');
-        const pageWidth = printQuality ? 259.2 : 648;
-        const pageHeight = printQuality ? 324 : 810;
+        const pageWidth = canvasWidth * (printQuality ? .24 : .6);
+        const pageHeight = canvasHeight * (printQuality ? .24 : .6);
+        const content = asciiBytes(`q ${pageWidth} 0 0 ${pageHeight} 0 0 cm /Im0 Do Q`);
         objects.set(pageObject, asciiBytes(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 ${imageObject} 0 R >> >> /Contents ${contentObject} 0 R >>`));
         objects.set(imageObject, concatenateBytes([
-          asciiBytes(`<< /Type /XObject /Subtype /Image /Width 1080 /Height 1350 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.length} >>\nstream\n`),
+          asciiBytes(`<< /Type /XObject /Subtype /Image /Width ${canvasWidth} /Height ${canvasHeight} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.length} >>\nstream\n`),
           image,
           asciiBytes('\nendstream')
         ]));
@@ -2494,7 +2063,6 @@
       style.size = Number(styleControls.size.value);
       style.color = styleControls.color.value;
       style.weight = styleControls.weight.value;
-      style.align = styleControls.alignment.value;
       style.lineSpacing = Number(styleControls.lineSpacing.value);
       style.letterSpacing = Number(styleControls.letterSpacing.value);
       style.effect = styleControls.effect.value;
@@ -2553,9 +2121,17 @@
     });
 
     categoryToggle.addEventListener('click', () => {
-      const isExpanded = categoryToggle.getAttribute('aria-expanded') === 'true';
-      categoryToggle.setAttribute('aria-expanded', String(!isExpanded));
-      categoryProducts.hidden = isExpanded;
+      categoryToggle.setAttribute('aria-expanded', 'true');
+      categoriesSection.classList.add('is-expanded');
+      categoryProducts.hidden = false;
+      productButton.focus();
+    });
+
+    categoryBack.addEventListener('click', () => {
+      categoryToggle.setAttribute('aria-expanded', 'false');
+      categoryProducts.hidden = true;
+      categoriesSection.classList.remove('is-expanded');
+      categoryToggle.focus();
     });
 
     productButton.addEventListener('click', openTemplateEditor);
@@ -2566,13 +2142,14 @@
     document.getElementById('invitation-form').addEventListener('submit', (event) => event.preventDefault());
     document.querySelectorAll('[data-editor-tab]').forEach((button) => {
       button.addEventListener('click', () => {
+        if (button.dataset.editorTab === 'text') {
+          document.querySelectorAll('.editor-tools details').forEach((details) => {
+            details.open = false;
+          });
+        }
         setEditorTab(button.dataset.editorTab);
         if (button.dataset.editorTab === 'text' && selectedLayer === 'photo') {
           selectedLayer = 'names';
-          syncStyleControls();
-        }
-        if (button.dataset.editorTab === 'uploads' || button.dataset.editorTab === 'tools') {
-          selectedLayer = 'photo';
           syncStyleControls();
         }
       });
@@ -2580,10 +2157,6 @@
     setEditorTab(activeEditorTab);
 
     document.getElementById('editor-home').addEventListener('click', () => editorDialog.close());
-    document.getElementById('editor-file').addEventListener('click', () => setEditorTab('apps'));
-    document.getElementById('editor-size-lock').addEventListener('click', () => {
-      setStatus('This template is fixed at 1080 × 1350 px and cannot be resized.');
-    });
     document.getElementById('editor-undo').addEventListener('click', restoreUndo);
     document.getElementById('editor-share').addEventListener('click', async () => {
       if (!navigator.share) {
@@ -2603,12 +2176,264 @@
       }
     });
 
+    function getInlineSelection() {
+      const selection = window.getSelection();
+      if (selection?.rangeCount && inlineTextEditor.contains(selection.anchorNode) && inlineTextEditor.contains(selection.focusNode)) {
+        savedInlineSelection = selection.getRangeAt(0).cloneRange();
+      }
+      return savedInlineSelection?.collapsed === false ? savedInlineSelection : null;
+    }
+
+    function getTextOffset(container, target, offset) {
+      const range = document.createRange();
+      range.selectNodeContents(container);
+      range.setEnd(target, offset);
+      return range.toString().length;
+    }
+
+    function renderInlineTextEditor(key) {
+      const text = currentPage().text[key] || '';
+      const runs = currentPage().styles[key].runs || [];
+      inlineTextEditor.replaceChildren();
+      let offset = 0;
+      while (offset < text.length) {
+        const run = runs.find((item) => offset >= item.start && offset < item.end);
+        const end = run ? Math.min(text.length, run.end) : Math.min(text.length, runs.find((item) => item.start > offset)?.start ?? text.length);
+        const span = document.createElement('span');
+        if (run) {
+          for (const property of ['family', 'size', 'color', 'weight', 'italic', 'underline', 'effect']) {
+            if (run[property] !== undefined) span.dataset[property] = String(run[property]);
+          }
+          applyRunCss(span, run);
+        }
+        span.textContent = text.slice(offset, end);
+        inlineTextEditor.append(span);
+        offset = end;
+      }
+      if (!text) inlineTextEditor.append(document.createTextNode(''));
+    }
+
+    function applyRunCss(element, run) {
+      if (run.family) element.style.fontFamily = run.family;
+      if (run.size) element.style.fontSize = `${run.size}px`;
+      if (run.color) element.style.color = run.color;
+      if (run.weight) element.style.fontWeight = run.weight;
+      if (run.italic !== undefined) element.style.fontStyle = run.italic ? 'italic' : 'normal';
+      if (run.underline !== undefined) element.style.textDecoration = run.underline ? 'underline' : 'none';
+      if (run.effect === 'shadow') element.style.textShadow = '0 2px 5px rgb(38 29 26 / 32%)';
+      if (run.effect === 'lift') element.style.textShadow = '0 8px 12px rgb(38 29 26 / 32%)';
+      if (run.effect === 'neon') element.style.textShadow = `0 0 24px ${run.color || 'currentColor'}`;
+      if (run.effect === 'hollow') {
+        element.style.webkitTextStroke = `1px ${run.color || 'currentColor'}`;
+        element.style.color = 'transparent';
+      }
+    }
+
+    function collectInlineRuns() {
+      const collected = [];
+      let offset = 0;
+      const visit = (node, inherited = {}) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const length = node.textContent.length;
+          if (length) collected.push({ start: offset, end: offset + length, ...inherited });
+          offset += length;
+          return;
+        }
+        const styles = { ...inherited };
+        if (node instanceof HTMLElement && node !== inlineTextEditor) {
+          if (node.tagName === 'DIV' && offset > 0) {
+            collected.push({ start: offset, end: offset + 1 });
+            offset += 1;
+          }
+          for (const property of ['family', 'size', 'color', 'weight', 'italic', 'underline', 'effect']) {
+            if (node.dataset[property] !== undefined) {
+              styles[property] = property === 'size' ? Number(node.dataset[property])
+                : property === 'italic' || property === 'underline' ? node.dataset[property] === 'true'
+                  : node.dataset[property];
+            }
+          }
+        }
+        for (const child of node.childNodes) visit(child, styles);
+      };
+      for (const child of inlineTextEditor.childNodes) visit(child);
+      return collected.filter((run) => Object.keys(run).length > 2);
+    }
+
+    function getInlineEditorText() {
+      let text = '';
+      const visit = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          text += node.textContent;
+          return;
+        }
+        if (node instanceof HTMLElement && node !== inlineTextEditor && node.tagName === 'BR') {
+          text += '\n';
+          return;
+        }
+        if (node instanceof HTMLElement && node.tagName === 'DIV' && text) text += '\n';
+        for (const child of node.childNodes) visit(child);
+      };
+      for (const child of inlineTextEditor.childNodes) visit(child);
+      return text.replace(/\r\n/g, '\n').replace(/\n$/, '');
+    }
+
+    function updateInlineTextEditorPosition() {
+      if (!inlineEditingLayer) return;
+      const style = currentPage().styles[inlineEditingLayer];
+      const canvasRect = invitationCanvas.getBoundingClientRect();
+      const figureRect = previewFigure.getBoundingClientRect();
+      const scaleX = canvasRect.width / invitationCanvas.width;
+      const scaleY = canvasRect.height / invitationCanvas.height;
+      const width = style.width * scaleX;
+      const left = canvasRect.left - figureRect.left + style.x * scaleX
+        - (style.align === 'center' ? width / 2 : style.align === 'right' ? width : 0);
+      inlineTextEditor.style.left = `${left}px`;
+      canvasContext.save();
+      canvasContext.font = `${style.italic ? 'italic ' : ''}${style.weight} ${style.size}px ${style.family}`;
+      const ascent = canvasContext.measureText('Mg').actualBoundingBoxAscent || style.size * .8;
+      canvasContext.restore();
+      const lines = wrapText(currentPage().text[inlineEditingLayer] || '', style.width);
+      const firstBaselineOffset = lines.length > 1
+        ? -((lines.length - 1) * style.size * style.lineSpacing) / 2
+        : 0;
+      inlineTextEditor.style.top = `${canvasRect.top - figureRect.top + (style.y + firstBaselineOffset - ascent) * scaleY}px`;
+      inlineTextEditor.style.width = `${width}px`;
+      inlineTextEditor.style.minHeight = `${style.size * style.lineSpacing * scaleY * 2}px`;
+      inlineTextEditor.style.fontFamily = style.family;
+      inlineTextEditor.style.fontSize = `${style.size * scaleY}px`;
+      inlineTextEditor.style.fontWeight = style.weight;
+      inlineTextEditor.style.fontStyle = style.italic ? 'italic' : 'normal';
+      inlineTextEditor.style.color = style.color;
+      inlineTextEditor.style.lineHeight = String(style.lineSpacing);
+      inlineTextEditor.style.letterSpacing = `${style.letterSpacing * scaleX}px`;
+      inlineTextEditor.style.textAlign = style.align;
+      inlineTextEditor.style.transform = `rotate(${style.rotation}deg)`;
+    }
+
+    function startInlineTextEditing(key) {
+      if (!currentPage().styles[key] || currentPage().styles[key].locked) return;
+      if (inlineEditingLayer && inlineEditingLayer !== key) finishInlineTextEditing();
+      controlUndoRecorded = false;
+      selectedLayer = key;
+      textEditingActive = true;
+      selectionGizmoActive = true;
+      inlineEditingLayer = key;
+      setEditorTab('text');
+      syncLayerControls();
+      syncStyleControls();
+      renderInlineTextEditor(key);
+      inlineTextEditor.hidden = false;
+      inlineTextEditor.contentEditable = 'true';
+      drawInvitation(currentPage(), true);
+      inlineTextEditor.focus();
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(inlineTextEditor);
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      savedInlineSelection = range.cloneRange();
+      syncToolbarControls();
+    }
+
+    function finishInlineTextEditing() {
+      if (!inlineEditingLayer) return;
+      saveInlineEditorContent();
+      inlineEditingLayer = null;
+      savedInlineSelection = null;
+      controlUndoRecorded = false;
+      inlineTextEditor.hidden = true;
+      drawInvitation(currentPage(), true);
+    }
+
+    function saveInlineEditorContent() {
+      if (!inlineEditingLayer) return;
+      const key = inlineEditingLayer;
+      const text = getInlineEditorText();
+      currentPage().text[key] = text;
+      currentPage().styles[key].runs = collectInlineRuns()
+        .filter((run) => run.start < text.length)
+        .map((run) => ({ ...run, end: Math.min(run.end, text.length) }));
+      if (textFields[key]) textFields[key].value = text;
+      document.getElementById('selected-text-content').value = text;
+      updateTextItemPreview(key);
+      syncTemplateTextItems();
+    }
+
+    inlineTextEditor.addEventListener('input', () => {
+      if (!inlineEditingLayer) return;
+      if (!controlUndoRecorded) {
+        recordUndo();
+        controlUndoRecorded = true;
+      }
+      saveInlineEditorContent();
+      drawInvitation();
+    });
+    inlineTextEditor.addEventListener('blur', (event) => {
+      const selection = window.getSelection();
+      const selectionInsideEditor = selection?.rangeCount
+        && inlineTextEditor.contains(selection.anchorNode)
+        && inlineTextEditor.contains(selection.focusNode);
+      if (editorFormatbar.contains(event.relatedTarget) || selectionInsideEditor) return;
+      finishInlineTextEditing();
+    });
+    inlineTextEditor.addEventListener('paste', (event) => {
+      event.preventDefault();
+      document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));
+    });
+    document.addEventListener('selectionchange', () => {
+      if (inlineEditingLayer) {
+        getInlineSelection();
+        syncToolbarControls();
+      }
+    });
+
     const formatSelection = (mutate) => {
       if (!isTextLayer()) return;
       const style = currentPage().styles[selectedLayer];
       if (style.locked) return;
+      const updatedStyle = { ...style };
+      mutate(updatedStyle);
+      const selection = inlineEditingLayer === selectedLayer ? getInlineSelection() : null;
+      if (selection) {
+        const start = getTextOffset(inlineTextEditor, selection.startContainer, selection.startOffset);
+        const end = getTextOffset(inlineTextEditor, selection.endContainer, selection.endOffset);
+        const changed = ['family', 'size', 'color', 'weight', 'italic', 'underline', 'effect']
+          .filter((property) => updatedStyle[property] !== style[property]);
+        if (changed.length) {
+          recordUndo();
+          const range = selection.cloneRange();
+          const span = document.createElement('span');
+          const inlineStyles = Object.fromEntries(changed.map((property) => [property, updatedStyle[property]]));
+          for (const property of changed) {
+            span.dataset[property] = String(updatedStyle[property]);
+            const cssProperty = {
+              family: 'font-family', size: 'font-size', color: 'color', weight: 'font-weight',
+              italic: 'font-style', underline: 'text-decoration'
+            }[property];
+            if (cssProperty) span.style.setProperty(cssProperty, property === 'size' ? `${updatedStyle[property]}px`
+              : property === 'italic' ? updatedStyle[property] ? 'italic' : 'normal'
+                : property === 'underline' ? updatedStyle[property] ? 'underline' : 'none'
+                  : updatedStyle[property]);
+          }
+          applyRunCss(span, inlineStyles);
+          span.append(range.extractContents());
+          range.insertNode(span);
+          const selectionAfter = window.getSelection();
+          const selectedRange = document.createRange();
+          selectedRange.selectNodeContents(span);
+          selectionAfter.removeAllRanges();
+          selectionAfter.addRange(selectedRange);
+          savedInlineSelection = selectedRange.cloneRange();
+          style.runs = collectInlineRuns();
+          saveInlineEditorContent();
+          syncToolbarControls();
+          drawInvitation();
+          return;
+        }
+      }
       recordUndo();
-      mutate(style);
+      Object.assign(style, updatedStyle);
       style.preset = 'custom';
       syncStyleControls();
       drawInvitation();
@@ -2632,53 +2457,75 @@
     toolbar.bold.addEventListener('click', () => formatSelection((style) => { style.weight = Number(style.weight) >= 600 ? '400' : '700'; }));
     toolbar.italic.addEventListener('click', () => formatSelection((style) => { style.italic = !style.italic; }));
     toolbar.underline.addEventListener('click', () => formatSelection((style) => { style.underline = !style.underline; }));
-    toolbar.alignment.addEventListener('change', () => formatSelection((style) => { style.align = toolbar.alignment.value; }));
+    toolbar.alignment.forEach((button) => button.addEventListener('click', () => {
+      formatSelection((style) => { style.align = button.dataset.toolbarAlign; });
+    }));
     toolbar.effect.addEventListener('change', () => formatSelection((style) => { style.effect = toolbar.effect.value; }));
     document.getElementById('toolbar-position').addEventListener('click', () => {
-      const panel = selectedLayer === 'photo' ? 'tools' : selectedLayer === 'background' || selectedLayer.startsWith('shape:') ? 'elements' : 'text';
+      const panel = selectedLayer.startsWith('shape:') ? 'insert'
+        : selectedLayer === 'photo' || selectedLayer === 'background' ? 'pictures' : 'text';
       setEditorTab(panel);
-      document.getElementById(panel === 'text' ? 'bring-forward' : panel === 'elements' ? 'shape-bring-forward' : 'photo-position-x').scrollIntoView({ block: 'nearest' });
+      const target = panel === 'text' ? 'bring-forward'
+        : panel === 'insert' ? 'shape-bring-forward'
+          : selectedLayer === 'background' ? 'background-zoom' : 'photo-position-x';
+      document.getElementById(target).scrollIntoView({ block: 'nearest' });
     });
     toolbar.lock.addEventListener('click', () => setLayerLocked(selectedLayer, !isSelectedLocked()));
+    editorFormatbar.addEventListener('mousedown', (event) => {
+      if (event.target instanceof Element && event.target.closest('button')) event.preventDefault();
+    });
     document.getElementById('canvas-duplicate').addEventListener('click', duplicateSelectedLayer);
-    document.getElementById('canvas-add-page').addEventListener('click', addPage);
+    document.getElementById('canvas-hand-tool').addEventListener('click', (event) => {
+      moveToolActive = !moveToolActive;
+      event.currentTarget.setAttribute('aria-pressed', String(moveToolActive));
+      invitationCanvas.classList.toggle('is-hand-tool', moveToolActive);
+      setStatus(moveToolActive
+        ? 'Hand tool active. Drag the selected item or its gizmo outline to move it.'
+        : 'Hand tool off. Drag an item to adjust its contents or use its gizmo handles to resize.');
+    });
     contextMenu.addEventListener('click', (event) => {
       const button = event.target.closest('[data-context-action]');
       if (button && !button.disabled) applyContextAction(button.dataset.contextAction);
     });
     document.addEventListener('pointerdown', (event) => {
       if (!contextMenu.hidden && !contextMenu.contains(event.target)) contextMenu.hidden = true;
-    });
-
-    Object.entries(textFields).forEach(([key, field]) => {
-      field.addEventListener('input', () => {
-        if (currentPage().styles[key].locked) return;
-        recordUndo();
-        currentPage().text[key] = field.value;
-        if (selectedLayer === key) document.getElementById('selected-text-content').value = field.value;
-        drawInvitation();
-      });
-    });
-
-    document.getElementById('selected-text-content').addEventListener('input', (event) => {
-      if (!isTextLayer() || isSelectedLocked()) return;
-      if (!controlUndoRecorded) {
-        recordUndo();
-        controlUndoRecorded = true;
+      const targetElement = event.target instanceof Element ? event.target : null;
+      const textFieldTarget = targetElement?.closest('#selected-text-content, .editor-text-layer-value');
+      const textLayerSummaryTarget = targetElement?.closest('.editor-accordion > summary')
+        && !targetElement.closest('[data-lock-layer]');
+      if (inlineEditingLayer && !inlineTextEditor.contains(event.target) && !editorFormatbar.contains(event.target)
+        && !textFieldTarget && !textLayerSummaryTarget) {
+        finishInlineTextEditing();
       }
-      const key = selectedLayer;
-      currentPage().text[key] = event.currentTarget.value;
-      if (textFields[key]) textFields[key].value = event.currentTarget.value;
-      const customKeys = currentPage().layerOrder.filter((layer) => !layerKeys.includes(layer));
-      const customIndex = customKeys.indexOf(key);
-      if (customIndex >= 0) document.querySelectorAll('#custom-text-list textarea')[customIndex].value = event.currentTarget.value;
-      drawInvitation();
+      if (textFieldTarget || textLayerSummaryTarget) return;
+      if (!editorDialog.open || invitationCanvas.contains(event.target)
+        || inlineTextEditor.contains(event.target) || editorFormatbar.contains(event.target)) return;
+      selectionGizmoActive = false;
+      textEditingActive = false;
+      mobileEditLayer = null;
+      lastTouchTap = null;
+      invitationCanvas.classList.remove('is-touch-editing');
+      syncToolbarControls();
+      drawInvitation(currentPage());
+    });
+
+    document.getElementById('selected-text-content').addEventListener('click', () => {
+      if (isTextLayer() && !isSelectedLocked()) startInlineTextEditing(selectedLayer);
+    });
+    document.getElementById('selected-text-content').addEventListener('focus', () => {
+      if (!isTextLayer()) return;
+      textEditingActive = true;
+      selectionGizmoActive = true;
+      syncToolbarControls();
+      drawInvitation(currentPage(), true);
     });
     document.getElementById('selected-text-content').addEventListener('change', () => { controlUndoRecorded = false; });
 
     textLayerSelect.addEventListener('change', (event) => {
       selectedLayer = event.target.value;
-      setEditorTab(selectedLayer === 'photo' ? 'tools' : 'text');
+      textEditingActive = selectedLayer !== 'photo';
+      selectionGizmoActive = textEditingActive;
+      setEditorTab(selectedLayer === 'photo' ? 'pictures' : 'text');
       openLayerDetails(selectedLayer);
       syncLayerControls();
       syncStyleControls();
@@ -2698,21 +2545,20 @@
       const page = currentPage();
       recordUndo();
       const key = `custom-${Date.now()}-${page.layerOrder.length}`;
-      const customCount = page.layerOrder.filter((layer) => !layerKeys.includes(layer)).length;
-      page.text[key] = 'Your text';
+      page.text[key] = 'Text';
       page.styles[key] = {
         ...layerDefaults.message,
-        y: 1240 - customCount * 48,
+        x: invitationCanvas.width / 2,
+        y: invitationCanvas.height / 2,
+        align: 'center',
         size: 32,
         preset: 'custom'
       };
       page.layerOrder.push(key);
       selectedLayer = key;
       syncLayerControls();
-      customTextList.lastElementChild.open = true;
-      syncStyleControls();
-      drawInvitation();
-      setStatus('Additional text added. Edit its wording below and drag it on the design to position it.', 'success');
+      startInlineTextEditing(key);
+      setStatus('Text added to the center of the invitation. Edit it on the design with the text toolbar.', 'success');
     });
 
     for (const control of Object.values(styleControls)) {
@@ -2752,45 +2598,39 @@
       drawInvitation();
     });
 
-    pageSelect.addEventListener('change', () => {
-      currentPageIndex = Number(pageSelect.value);
-      selectedLayer = 'names';
-      photoUpload.value = '';
-      loadCurrentPage();
-      updatePageStrip();
-      setStatus(`Page ${currentPageIndex + 1} selected.`);
-    });
-
-    document.getElementById('add-page').addEventListener('click', addPage);
-
-    document.getElementById('duplicate-page').addEventListener('click', () => {
-      recordUndo();
-      pages.splice(currentPageIndex + 1, 0, clonePage(currentPage()));
-      currentPageIndex += 1;
-      selectedLayer = 'names';
-      updatePageSelect();
-      syncPageControls();
-      drawInvitation();
-      setStatus(`Page ${currentPageIndex + 1} duplicated.`);
-    });
-
     for (const [key, control] of Object.entries(photoControls)) {
       control.addEventListener('input', () => {
         if (!controlUndoRecorded) {
           recordUndo();
           controlUndoRecorded = true;
         }
-        const suffix = key === 'brightness' || key === 'contrast' || key === 'saturation' ? '%' : '';
-        const pageKey = key === 'zoom' ? 'photoZoom'
-          : key === 'positionX' ? 'photoX'
-            : key === 'positionY' ? 'photoY' : key;
+        const suffix = ['brightness', 'contrast', 'saturation', 'opacity'].includes(key) ? '%' : ['borderWidth', 'cornerRadius'].includes(key) ? ' px' : '';
+        const pageKey = {
+          zoom: 'photoZoom',
+          opacity: 'photoOpacity',
+          blendMode: 'photoBlendMode',
+          borderColor: 'photoBorderColor',
+          borderWidth: 'photoBorderWidth',
+          cornerRadius: 'photoCornerRadius',
+          cornerStyle: 'photoCornerStyle',
+          positionX: 'photoX',
+          positionY: 'photoY'
+        }[key] || key;
         setPhotoControl(pageKey, control, control.parentElement.querySelector('output'), suffix);
       });
       control.addEventListener('change', () => {
-        const suffix = key === 'brightness' || key === 'contrast' || key === 'saturation' ? '%' : '';
-        const pageKey = key === 'zoom' ? 'photoZoom'
-          : key === 'positionX' ? 'photoX'
-            : key === 'positionY' ? 'photoY' : key;
+        const suffix = ['brightness', 'contrast', 'saturation', 'opacity'].includes(key) ? '%' : ['borderWidth', 'cornerRadius'].includes(key) ? ' px' : '';
+        const pageKey = {
+          zoom: 'photoZoom',
+          opacity: 'photoOpacity',
+          blendMode: 'photoBlendMode',
+          borderColor: 'photoBorderColor',
+          borderWidth: 'photoBorderWidth',
+          cornerRadius: 'photoCornerRadius',
+          cornerStyle: 'photoCornerStyle',
+          positionX: 'photoX',
+          positionY: 'photoY'
+        }[key] || key;
         setPhotoControl(pageKey, control, control.parentElement.querySelector('output'), suffix);
         controlUndoRecorded = false;
       });
@@ -2821,7 +2661,9 @@
     for (const [id, key] of [
     ['background-zoom', 'backgroundZoom'],
     ['background-position-x', 'backgroundX'],
-    ['background-position-y', 'backgroundY']
+    ['background-position-y', 'backgroundY'],
+    ['background-opacity', 'backgroundOpacity'],
+    ['background-blend-mode', 'backgroundBlendMode']
     ]) {
     const control = document.getElementById(id);
     control.addEventListener('input', () => {
@@ -2829,9 +2671,10 @@
         recordUndo();
         controlUndoRecorded = true;
       }
-      const value = Number(control.value);
+      const value = control.type === 'range' ? Number(control.value) : control.value;
       currentPage()[key] = value;
-      control.parentElement.querySelector('output').value = key === 'backgroundZoom' ? `${Math.round(value * 100)}%` : value;
+      const output = control.parentElement.querySelector('output');
+      if (output) output.value = key === 'backgroundZoom' ? `${Math.round(value * 100)}%` : key === 'backgroundOpacity' ? `${value}%` : value;
       drawInvitation();
     });
     control.addEventListener('change', () => { controlUndoRecorded = false; });
@@ -2848,24 +2691,34 @@
       height: document.getElementById('shape-type').value === 'circle' ? 320 : 300,
       stroke: document.getElementById('shape-stroke').value,
       strokeWidth: Number(document.getElementById('shape-stroke-width').value),
+      cornerRadius: Number(document.getElementById('shape-corner-radius').value),
+      cornerStyle: document.getElementById('shape-corner-style').value,
+      innerCornerRadius: Number(document.getElementById('shape-inner-corner-radius').value),
       fill: document.getElementById('shape-fill').value,
       transparent: document.getElementById('shape-transparent').checked,
       photo: null,
       photoZoom: 1,
+      photoOpacity: 100,
+      photoBlendMode: 'source-over',
       opacity: 100,
       locked: false,
       removable: true
     };
     currentPage().shapes.push(shape);
     selectedLayer = `shape:${shape.id}`;
-    setEditorTab('elements');
+    textEditingActive = false;
+    selectionGizmoActive = true;
+    activateShapeSection();
     syncLayerControls();
     syncStyleControls();
     drawInvitation();
     setStatus(`${shape.type} frame added. Drag its handles to resize it.`, 'success');
     });
 
-    for (const id of ['shape-stroke', 'shape-stroke-width', 'shape-fill', 'shape-transparent', 'shape-photo-zoom']) {
+    for (const id of [
+      'shape-stroke', 'shape-stroke-width', 'shape-corner-style', 'shape-corner-radius', 'shape-inner-corner-radius',
+      'shape-fill', 'shape-transparent', 'shape-photo-zoom', 'shape-photo-opacity', 'shape-photo-blend-mode'
+    ]) {
     const control = document.getElementById(id);
     control.addEventListener('input', () => {
       const shape = currentPage().shapes.find((item) => `shape:${item.id}` === selectedLayer);
@@ -2879,12 +2732,26 @@
         shape.strokeWidth = Number(control.value);
         control.parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
       }
+      if (id === 'shape-corner-style') shape.cornerStyle = control.value;
+      if (id === 'shape-corner-radius') {
+        shape.cornerRadius = Number(control.value);
+        control.parentElement.querySelector('output').value = `${shape.cornerRadius} px`;
+      }
+      if (id === 'shape-inner-corner-radius') {
+        shape.innerCornerRadius = Number(control.value);
+        control.parentElement.querySelector('output').value = `${shape.innerCornerRadius} px`;
+      }
       if (id === 'shape-fill') shape.fill = control.value;
       if (id === 'shape-transparent') shape.transparent = control.checked;
       if (id === 'shape-photo-zoom') {
         shape.photoZoom = Number(control.value);
         control.parentElement.querySelector('output').value = `${Math.round(shape.photoZoom * 100)}%`;
       }
+      if (id === 'shape-photo-opacity') {
+        shape.photoOpacity = Number(control.value);
+        control.parentElement.querySelector('output').value = `${shape.photoOpacity}%`;
+      }
+      if (id === 'shape-photo-blend-mode') shape.photoBlendMode = control.value;
       drawInvitation();
     });
     control.addEventListener('change', () => { controlUndoRecorded = false; });
@@ -2892,9 +2759,6 @@
 
     document.getElementById('shape-lock').addEventListener('click', () => {
     if (!selectedLayer.startsWith('shape:')) return;
-    setLayerLocked(selectedLayer, !isSelectedLocked());
-    });
-    document.getElementById('toggle-lock').addEventListener('click', () => {
     setLayerLocked(selectedLayer, !isSelectedLocked());
     });
     document.getElementById('canvas-lock').addEventListener('click', () => {
@@ -3001,14 +2865,14 @@
       phonePreview = !phonePreview;
       previewFigure.classList.toggle('is-phone', phonePreview);
       event.currentTarget.setAttribute('aria-pressed', String(phonePreview));
+      const dimensions = `${canvasWidth} × ${canvasHeight} px`;
       previewCaption.textContent = phonePreview
-        ? `Preview · Page ${currentPageIndex + 1} · 1080 × 1350 px`
-        : `Live preview · Page ${currentPageIndex + 1} · 1080 × 1350 px · drag photo or text to reposition`;
+        ? `Preview · Page ${currentPageIndex + 1} · ${dimensions}`
+        : `Live preview · Page ${currentPageIndex + 1} · ${dimensions} · drag photo or text to reposition`;
     });
 
     document.getElementById('download-png').addEventListener('click', () => exportImage('png'));
     document.getElementById('download-jpg').addEventListener('click', () => exportImage('jpg'));
-    document.getElementById('download-pdf-standard').addEventListener('click', () => exportPdf(false));
     document.getElementById('download-pdf-print').addEventListener('click', () => exportPdf(true));
 
     function hitShape(x, y) {
@@ -3029,7 +2893,7 @@
         ['se', bounds.right, bounds.bottom], ['s', (bounds.left + bounds.right) / 2, bounds.bottom],
         ['sw', bounds.left, bounds.bottom], ['w', bounds.left, (bounds.top + bounds.bottom) / 2]
       ];
-      return handles.find(([, handleX, handleY]) => Math.hypot(x - handleX, y - handleY) <= 30)?.[0] || null;
+      return handles.find(([, handleX, handleY]) => Math.hypot(x - handleX, y - handleY) <= 20)?.[0] || null;
     }
 
     invitationCanvas.addEventListener('pointerdown', (event) => {
@@ -3037,10 +2901,59 @@
       const rect = invitationCanvas.getBoundingClientRect();
       const x = (event.clientX - rect.left) * invitationCanvas.width / rect.width;
       const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
-      const selectedBounds = getSelectedBounds(currentPage());
-      const resizeHandle = selectedBounds && hitResizeHandle(selectedBounds, x, y);
-      if (resizeHandle && !isSelectedLocked()) {
-        const page = currentPage();
+      const page = currentPage();
+      const selectedBounds = getSelectedBounds(page);
+      const resizeHandle = selectionGizmoActive && selectedBounds && hitResizeHandle(selectedBounds, x, y);
+      const photoFrame = getPhotoFrame(page);
+      const shape = hitShape(x, y);
+      const textHit = hitTextLayer(x, y);
+      const handMoveHit = moveToolActive && selectedBounds
+        && x >= selectedBounds.left && x <= selectedBounds.right
+        && y >= selectedBounds.top && y <= selectedBounds.bottom;
+      const hitLayer = resizeHandle || handMoveHit ? selectedLayer
+        : shape ? `shape:${shape.id}`
+          : x >= photoFrame.x && x <= photoFrame.x + photoFrame.width && y >= photoFrame.y && y <= photoFrame.y + photoFrame.height ? 'photo'
+            : textHit || (page.background && !page.backgroundLocked ? 'background' : null);
+      if (!hitLayer) {
+        selectionGizmoActive = false;
+        textEditingActive = false;
+        mobileEditLayer = null;
+        lastTouchTap = null;
+        dragState = null;
+        invitationCanvas.classList.remove('is-touch-editing');
+        syncToolbarControls();
+        drawInvitation(page);
+        return;
+      }
+
+      selectionGizmoActive = true;
+      const isTouch = event.pointerType === 'touch';
+      let justArmedForTouch = false;
+      if (isTouch) {
+        const now = Date.now();
+        const isDoubleTap = lastTouchTap?.layer === hitLayer
+          && now - lastTouchTap.time <= 600
+          && Math.hypot(event.clientX - lastTouchTap.x, event.clientY - lastTouchTap.y) <= 28;
+        if (isDoubleTap) {
+          mobileEditLayer = hitLayer;
+          lastTouchTap = null;
+          justArmedForTouch = true;
+          if (isTextLayer(hitLayer) && !page.styles[hitLayer].locked) {
+            startInlineTextEditing(hitLayer);
+            return;
+          }
+          setStatus('Touch editing enabled for this item. Drag it to move, or drag a handle to resize.');
+        } else {
+          lastTouchTap = { layer: hitLayer, time: now, x: event.clientX, y: event.clientY };
+          if (mobileEditLayer !== hitLayer) mobileEditLayer = null;
+        }
+      } else {
+        mobileEditLayer = null;
+        lastTouchTap = null;
+      }
+      invitationCanvas.classList.toggle('is-touch-editing', isTouch && mobileEditLayer === hitLayer);
+      const canTouchEdit = !isTouch || (mobileEditLayer === hitLayer && !justArmedForTouch);
+      if (resizeHandle && !isSelectedLocked() && canTouchEdit) {
         const selectedShape = selectedLayer.startsWith('shape:') ? page.shapes.find((shape) => shape.id === selectedLayer.slice(6)) : null;
         dragState = {
           type: 'resize',
@@ -3055,41 +2968,77 @@
           shapeId: selectedShape?.id,
           startShape: selectedShape ? { x: selectedShape.x, y: selectedShape.y, width: selectedShape.width, height: selectedShape.height } : null
         };
+        dragState.pointerType = event.pointerType;
         recordUndo();
         invitationCanvas.setPointerCapture(event.pointerId);
         return;
       }
-      const photoFrame = { x: 78, y: 78, width: 924, height: 620 };
-      const shape = hitShape(x, y);
+      if (handMoveHit && !isSelectedLocked() && canTouchEdit) {
+        const selectedShape = selectedLayer.startsWith('shape:')
+          ? page.shapes.find((item) => item.id === selectedLayer.slice(6))
+          : null;
+        dragState = {
+          type: 'move-element',
+          layer: selectedLayer,
+          startX: x,
+          startY: y,
+          startPhotoFrameX: page.photoFrameX,
+          startPhotoFrameY: page.photoFrameY,
+          startBackgroundX: page.backgroundX,
+          startBackgroundY: page.backgroundY,
+          startShape: selectedShape ? { x: selectedShape.x, y: selectedShape.y } : null,
+          startText: isTextLayer() ? { x: page.styles[selectedLayer].x, y: page.styles[selectedLayer].y } : null
+        };
+        dragState.pointerType = event.pointerType;
+        recordUndo();
+        invitationCanvas.setPointerCapture(event.pointerId);
+        return;
+      }
       if (shape) {
         selectedLayer = `shape:${shape.id}`;
-        setEditorTab('elements');
-        if (!shape.locked) dragState = { type: 'shape', id: shape.id, startX: x, startY: y, shapeX: shape.x, shapeY: shape.y };
+        textEditingActive = false;
+        selectionGizmoActive = true;
+        activateShapeSection();
+        if (!shape.locked && canTouchEdit) dragState = { type: 'shape', id: shape.id, startX: x, startY: y, shapeX: shape.x, shapeY: shape.y };
       } else if (x >= photoFrame.x && x <= photoFrame.x + photoFrame.width && y >= photoFrame.y && y <= photoFrame.y + photoFrame.height) {
         selectedLayer = 'photo';
-        setEditorTab('tools');
-        if (currentPage().photo && !currentPage().photoLocked) dragState = { type: 'photo', startX: x, startY: y, photoX: currentPage().photoX, photoY: currentPage().photoY };
+        textEditingActive = false;
+        setEditorTab('pictures');
+        if (page.photo && !page.photoLocked && canTouchEdit) dragState = { type: 'photo', startX: x, startY: y, photoX: page.photoX, photoY: page.photoY };
       } else {
-        const hit = hitTextLayer(x, y);
-        if (hit) {
-          selectedLayer = hit;
+        if (textHit) {
+          selectedLayer = textHit;
+          textEditingActive = true;
           setEditorTab('text');
-          openLayerDetails(hit);
-          const style = currentPage().styles[hit];
-          if (!style.locked) dragState = { type: 'text', key: hit, startX: x, startY: y, textX: style.x, textY: style.y };
-        } else if (currentPage().background && !currentPage().backgroundLocked) {
+          openLayerDetails(textHit);
+          const style = page.styles[textHit];
+          if (!style.locked && canTouchEdit) dragState = { type: 'text', key: textHit, startX: x, startY: y, textX: style.x, textY: style.y };
+        } else if (page.background && !page.backgroundLocked) {
           selectedLayer = 'background';
-          setEditorTab('elements');
-          dragState = { type: 'background', startX: x, startY: y, backgroundX: currentPage().backgroundX, backgroundY: currentPage().backgroundY };
-        } else {
-          return;
+          textEditingActive = false;
+          setEditorTab('pictures');
+          if (canTouchEdit) dragState = { type: 'background', startX: x, startY: y, backgroundX: page.backgroundX, backgroundY: page.backgroundY };
         }
       }
       syncLayerControls();
       syncStyleControls();
-      if (dragState) recordUndo();
-      invitationCanvas.setPointerCapture(event.pointerId);
-      drawInvitation(currentPage(), true);
+      if (dragState) {
+        dragState.pointerType = event.pointerType;
+        recordUndo();
+      }
+      if (dragState) invitationCanvas.setPointerCapture(event.pointerId);
+      drawInvitation(page, true);
+    });
+
+    invitationCanvas.addEventListener('dblclick', (event) => {
+      const rect = invitationCanvas.getBoundingClientRect();
+      const x = (event.clientX - rect.left) * invitationCanvas.width / rect.width;
+      const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
+      const key = hitTextLayer(x, y);
+      if (!key) return;
+      event.preventDefault();
+      dragState = null;
+      startInlineTextEditing(key);
     });
 
     invitationCanvas.addEventListener('contextmenu', (event) => {
@@ -3100,21 +3049,32 @@
       const shape = hitShape(x, y);
       if (shape) {
         selectedLayer = `shape:${shape.id}`;
-        setEditorTab('elements');
-      } else if (x >= 78 && x <= 1002 && y >= 78 && y <= 698) {
-        selectedLayer = 'photo';
-        setEditorTab('tools');
+        textEditingActive = false;
+        selectionGizmoActive = true;
+        activateShapeSection();
       } else {
+        const photoFrame = getPhotoFrame(currentPage());
+        if (x >= photoFrame.x && x <= photoFrame.x + photoFrame.width && y >= photoFrame.y && y <= photoFrame.y + photoFrame.height) {
+        selectedLayer = 'photo';
+        textEditingActive = false;
+        selectionGizmoActive = true;
+        setEditorTab('pictures');
+        } else {
         const hit = hitTextLayer(x, y);
         if (hit) {
           selectedLayer = hit;
+          textEditingActive = true;
           setEditorTab('text');
           openLayerDetails(hit);
         } else if (currentPage().background) {
           selectedLayer = 'background';
-          setEditorTab('elements');
+          textEditingActive = false;
+          selectionGizmoActive = true;
+          setEditorTab('pictures');
         } else return;
+        }
       }
+      selectionGizmoActive = true;
       syncLayerControls();
       syncStyleControls();
       drawInvitation(currentPage(), true);
@@ -3128,7 +3088,25 @@
       const y = (event.clientY - rect.top) * invitationCanvas.height / rect.height;
       const deltaX = x - dragState.startX;
       const deltaY = y - dragState.startY;
-      if (dragState.type === 'resize') {
+      if (dragState.type === 'move-element') {
+        const page = currentPage();
+        if (dragState.layer === 'photo') {
+          const frame = getPhotoFrame(page);
+          page.photoFrameX = Math.max(50 - frame.width, Math.min(invitationCanvas.width - 50, dragState.startPhotoFrameX + deltaX));
+          page.photoFrameY = Math.max(50 - frame.height, Math.min(invitationCanvas.height - 50, dragState.startPhotoFrameY + deltaY));
+        } else if (dragState.layer === 'background') {
+          page.backgroundX = Math.max(-canvasWidth, Math.min(canvasWidth, dragState.startBackgroundX + deltaX));
+          page.backgroundY = Math.max(-canvasHeight, Math.min(canvasHeight, dragState.startBackgroundY + deltaY));
+        } else if (dragState.layer.startsWith('shape:')) {
+          const shape = page.shapes.find((item) => item.id === dragState.layer.slice(6));
+          shape.x = dragState.startShape.x + deltaX;
+          shape.y = dragState.startShape.y + deltaY;
+        } else {
+          const style = page.styles[dragState.layer];
+          style.x = dragState.startText.x + deltaX;
+          style.y = dragState.startText.y + deltaY;
+        }
+      } else if (dragState.type === 'resize') {
         const { handle, startBounds } = dragState;
         const horizontalDirection = handle.includes('w') ? -1 : handle.includes('e') ? 1 : 0;
         const verticalDirection = handle.includes('n') ? -1 : handle.includes('s') ? 1 : 0;
@@ -3162,12 +3140,13 @@
           currentPage().backgroundZoom = Math.max(.2, Math.min(5, dragState.startBackgroundZoom * scale));
         }
       } else if (dragState.type === 'photo') {
-        currentPage().photoX = Math.max(-462, Math.min(462, dragState.photoX + deltaX));
-        currentPage().photoY = Math.max(-310, Math.min(310, dragState.photoY + deltaY));
+        const frame = getPhotoFrame(currentPage());
+        currentPage().photoX = Math.max(-frame.width / 2, Math.min(frame.width / 2, dragState.photoX + deltaX));
+        currentPage().photoY = Math.max(-frame.height / 2, Math.min(frame.height / 2, dragState.photoY + deltaY));
         snapGuides = { layer: 'photo' };
       } else if (dragState.type === 'background') {
-        currentPage().backgroundX = Math.max(-1080, Math.min(1080, dragState.backgroundX + deltaX));
-        currentPage().backgroundY = Math.max(-1350, Math.min(1350, dragState.backgroundY + deltaY));
+        currentPage().backgroundX = Math.max(-canvasWidth, Math.min(canvasWidth, dragState.backgroundX + deltaX));
+        currentPage().backgroundY = Math.max(-canvasHeight, Math.min(canvasHeight, dragState.backgroundY + deltaY));
       } else if (dragState.type === 'shape') {
         const shape = currentPage().shapes.find((item) => item.id === dragState.id);
         shape.x = dragState.shapeX + deltaX;
@@ -3187,10 +3166,20 @@
     });
 
     function finishCanvasDrag(event) {
-      if (!dragState) return;
+      if (!dragState) {
+        if (event?.type === 'pointercancel') lastTouchTap = null;
+        return;
+      }
+      const wasTouchDrag = dragState.pointerType === 'touch';
       dragState = null;
       snapGuides = null;
+      if (wasTouchDrag) {
+        mobileEditLayer = null;
+        invitationCanvas.classList.remove('is-touch-editing');
+        setStatus('Item updated. Double-tap it again before moving or resizing it.');
+      }
       syncStyleControls();
+      syncTemplateTextItems();
       drawInvitation(currentPage(), true);
       if (event && invitationCanvas.hasPointerCapture(event.pointerId)) invitationCanvas.releasePointerCapture(event.pointerId);
     }
@@ -3248,7 +3237,9 @@
         URL.revokeObjectURL(objectUrl);
         if (targetPage === currentPage()) {
           selectedLayer = 'photo';
-          setEditorTab('tools');
+          textEditingActive = false;
+          selectionGizmoActive = true;
+          setEditorTab('pictures');
           syncLayerControls();
           syncStyleControls();
           setStatus('Photo added to your invitation.', 'success');
@@ -3284,7 +3275,9 @@
         URL.revokeObjectURL(objectUrl);
         if (targetPage === currentPage()) {
           selectedLayer = 'background';
-          setEditorTab('elements');
+          textEditingActive = false;
+          selectionGizmoActive = true;
+          setEditorTab('pictures');
           document.querySelector('[aria-label="Background image"]').open = true;
           syncPageControls();
           setStatus('Background image added. Drag it or use the resize handles to position and scale it.', 'success');
@@ -3310,12 +3303,27 @@
       setStatus('Background image removed.', 'success');
     });
 
+    function clearMusicUpload(message, state = '') {
+      musicFile = null;
+      if (musicObjectUrl) URL.revokeObjectURL(musicObjectUrl);
+      musicObjectUrl = null;
+      musicPreview.pause();
+      musicPreview.removeAttribute('src');
+      musicPreview.load();
+      musicPreview.hidden = true;
+      musicUpload.value = '';
+      document.getElementById('download-mp4').disabled = true;
+      if (message) setStatus(message, state);
+    }
+
     musicUpload.addEventListener('change', () => {
       const [file] = musicUpload.files;
-      if (!file) return;
+      if (!file) {
+        clearMusicUpload('Upload audio to enable MP4 export.');
+        return;
+      }
       if (!file.type.startsWith('audio/')) {
-        setStatus('Choose an audio file such as MP3, WAV, or M4A.', 'error');
-        musicUpload.value = '';
+        clearMusicUpload('Choose an audio file such as MP3, WAV, or M4A.', 'error');
         return;
       }
       musicFile = file;
@@ -3397,7 +3405,7 @@
         link.download = `lobola-invitation-page-${currentPageIndex + 1}.mp4`;
         link.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
-        setStatus(`MP4 downloaded (${(blob.size / (1024 * 1024)).toFixed(2)} MB, ${duration.toFixed(1)} seconds). Artwork is 1080 × 1350 px; music fades out at the end.`, 'success');
+        setStatus(`MP4 downloaded (${(blob.size / (1024 * 1024)).toFixed(2)} MB, ${duration.toFixed(1)} seconds). Artwork is ${canvasWidth} × ${canvasHeight} px; music fades out at the end.`, 'success');
       } catch (error) {
         setStatus(`MP4 export failed: ${error.message}`, 'error');
       } finally {
@@ -3408,6 +3416,113 @@
     }
 
     document.getElementById('download-mp4').addEventListener('click', exportMp4);
+
+    function loadTemplateImage(source) {
+      if (!source) return Promise.resolve(null);
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.crossOrigin = 'anonymous';
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('A saved image in this template could not be loaded.'));
+        image.src = source;
+      });
+    }
+
+    async function hydrateTemplatePage(savedPage) {
+      const defaults = makePage();
+      const page = { ...defaults, ...savedPage };
+      page.text = { ...defaults.text, ...savedPage.text };
+      page.styles = Object.fromEntries(Object.entries({ ...defaults.styles, ...savedPage.styles })
+        .map(([key, style]) => [key, { ...style, runs: style.runs?.map((run) => ({ ...run })) }]));
+      page.layerOrder = [...(savedPage.layerOrder || defaults.layerOrder)];
+      page.photo = await loadTemplateImage(savedPage.photo);
+      page.sourcePhoto = await loadTemplateImage(savedPage.sourcePhoto || savedPage.photo);
+      page.background = await loadTemplateImage(savedPage.background);
+      page.shapes = await Promise.all((savedPage.shapes || []).map(async (shape) => ({
+        ...shape,
+        photo: await loadTemplateImage(shape.photo)
+      })));
+      return page;
+    }
+
+    function imageAsDataUrl(image) {
+      if (!image) return null;
+      const source = image.currentSrc || image.src;
+      if (source?.startsWith('data:image/')) return source;
+      const width = image.naturalWidth || image.width;
+      const height = image.naturalHeight || image.height;
+      if (!width || !height) throw new Error('An image in this design is not ready to save.');
+      const scale = Math.min(1, 2160 / Math.max(width, height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(width * scale));
+      canvas.height = Math.max(1, Math.round(height * scale));
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('The browser could not prepare a design image.');
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL('image/png');
+    }
+
+    function serializeTemplatePage(page) {
+      return {
+        ...page,
+        photo: imageAsDataUrl(page.photo),
+        sourcePhoto: imageAsDataUrl(page.sourcePhoto),
+        background: imageAsDataUrl(page.background),
+        shapes: page.shapes.map((shape) => ({ ...shape, photo: imageAsDataUrl(shape.photo) }))
+      };
+    }
+
+    async function receiveTemplateMessage(event) {
+      if (event.origin !== window.location.origin || event.source !== window.parent) return;
+      if (event.data?.type === 'lobola-parent-ready') {
+        window.parent.postMessage({ type: 'lobola-editor-ready' }, window.location.origin);
+      }
+      if (event.data?.type === 'lobola-load-template') {
+        try {
+          const requestedFormat = event.data.canvasFormat || event.data.design?.canvasFormat || 'standard';
+          setCanvasFormat(requestedFormat);
+          if (event.data.design?.pages?.length) {
+            pages = await Promise.all(event.data.design.pages.map(hydrateTemplatePage));
+          } else {
+            pages = [makePage()];
+          }
+          currentPageIndex = 0;
+          selectedLayer = 'names';
+          const title = typeof event.data.title === 'string' ? event.data.title : 'Lobola Invitation';
+          document.title = `${title} — Lobola Invitation`;
+          document.querySelector('.editor-document-name').textContent = title;
+          loadCurrentPage();
+          syncPageControls();
+          window.parent.postMessage({ type: 'lobola-template-loaded' }, window.location.origin);
+          openTemplateEditor();
+        } catch (error) {
+          window.parent.postMessage({ type: 'lobola-editor-error', message: error.message }, window.location.origin);
+        }
+      }
+      if (event.data?.type === 'lobola-open-editor') {
+        openTemplateEditor();
+      }
+      if (event.data?.type === 'lobola-export-template') {
+        try {
+          if (inlineEditingLayer) saveInlineEditorContent();
+          const design = {
+            version: 1,
+            canvasFormat,
+            canvasWidth,
+            canvasHeight,
+            pages: await Promise.all(pages.map(serializeTemplatePage))
+          };
+          window.parent.postMessage({ type: 'lobola-editor-export', design }, window.location.origin);
+        } catch (error) {
+          window.parent.postMessage({ type: 'lobola-editor-error', message: error.message }, window.location.origin);
+        }
+      }
+    }
+
+    if (window.parent !== window) {
+      window.addEventListener('message', receiveTemplateMessage);
+      window.parent.postMessage({ type: 'lobola-editor-ready' }, window.location.origin);
+    }
 
     menu.addEventListener('click', (event) => {
       if (event.target instanceof HTMLAnchorElement) {
