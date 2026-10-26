@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+.env
+.env.local
+.env.*.local
+!.env.example
+public/invitation-editor.html
+public/css/styles.css
