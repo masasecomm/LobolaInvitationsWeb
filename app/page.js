@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { getPublicCatalog, isFirebaseConfigured } from '@/lib/firebase/catalog';
 import CategoryGallery from './category-gallery';
+import SiteHeader from './site-header';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,7 +27,7 @@ export const metadata = {
   }
 };
 
-const logoUrl = 'https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/284088209_104493135614872_3978818778956920310_n.jpg?stp=dst-jpg_tt6&cstp=mx1154x1154&ctp=s200x200&_nc_cat=104&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=ENEKrX1DM9cQ7kNvwGkf2_o&_nc_oc=Adq_gO_ZqLS97sTeYycWqPiwxwkmPTg4HcoeG1rud5G_WX23LRtL4ybAS67B__nA8fw&_nc_zt=24&_nc_ht=scontent-jnb2-1.xx&_nc_gid=fXKYgnKTf0nKccF_cBYDEg&_nc_ss=7b2a8&oh=00_AQN2ox7Rbe65ag-KXq4yjIpuZgJ4KQsi8CEySRFopO6_yQ&oe=6AD6D1C5';
+const categoryCoverUrl = 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85';
 
 export default async function HomePage() {
   const catalog = isFirebaseConfigured ? await getPublicCatalog() : null;
@@ -45,6 +45,9 @@ export default async function HomePage() {
   if (uncategorizedProducts.length) {
     categoryGroups.push({ id: 'other-products', name: 'More designs', products: uncategorizedProducts });
   }
+  const galleryCategories = categoryGroups.length
+    ? categoryGroups
+    : [{ id: 'lobola-invitation-template', name: 'Lobola Invitation Template', products: [], fallbackCoverUrl: categoryCoverUrl }];
 
   return (
     <>
@@ -61,86 +64,82 @@ export default async function HomePage() {
           })
         }}
       />
-      <header className="site-header">
-        <Link className="brand" href="/" aria-label="Lobola Invitation home">
-          <img src={logoUrl} alt="" />
-          <span>Lobola Invitation<br /><small>Editable Digital Templates</small></span>
-        </Link>
-        <nav className="header-links" aria-label="Main navigation">
-          <a href="#templates">Templates</a>
-          <a href="https://www.instagram.com/lobolainvitation/" target="_blank" rel="noreferrer">Instagram</a>
-          <Link href="/about-us">About us</Link>
-          <Link href="/contact-us">Contact us</Link>
-        </nav>
-      </header>
-      <main className="page-wrap storefront">
-        <section className="store-profile" aria-label="Lobola Invitation profile">
-          <div className="store-avatar">
-            <img src={logoUrl} alt="Lobola Invitation logo" />
-          </div>
-          <div className="store-profile-content">
-            <div className="store-profile-heading">
-              <h1>Lobola Invitation Cards &amp; Templates</h1>
-              <Link className="button secondary" href="/admin">Create a template</Link>
-            </div>
-            <div className="store-profile-stats" aria-label="Store statistics">
-              <span><strong>{products.length}</strong> templates</span>
-              <span><strong>{categories.length}</strong> categories</span>
-            </div>
-            <p><strong>Editable digital invitation designs</strong><br />Find a template for your lobola celebration and make the invitation your own.</p>
-          </div>
-        </section>
+      <div className="home-page">
+        <SiteHeader />
+        <main>
+          <section className="home-intro" aria-labelledby="home-title">
+            <p className="section-label">Editable digital invitation templates</p>
+            <h1 id="home-title">Lobola Invitation Cards &amp; Templates</h1>
+            <p>
+              Browse digital invitation designs for your lobola celebration. Explore editable lobola
+              invitation cards and templates, and find published designs for occasions such as Umembeso
+              and Mahlabiso when available.
+            </p>
+            <a className="text-link" href="#categories">Browse lobola invitation templates</a>
+          </section>
 
-        <section className="home-introduction" aria-labelledby="home-introduction-heading">
-          <h2 id="home-introduction-heading">Shop editable lobola invitation cards</h2>
-          <p>
-            Browse digital invitation templates for lobola celebrations. Check the published
-            collection for Umembeso and Mahlabiso designs. Open a template to preview it,
-            personalize the wording and add your own photos in the browser.
-          </p>
-        </section>
+          <CategoryGallery categories={galleryCategories} />
 
-        <section className="category-section" id="templates">
-          <div className="collection-heading">
-            <span className="eyebrow">The collection</span>
-            <h2 className="section-heading">Lobola invitation templates</h2>
-          </div>
-          {!isFirebaseConfigured ? (
-            <div className="setup-notice">Connect Firebase to publish and display your invitation templates. The setup guide is in <code>SETUP.md</code>.</div>
-          ) : products.length === 0 ? (
-            <div className="empty-state">
-              <h3>Your first template goes here</h3>
-              <p>Create a template post in the admin, design it, and publish it to see it appear on this page.</p>
-              <Link className="button" href="/admin">Create your first template</Link>
+          <section className="details" id="about">
+            <div>
+              <p className="section-label">About us</p>
+              <h2>About Lobola Invitation</h2>
             </div>
-          ) : <CategoryGallery categories={categoryGroups} />}
-        </section>
+            <div className="details-copy">
+              <p>
+                Lobola Invitation is a digital collection of editable invitation templates for lobola
+                celebrations and meaningful family occasions. Browse the available designs to find an
+                invitation style that suits your special day.
+              </p>
+              <p>
+                Open a published template to preview it, personalize the wording and add your own photos
+                in the browser. Designs for Umembeso, Mahlabiso and related occasions appear when they
+                are available in the collection.
+              </p>
+              <a className="text-link" href="#categories">Explore invitation templates</a>
+            </div>
+          </section>
 
-        <section className="home-guidance" aria-labelledby="invitation-guidance-heading">
-          <h2 id="invitation-guidance-heading">Plan your lobola celebration invitation</h2>
-          <p>
-            A clear invitation helps guests know when and where to join your celebration. Include
-            the names of the hosts or couple, the event date and time, the venue, and RSVP details.
-            Check with your family about any additional information or wording they would like
-            included.
-          </p>
-          <h3>Looking for an Umembeso or Mahlabiso invitation?</h3>
-          <p>
-            Browse the published designs above and use the category links to find available
-            styles. Each invitation page includes its own preview and editing options.
-          </p>
-          <a href="#templates">Browse invitation cards</a>
-        </section>
-      </main>
-      <footer className="site-footer">
-        <span>© {new Date().getFullYear()} Lobola Invitation · Editable digital templates for your special day</span>
-        <nav className="footer-links" aria-label="Footer navigation">
-          <Link href="/">Templates</Link>
-          <Link href="/about-us">About us</Link>
-          <Link href="/contact-us">Contact us</Link>
-          <Link href="/admin">Admin</Link>
-        </nav>
-      </footer>
+          <section className="contact-section" id="contact" aria-labelledby="contact-title">
+            <div className="contact-heading">
+              <p className="section-label">Contact us</p>
+              <h2 id="contact-title">Contact Lobola Invitation</h2>
+              <p>
+                Have a question about an editable lobola invitation template, a published design or the
+                online editor? Get in touch using one of the options below.
+              </p>
+            </div>
+            <div className="contact-options">
+              <a className="contact-option" href="mailto:hello@lobolainvitation.co.za?subject=Lobola%20Invitation%20enquiry">
+                <span className="contact-option-label">Email</span>
+                <span>hello@lobolainvitation.co.za</span>
+              </a>
+              <a className="contact-option" href="https://www.instagram.com/lobolainvitation/" target="_blank" rel="noopener noreferrer">
+                <span className="contact-option-label">Instagram</span>
+                <span>@lobolainvitation</span>
+              </a>
+              <a className="contact-option" href="https://www.facebook.com/lobolainvitation/" target="_blank" rel="noopener noreferrer">
+                <span className="contact-option-label">Facebook</span>
+                <span>Lobola Invitation</span>
+              </a>
+            </div>
+            <p className="contact-note">
+              For a question about a specific invitation, include the design name or page link. For
+              editor help, describe what you were trying to do.
+            </p>
+          </section>
+        </main>
+        <footer className="home-site-footer">
+          <span>© {new Date().getFullYear()} Lobola Invitation</span>
+          <span>Editable digital templates for your special day</span>
+          <nav className="footer-links" aria-label="Footer navigation">
+            <a href="#categories">Templates</a>
+            <a href="#about">About us</a>
+            <a href="#contact">Contact us</a>
+            <a href="/admin">Admin</a>
+          </nav>
+        </footer>
+      </div>
     </>
   );
 }
