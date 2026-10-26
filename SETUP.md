@@ -39,7 +39,7 @@ Create template posts in the admin dashboard, assign a category, add search titl
 
 In the admin dashboard, choose **Create a template post** or **Create a blog post** to open the matching form. Published blog articles appear at `/blog/<slug>` with canonical metadata, Open Graph and Twitter tags, `BlogPosting` structured data, and a sitemap entry. Blog summaries, article text, SEO titles, and SEO descriptions are validated before saving.
 
-Each template has a required price in South African rand. The website displays that price, but payment processing is not connected. Visitors must create an email/password account, confirm the Firebase email link, then sign in before the template editor appears. Visitor edits stay in their browser and cannot save changes to the published template. Add the production hostname under **Authentication → Settings → Authorized domains** so verification links can return to the site.
+Each template has a required price in South African rand. The website displays that price, but payment processing is not connected. Visitors must create an email/password account, confirm the email link, then sign in before the template editor appears. Visitor edits stay in their browser and cannot save changes to the published template. Add the production hostname under **Authentication → Settings → Authorized domains** so verification links can return to the site.
 
 Visitors must submit a 1–5 star rating and written comment before downloading a published invitation design or print PDF. The admin editor is exempt. Reviews are stored in the `reviews` collection and displayed with Product, Review, and AggregateRating structured data based only on submitted reviews; no rating markup is emitted until real reviews exist. Public reviews are anonymous unless the visitor chooses to provide a display name.
 
@@ -64,6 +64,22 @@ To enable uploads in Vercel:
 3. Redeploy the project so the environment variable is available to the upload API.
 
 The upload API requires a valid Firebase ID token and independently checks the caller's `admins/{uid}` document through Firestore before it writes to GitHub. A missing GitHub token, invalid image, or insufficient repository permission produces an explicit error. Replacing a cover for the same slug and image type updates that file in GitHub. Firebase Storage is not used, so cover uploads do not require upgrading the Firebase Spark plan.
+
+## Sending customer verification emails
+
+The customer verification flow generates the link through the Firebase Admin SDK and sends the message through Resend, instead of relying on Firebase's default `@firebaseapp.com` sender. Resend's free transactional plan currently includes 3,000 emails per month, with a 100-email daily cap; check [Resend pricing](https://resend.com/pricing) for current limits. Sending does not require an email-hosting plan or a mailbox, but customers cannot reply to the `no-reply` address.
+
+To configure the sender:
+
+1. Create a Resend account and add the sending subdomain `mail.lobolainvitation.co.za` at [resend.com/domains](https://resend.com/domains). Add the exact DNS records Resend provides to Cloudflare and wait for domain verification.
+2. Create a restricted Firebase service account for the app. Grant it **Firebase Authentication Admin** and **Cloud Datastore User** roles on the `lobolainvitation-643df` project. Create a JSON key and keep it private.
+3. In Vercel, add these server-only Production environment variables:
+   - `RESEND_API_KEY`: the API key from Resend.
+   - `RESEND_FROM_EMAIL`: `Lobola Invitation <no-reply@mail.lobolainvitation.co.za>`.
+   - `FIREBASE_ADMIN_SERVICE_ACCOUNT`: the complete service-account JSON contents.
+4. Redeploy the Production deployment. Do not put these credentials in source control, `NEXT_PUBLIC_` variables, or chat.
+
+The verification API derives the recipient from the authenticated Firebase account, generates a Firebase email-verification action link, and limits requests to one per minute and five per account per day. Email-provider acceptance does not guarantee inbox delivery; check Resend's email logs for delivered, bounced, or rejected messages. The Firebase email template can remain configured as-is; this customer flow now uses the custom sender.
 
 Firestore documents are limited to 1 MiB. The app refuses to save a product/design document larger than 800 KiB to leave room for Firestore document overhead. Designs that embed large image data may need those images replaced with smaller images or URLs.
 

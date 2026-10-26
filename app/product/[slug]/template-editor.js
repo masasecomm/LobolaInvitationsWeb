@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import {
-  createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification,
+  createUserWithEmailAndPassword, onAuthStateChanged,
   signInWithEmailAndPassword, signOut
 } from 'firebase/auth';
 import { getFirebaseAuth, getFirebaseDb } from '@/lib/firebase/client';
@@ -68,12 +68,19 @@ export default function TemplateEditor({ product }) {
 
   async function sendVerificationLink(user, auth) {
     try {
-      await sendEmailVerification(user, {
-        url: `${window.location.origin}/product/${encodeURIComponent(product.slug)}`
+      const response = await fetch('/api/auth/send-verification-email', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${await user.getIdToken()}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug: product.slug })
       });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'The email service could not send the confirmation message.');
     } catch (caught) {
       await signOut(auth);
-      throw new Error(`Could not send the confirmation email: ${caught.message}`);
+      throw new Error(caught.message);
     }
     await signOut(auth);
   }
@@ -83,12 +90,14 @@ export default function TemplateEditor({ product }) {
     setAccountBusy(true);
     setAccountMessage('');
     setError('');
+    let accountWasCreated = false;
     try {
       const auth = getFirebaseAuth();
       if (accountMode === 'create') {
         const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+        accountWasCreated = true;
         await sendVerificationLink(credential.user, auth);
-        setAccountMessage('We sent a confirmation link to your email. Confirm it, then sign in here to edit this invitation.');
+        setAccountMessage('The confirmation email was accepted for delivery. Check your inbox and spam folder, then sign in here after confirming.');
         setAccountMode('sign-in');
       } else {
         const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
@@ -101,7 +110,12 @@ export default function TemplateEditor({ product }) {
         setAccountMessage('Email confirmed. You can now edit this invitation. Your changes stay in this browser.');
       }
     } catch (caught) {
-      setError(`Could not ${accountMode === 'create' ? 'create account' : 'sign in'}: ${caught.message}`);
+      if (accountWasCreated) {
+        setAccountMode('sign-in');
+        setError(`Your account was created, but we could not send its confirmation email: ${caught.message}`);
+      } else {
+        setError(`Could not ${accountMode === 'create' ? 'create account' : 'sign in'}: ${caught.message}`);
+      }
     } finally {
       setAccountBusy(false);
     }
