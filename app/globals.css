@@ -127,6 +127,8 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
 .field input, .field textarea, .field select { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #d8d1cc; border-radius: 8px; background: white; color: var(--ink); }
 .field textarea { min-height: 82px; resize: vertical; }
 .field small, .help { color: var(--muted); font-size: 12px; font-weight: 400; }
+.field input[type="file"] { padding: 7px; }
+.admin-cover-preview { display: block; width: min(100%, 320px); max-height: 280px; border: 1px solid var(--line); border-radius: 8px; object-fit: contain; object-position: left; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .message { padding: 11px 13px; border-radius: 8px; background: #f5f1ee; color: var(--muted); }
 .message.error { background: #fff0ee; color: #9a3128; }

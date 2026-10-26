@@ -53,7 +53,19 @@ The review rule validates the product, rating, display name, comment length, and
 
 The admin sign-in form uses Cloudflare Turnstile site key `0x4AAAAAAFbXDbZY4AJ5gGSD`. Set the matching Turnstile **secret key** as `TURNSTILE_SECRET_KEY` in the server environment for local use and in Vercel's Production/Preview environments. Never use a `NEXT_PUBLIC_` prefix for this secret. Admin sign-in is denied if Turnstile server verification is not configured or fails. The API verifies the token with Cloudflare and checks the returned hostname.
 
-Firestore documents are limited to 1 MiB. The app refuses to save a product/design document larger than 800 KiB to leave room for Firestore document overhead. Firebase Storage is not used: it is unavailable on this project's current Spark plan, so cover images should be provided as public image URLs. Designs that embed large image data may need those images replaced with smaller images or URLs.
+## Uploading template covers
+
+The template form accepts JPEG, PNG, or WebP cover images up to 4 MB. When the template is saved, its cover is committed to `public/Admin Template Covers/<template-slug>-cover.<extension>` in the `masasecomm/LobolaInvitationsWeb` GitHub repository. A commit to `main` triggers the connected Vercel deployment; the saved product uses the site's own image path, avoiding third-party image hosts that block embedding. The directory is tracked in Git with `.gitkeep`.
+
+To enable uploads in Vercel:
+
+1. Create a **fine-grained personal access token** in GitHub. Select resource owner `masasecomm`, restrict repository access to `LobolaInvitationsWeb`, and grant only **Contents: Read and write** repository permission.
+2. In the Vercel project, add the token as the server-only environment variable `GITHUB_CONTENTS_TOKEN` for Production (and any other environment where you want uploads enabled). Do not prefix it with `NEXT_PUBLIC_`, commit it, or share it in chat.
+3. Redeploy the project so the environment variable is available to the upload API.
+
+The upload API requires a valid Firebase ID token and independently checks the caller's `admins/{uid}` document through Firestore before it writes to GitHub. A missing GitHub token, invalid image, or insufficient repository permission produces an explicit error. Replacing a cover for the same slug and image type updates that file in GitHub. Firebase Storage is not used, so cover uploads do not require upgrading the Firebase Spark plan.
+
+Firestore documents are limited to 1 MiB. The app refuses to save a product/design document larger than 800 KiB to leave room for Firestore document overhead. Designs that embed large image data may need those images replaced with smaller images or URLs.
 
 Firebase web app configuration (including its API key) is public client configuration, not an authorization mechanism. Keep Firestore rules deployed and never treat an obscured client key as security. Admin authorization is based on the protected `admins/{uid}` membership document.
 

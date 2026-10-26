@@ -107,6 +107,7 @@ export default function AdminDashboard() {
     id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
     seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
   });
+  const [coverFile, setCoverFile] = useState(null);
   const [slugTouched, setSlugTouched] = useState(false);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -188,6 +189,7 @@ export default function AdminDashboard() {
 
   function editProduct(product) {
     setContentMode('template');
+    setCoverFile(null);
     setForm({
       id: product.id,
       title: product.title,
@@ -207,6 +209,7 @@ export default function AdminDashboard() {
   }
 
   function resetForm() {
+    setCoverFile(null);
     setForm({
       id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
       seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
@@ -235,10 +238,8 @@ export default function AdminDashboard() {
         throw new Error('Enter a template price greater than R 0.00.');
       }
       if (form.seoDescription.length > 160) throw new Error('SEO description must be 160 characters or fewer.');
-      if (form.coverImageUrl && !/^https?:\/\//i.test(form.coverImageUrl.trim())) {
-        throw new Error('Cover image must be a public http or https URL.');
-      }
 
+      let coverImageUrl = form.coverImageUrl.trim() || null;
       const existingProduct = await getDocs(query(
         collection(db, 'products'), where('slug', '==', slug), limit(1)
       ));
@@ -273,7 +274,7 @@ export default function AdminDashboard() {
         priceCurrency: 'ZAR',
         canvasFormat: form.canvasFormat,
         excerpt: form.excerpt.trim(),
-        coverImageUrl: form.coverImageUrl.trim() || null,
+        coverImageUrl,
         seoTitle: form.seoTitle.trim() || form.title.trim(),
         seoDescription: form.seoDescription.trim(),
         design_json: designs[productId] || oldProduct?.design_json || { version: 1, canvasFormat: form.canvasFormat, pages: [] },
@@ -284,12 +285,32 @@ export default function AdminDashboard() {
       if (documentSize(payload) > 800 * 1024) {
         throw new Error('This template design is too large for Firestore on the current setup. Reduce embedded images or use image URLs; Firebase Storage requires a paid-plan upgrade.');
       }
+      if (coverFile) {
+        const user = getFirebaseAuth().currentUser;
+        if (!user) throw new Error('Sign in again before uploading a cover image.');
+
+        setMessage('Uploading cover image to Admin Template Covers…');
+        const uploadForm = new FormData();
+        uploadForm.set('file', coverFile);
+        uploadForm.set('slug', slug);
+        const response = await fetch('/api/admin/cover-upload', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+          body: uploadForm
+        });
+        const uploadResult = await response.json();
+        if (!response.ok) throw new Error(uploadResult.error || 'Could not upload the cover image.');
+        coverImageUrl = uploadResult.coverImageUrl;
+        payload.coverImageUrl = coverImageUrl;
+      }
       await setDoc(doc(db, 'products', productId), payload);
 
       const savedMessage = form.id ? 'Template updated.' : 'Template created. You can now design it from the product list.';
       resetForm();
       setMessageType('success');
-      setMessage(savedMessage);
+      setMessage(coverFile
+        ? `${savedMessage} The cover image was committed to GitHub and will deploy automatically.`
+        : savedMessage);
       router.refresh();
       const [categorySnapshotAfterSave, productSnapshotAfterSave] = await Promise.all([
         getDocs(collection(db, 'categories')),
@@ -428,9 +449,25 @@ export default function AdminDashboard() {
             <label className="field">Short description
               <textarea maxLength={300} value={form.excerpt} onChange={(event) => updateField('excerpt', event.target.value)} placeholder="Describe this invitation design." />
             </label>
-            <label className="field">Cover image URL
-              <input type="url" maxLength={2048} value={form.coverImageUrl} onChange={(event) => updateField('coverImageUrl', event.target.value)} placeholder="https://…" />
-              <small>Firebase Storage uploads are unavailable on the current Spark plan; use a public image URL.</small>
+            <label className="field">Cover image
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                disabled={busy}
+                onChange={(event) => {
+                  const file = event.target.files?.[0] || null;
+                  setCoverFile(file);
+                }}
+              />
+              <small>
+                {coverFile
+                  ? `${coverFile.name} selected. It will be saved to Admin Template Covers when you save this template.`
+                  : 'Choose a JPEG, PNG, or WebP image (4 MB maximum). When you save, it is added to the website repository and Vercel deploys it automatically.'}
+                {form.coverImageUrl && !coverFile ? ' Leave blank to keep the current cover.' : ''}
+              </small>
+              {form.coverImageUrl && (
+                <img className="admin-cover-preview" src={form.coverImageUrl} alt="Current template cover" />
+              )}
             </label>
             <label className="field">Price (South African rand)
               <input type="number" required min="0.01" max="999999.99" step="0.01" value={form.price} onChange={(event) => updateField('price', event.target.value)} placeholder="e.g. 99.00" />
