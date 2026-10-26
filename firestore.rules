@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 rules_version = '2';
 
 service cloud.firestore {
@@ -23,3 +24,30 @@ service cloud.firestore {
     }
   }
 }
+=======
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /admins/{userId} {
+      allow get: if request.auth != null && request.auth.uid == userId;
+      allow list, create, update, delete: if false;
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow get, list: if resource.data.status == 'published' || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}
+>>>>>>> f92e6574c03b1fa4e999afdac31125210b0f396b

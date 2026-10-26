@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "lobola-invitation",
   "version": "1.0.0",
@@ -18,3 +19,25 @@
     "@grpc/grpc-js": "^1.14.6"
   }
 }
+=======
+{
+  "name": "lobola-invitation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/sync-editor.mjs && next dev --webpack",
+    "build": "node scripts/sync-editor.mjs && next build --webpack",
+    "start": "next start",
+    "check": "node scripts/check-editor.mjs"
+  },
+  "dependencies": {
+    "firebase": "^12.0.0",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.6"
+  }
+}
+>>>>>>> f92e6574c03b1fa4e999afdac31125210b0f396b

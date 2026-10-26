@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/
 .next/
 out/
@@ -8,3 +9,15 @@ next-env.d.ts
 !.env.example
 public/invitation-editor.html
 public/css/styles.css
+=======
+node_modules/
+.next/
+out/
+next-env.d.ts
+.env
+.env.local
+.env.*.local
+!.env.example
+public/invitation-editor.html
+public/css/styles.css
+>>>>>>> f92e6574c03b1fa4e999afdac31125210b0f396b
