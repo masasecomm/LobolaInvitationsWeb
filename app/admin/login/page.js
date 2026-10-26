@@ -14,6 +14,7 @@ export default function AdminLoginPage() {
         {!isFirebaseConfigured
           ? <p className="message error">Firebase is not configured. Follow the setup instructions in <code>SETUP.md</code>.</p>
           : <SignInForm />}
+        <Link href="/" className="button secondary">Home</Link>
       </section>
     </main>
   );

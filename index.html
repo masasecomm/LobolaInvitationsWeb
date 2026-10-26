@@ -60,8 +60,7 @@
       <a class="admin-link" href="/admin">Admin</a>
     </nav>
     <a class="brand" href="/" aria-label="Lobola Invitation home">
-      <img class="brand-logo" src="https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/284088209_104493135614872_3978818778956920310_n.jpg?stp=dst-jpg_tt6&amp;cstp=mx1154x1154&amp;ctp=s200x200&amp;_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=2d3e12&amp;_nc_ohc=ENEKrX1DM9cQ7kNvwGkf2_o&amp;_nc_oc=Adq_gO_ZqLS97sTeYycWqPiwxwkmPTg4HcoeG1rud5G_WX23LRtL4ybAS67B__nA8fw&amp;_nc_zt=24&amp;_nc_ht=scontent-jnb2-1.xx&amp;_nc_gid=fXKYgnKTf0nKccF_cBYDEg&amp;_nc_ss=7b2a8&amp;oh=00_AQN2ox7Rbe65ag-KXq4yjIpuZgJ4KQsi8CEySRFopO6_yQ&amp;oe=6AD6D1C5" alt="Lobola Invitation logo">
-      <span class="brand-tagline">Editable Digital Templates</span>
+      <img class="brand-logo" src="/lobola-invitation-logo.jpg" alt="Lobola Invitation logo">
     </a>
     <div class="header-note" aria-label="Social media and contact links">
       <a class="social-link" href="https://www.facebook.com/lobolainvitation/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -532,6 +531,11 @@
       'hd-mobile': { width: 1080, height: 1920, label: 'HD Mobile' },
       'hd-landscape': { width: 1920, height: 1080, label: 'HD Landscape' }
     };
+    let adminEditorAccess = false;
+    let pendingReviewAction = '';
+    let approvedReviewAction = '';
+    let reviewSubmitted = false;
+    let currentTemplateSlug = '';
     let canvasFormat = 'standard';
     let canvasWidth = canvasFormats.standard.width;
     let canvasHeight = canvasFormats.standard.height;
@@ -2871,6 +2875,19 @@
         : `Live preview · Page ${currentPageIndex + 1} · ${dimensions} · drag photo or text to reposition`;
     });
 
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('#download-png, #download-jpg, #download-pdf-print, #download-mp4');
+      if (!button || adminEditorAccess || reviewSubmitted) return;
+      if (approvedReviewAction === button.id) {
+        approvedReviewAction = '';
+        return;
+      }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      pendingReviewAction = button.id;
+      window.parent.postMessage({ type: 'lobola-review-required', action: button.id }, window.location.origin);
+    }, true);
+
     document.getElementById('download-png').addEventListener('click', () => exportImage('png'));
     document.getElementById('download-jpg').addEventListener('click', () => exportImage('jpg'));
     document.getElementById('download-pdf-print').addEventListener('click', () => exportPdf(true));
@@ -3475,10 +3492,17 @@
     async function receiveTemplateMessage(event) {
       if (event.origin !== window.location.origin || event.source !== window.parent) return;
       if (event.data?.type === 'lobola-parent-ready') {
+        adminEditorAccess = event.data.adminEditor === true;
         window.parent.postMessage({ type: 'lobola-editor-ready' }, window.location.origin);
       }
       if (event.data?.type === 'lobola-load-template') {
         try {
+          if (event.data.slug !== currentTemplateSlug) {
+            currentTemplateSlug = event.data.slug;
+            pendingReviewAction = '';
+            approvedReviewAction = '';
+            reviewSubmitted = false;
+          }
           const requestedFormat = event.data.canvasFormat || event.data.design?.canvasFormat || 'standard';
           setCanvasFormat(requestedFormat);
           if (event.data.design?.pages?.length) {
@@ -3501,6 +3525,14 @@
       }
       if (event.data?.type === 'lobola-open-editor') {
         openTemplateEditor();
+      }
+      if (event.data?.type === 'lobola-review-approved'
+        && event.data.action === pendingReviewAction
+        && ['download-png', 'download-jpg', 'download-pdf-print', 'download-mp4'].includes(pendingReviewAction)) {
+        approvedReviewAction = pendingReviewAction;
+        pendingReviewAction = '';
+        reviewSubmitted = true;
+        document.getElementById(approvedReviewAction)?.click();
       }
       if (event.data?.type === 'lobola-export-template') {
         try {

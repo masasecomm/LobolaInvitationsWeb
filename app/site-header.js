@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-const logoUrl = 'https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/284088209_104493135614872_3978818778956920310_n.jpg?stp=dst-jpg_tt6&cstp=mx1154x1154&ctp=s200x200&_nc_cat=104&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=ENEKrX1DM9cQ7kNvwGkf2_o&_nc_oc=Adq_gO_ZqLS97sTeYycWqPiwxwkmPTg4HcoeG1rud5G_WX23LRtL4ybAS67B__nA8fw&_nc_zt=24&_nc_ht=scontent-jnb2-1.xx&_nc_gid=fXKYgnKTf0nKccF_cBYDEg&_nc_ss=7b2a8&oh=00_AQN2ox7Rbe65ag-KXq4yjIpuZgJ4KQsi8CEySRFopO6_yQ&oe=6AD6D1C5';
-
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
@@ -25,13 +23,13 @@ export default function SiteHeader() {
       </button>
       <nav className={`home-menu-panel${menuOpen ? ' is-open' : ''}`} id="home-site-menu" aria-label="Main navigation">
         <a href="#categories" onClick={closeMenu}>The collection</a>
+        <Link href="/blog" onClick={closeMenu}>Blog</Link>
         <a href="#about" onClick={closeMenu}>About us</a>
         <a href="#contact" onClick={closeMenu}>Contact us</a>
         <Link href="/admin" className="admin-link" onClick={closeMenu}>Admin</Link>
       </nav>
       <Link className="home-brand" href="/" aria-label="Lobola Invitation home">
-        <img className="home-brand-logo" src={logoUrl} alt="Lobola Invitation logo" />
-        <span className="home-brand-tagline">Editable Digital Templates</span>
+        <img className="home-brand-logo" src="/lobola-invitation-logo.jpg" alt="Lobola Invitation logo" />
       </Link>
       <div className="home-header-note" aria-label="Social media and contact links">
         <a className="home-social-link" href="https://www.facebook.com/lobolainvitation/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">

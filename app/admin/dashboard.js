@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { getFirebaseAuth, getFirebaseDb, isFirebaseConfigured } from '@/lib/firebase/client';
 import { templateFormats } from '@/lib/template-formats';
+import BlogManager from './blog-manager';
 import SignInForm from './login/sign-in-form';
 
 function makeSlug(value) {
@@ -86,11 +87,11 @@ function DesignModal({ product, onClose, onSave }) {
         <iframe
           ref={frame}
           className="editor-frame"
-          src="/invitation-editor.html?mode=admin"
+          src="/invitation-editor.html"
           title={`Design ${product.title}`}
           onLoad={() => {
             setReady(false);
-            frame.current?.contentWindow?.postMessage({ type: 'lobola-parent-ready' }, window.location.origin);
+            frame.current?.contentWindow?.postMessage({ type: 'lobola-parent-ready', adminEditor: true }, window.location.origin);
           }}
         />
       </div>
@@ -104,7 +105,7 @@ export default function AdminDashboard() {
   const [userEmail, setUserEmail] = useState('');
   const [form, setForm] = useState({
     id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
-    seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: ''
+    seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
   });
   const [slugTouched, setSlugTouched] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -114,6 +115,7 @@ export default function AdminDashboard() {
   const [busy, setBusy] = useState(false);
   const [designProduct, setDesignProduct] = useState(null);
   const [designs, setDesigns] = useState({});
+  const [contentMode, setContentMode] = useState('');
 
   useEffect(() => {
     if (!isFirebaseConfigured) {
@@ -185,6 +187,7 @@ export default function AdminDashboard() {
   }
 
   function editProduct(product) {
+    setContentMode('template');
     setForm({
       id: product.id,
       title: product.title,
@@ -195,7 +198,8 @@ export default function AdminDashboard() {
       seoDescription: product.seoDescription || '',
       status: product.status,
       coverImageUrl: product.coverImageUrl || '',
-      canvasFormat: product.canvasFormat || product.design_json?.canvasFormat || 'standard'
+      canvasFormat: product.canvasFormat || product.design_json?.canvasFormat || 'standard',
+      price: product.priceCents ? (product.priceCents / 100).toFixed(2) : ''
     });
     setSlugTouched(true);
     setMessage('');
@@ -205,7 +209,7 @@ export default function AdminDashboard() {
   function resetForm() {
     setForm({
       id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
-      seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: ''
+      seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
     });
     setSlugTouched(false);
     setMessage('');
@@ -226,6 +230,10 @@ export default function AdminDashboard() {
         throw new Error('Choose HD Mobile or HD Landscape for this template.');
       }
       if (!slug) throw new Error('Enter a valid template title and URL slug.');
+      const price = Number(form.price);
+      if (!Number.isFinite(price) || price <= 0 || Math.round(price * 100) <= 0) {
+        throw new Error('Enter a template price greater than R 0.00.');
+      }
       if (form.seoDescription.length > 160) throw new Error('SEO description must be 160 characters or fewer.');
       if (form.coverImageUrl && !/^https?:\/\//i.test(form.coverImageUrl.trim())) {
         throw new Error('Cover image must be a public http or https URL.');
@@ -261,6 +269,8 @@ export default function AdminDashboard() {
         categorySlug,
         title: form.title.trim(),
         slug,
+        priceCents: Math.round(price * 100),
+        priceCurrency: 'ZAR',
         canvasFormat: form.canvasFormat,
         excerpt: form.excerpt.trim(),
         coverImageUrl: form.coverImageUrl.trim() || null,
@@ -333,10 +343,10 @@ export default function AdminDashboard() {
   };
 
   if (authState === 'unconfigured') {
-    return <main className="page-wrap admin-wrap"><div className="setup-notice"><h1>Connect Firebase</h1><p>Set the Firebase web app values in <code>.env.local</code>, then restart the development server. See <code>SETUP.md</code>.</p></div></main>;
+    return <main className="page-wrap admin-wrap"><div className="setup-notice"><Link className="button secondary" href="/">Home</Link><h1>Connect Firebase</h1><p>Set the Firebase web app values in <code>.env.local</code>, then restart the development server. See <code>SETUP.md</code>.</p></div></main>;
   }
   if (authState === 'loading') {
-    return <main className="page-wrap admin-wrap"><p role="status">Checking administrator access…</p></main>;
+    return <main className="page-wrap admin-wrap"><Link className="button secondary" href="/">Home</Link><p role="status">Checking administrator access…</p></main>;
   }
   if (authState === 'signed-out') {
     return (
@@ -346,6 +356,7 @@ export default function AdminDashboard() {
           <h1>Admin sign in</h1>
           <p className="help">Sign in with an administrator account to manage invitation templates.</p>
           <SignInForm />
+          <Link className="button secondary" href="/">Home</Link>
         </section>
       </main>
     );
@@ -359,7 +370,7 @@ export default function AdminDashboard() {
             ? <p>Add a document with this user’s UID at <code>admins/{getFirebaseAuth().currentUser?.uid}</code> in Firestore.</p>
             : <p className="message error" role="alert">{message}</p>}
           <div className="form-actions">
-            <Link href="/" className="button secondary">Return to storefront</Link>
+            <Link href="/" className="button secondary">Home</Link>
             <button className="button" type="button" onClick={handleSignOut}>Sign out</button>
           </div>
         </div>
@@ -370,10 +381,18 @@ export default function AdminDashboard() {
   return (
     <main className="page-wrap admin-wrap">
       <div className="admin-heading">
-        <div><span className="eyebrow">Template management</span><h1>Your products</h1><p className="help">Signed in as {userEmail}</p></div>
-        <div className="form-actions"><Link className="button secondary" href="/">View storefront</Link><button className="button secondary" type="button" onClick={handleSignOut}>Sign out</button></div>
+        <div><span className="eyebrow">Template and blog management</span><h1>Your content</h1><p className="help">Signed in as {userEmail}</p></div>
+        <div className="form-actions"><Link className="button secondary" href="/">Home</Link><button className="button secondary" type="button" onClick={handleSignOut}>Sign out</button></div>
       </div>
       {message && <p className={`message ${messageType}`} role="status">{message}</p>}
+      {contentMode && (
+        <div className="form-actions content-type-actions">
+          <button className="button secondary" type="button" onClick={() => { setContentMode(''); resetForm(); }}>Choose post type</button>
+          <button className={`button${contentMode === 'template' ? '' : ' secondary'}`} type="button" onClick={() => { setContentMode('template'); if (contentMode !== 'template') resetForm(); }}>Template posts</button>
+          <button className={`button${contentMode === 'blog' ? '' : ' secondary'}`} type="button" onClick={() => setContentMode('blog')}>Blog posts</button>
+        </div>
+      )}
+      {contentMode === 'blog' ? <BlogManager /> : contentMode === 'template' ? (
       <div className="admin-layout">
         <section className="panel">
           <h2>{form.id ? 'Edit template post' : 'Create a template post'}</h2>
@@ -413,6 +432,10 @@ export default function AdminDashboard() {
               <input type="url" maxLength={2048} value={form.coverImageUrl} onChange={(event) => updateField('coverImageUrl', event.target.value)} placeholder="https://…" />
               <small>Firebase Storage uploads are unavailable on the current Spark plan; use a public image URL.</small>
             </label>
+            <label className="field">Price (South African rand)
+              <input type="number" required min="0.01" max="999999.99" step="0.01" value={form.price} onChange={(event) => updateField('price', event.target.value)} placeholder="e.g. 99.00" />
+              <small>Payment processing is not connected yet. This amount is displayed for customers only.</small>
+            </label>
             <h3 className="form-subheading">Search engine details</h3>
             <label className="field">SEO title
               <input required maxLength={70} value={form.seoTitle} onChange={(event) => updateField('seoTitle', event.target.value)} placeholder="Search result title" />
@@ -438,12 +461,13 @@ export default function AdminDashboard() {
           {products.length === 0 ? <p className="empty-state">No products yet. Create your first template post.</p> : (
             <div className="table-scroll">
               <table className="product-table">
-                <thead><tr><th>Cover</th><th>Template</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Cover</th><th>Template</th><th>Price</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>
                   {products.map((product) => (
                     <tr key={product.id}>
                       <td>{product.coverImageUrl ? <img src={product.coverImageUrl} alt="" /> : <span className="cover-placeholder" />}</td>
                       <td><strong>{product.title}</strong><br /><small>/product/{product.slug}</small></td>
+                      <td>{product.priceCents ? new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.priceCents / 100) : 'Set price'}</td>
                       <td>{product.category?.name || product.categorySlug}</td>
                       <td><span className={`status-pill ${product.status}`}>{product.status}</span></td>
                       <td>
@@ -461,6 +485,16 @@ export default function AdminDashboard() {
           )}
         </section>
       </div>
+      ) : (
+        <section className="panel">
+          <h2>What would you like to create?</h2>
+          <p>Choose a post type to open its form.</p>
+          <div className="form-actions">
+            <button className="button" type="button" onClick={() => { setContentMode('template'); resetForm(); }}>Create a template post</button>
+            <button className="button secondary" type="button" onClick={() => setContentMode('blog')}>Create a blog post</button>
+          </div>
+        </section>
+      )}
       {designProduct && <DesignModal product={designProduct} onClose={() => setDesignProduct(null)} onSave={(design) => persistDesign(designProduct, design)} />}
     </main>
   );

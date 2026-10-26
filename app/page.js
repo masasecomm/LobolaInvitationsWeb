@@ -27,8 +27,6 @@ export const metadata = {
   }
 };
 
-const categoryCoverUrl = 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=85';
-
 export default async function HomePage() {
   const catalog = isFirebaseConfigured ? await getPublicCatalog() : null;
   const categories = catalog?.categories || [];
@@ -45,10 +43,6 @@ export default async function HomePage() {
   if (uncategorizedProducts.length) {
     categoryGroups.push({ id: 'other-products', name: 'More designs', products: uncategorizedProducts });
   }
-  const galleryCategories = categoryGroups.length
-    ? categoryGroups
-    : [{ id: 'lobola-invitation-template', name: 'Lobola Invitation Template', products: [], fallbackCoverUrl: categoryCoverUrl }];
-
   return (
     <>
       <script
@@ -78,7 +72,7 @@ export default async function HomePage() {
             <a className="text-link" href="#categories">Browse lobola invitation templates</a>
           </section>
 
-          <CategoryGallery categories={galleryCategories} />
+          <CategoryGallery categories={categoryGroups} />
 
           <section className="details" id="about">
             <div>
@@ -134,6 +128,7 @@ export default async function HomePage() {
           <span>Editable digital templates for your special day</span>
           <nav className="footer-links" aria-label="Footer navigation">
             <a href="#categories">Templates</a>
+            <a href="/blog">Blog</a>
             <a href="#about">About us</a>
             <a href="#contact">Contact us</a>
             <a href="/admin">Admin</a>
