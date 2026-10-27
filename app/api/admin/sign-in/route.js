@@ -186,7 +186,7 @@ export async function POST(request) {
     console.error('Could not confirm the authenticated administrator record.', error);
     return jsonError('Could not verify the administrator account. Please try again.', 502);
   }
-  if (credentials.localId !== adminUid || !signedInUser.emailVerified || signedInUser.disabled) {
+  if (credentials.localId !== adminUid || signedInUser.disabled) {
     try {
       const blockedUntil = await recordFailure(services.firestore, attemptReference);
       if (blockedUntil) {
@@ -201,6 +201,14 @@ export async function POST(request) {
       return jsonError('Administrator sign-in is temporarily unavailable. Please try again.', 503);
     }
     return jsonError('This account is not permitted to access the administrator area.', 403);
+  }
+
+  if (!signedInUser.emailVerified) {
+    return NextResponse.json({
+      error: 'Verify the primary administrator email before signing in.',
+      code: 'ADMIN_EMAIL_NOT_VERIFIED',
+      uid: adminUid
+    }, { status: 403 });
   }
 
   try {
