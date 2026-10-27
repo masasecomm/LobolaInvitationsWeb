@@ -340,6 +340,28 @@
 
     .editor-dialog::backdrop { background: rgb(37 34 31 / 62%); }
 
+    .editor-dialog.customer-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      max-width: none;
+      max-height: 100dvh;
+      margin: 0;
+      overflow: auto;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .editor-dialog.customer-fullscreen .editor-workspace {
+      min-height: calc(100dvh - 106px);
+    }
+
+    .editor-dialog.customer-fullscreen .editor-tools,
+    .editor-dialog.customer-fullscreen .editor-canvas-area {
+      max-height: calc(100dvh - 106px);
+    }
+
     .editor-header {
       display: flex;
       align-items: flex-start;

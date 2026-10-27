@@ -157,7 +157,7 @@ export default async function ProductPage({ params, searchParams }) {
               ))}
             </section>
           ) : <p>No reviews yet. Be the first to review this template.</p>}
-          <p className="help">Make a personal copy by editing the text and adding your own photos. Invitation edits stay in this browser; uploaded photos are stored securely and automatically deleted after five days.</p>
+          <p className="help">Make a personal copy by editing the text and adding your own photos. Invitation edits and uploaded photos stay in this browser only.</p>
         </section>
         <TemplateEditor
           key={product.id}

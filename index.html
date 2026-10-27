@@ -2056,7 +2056,8 @@
       setStatus('');
       updatePageSelect();
       loadCurrentPage();
-      editorDialog.showModal();
+      editorDialog.classList.toggle('customer-fullscreen', customerPhotoUploadsEnabled);
+      if (!editorDialog.open) editorDialog.showModal();
     }
 
     function clonePage(page) {
@@ -2276,6 +2277,9 @@
     productButton.addEventListener('click', openTemplateEditor);
     closeEditorButton.addEventListener('click', () => editorDialog.close());
     editorDialog.addEventListener('close', () => {
+      if (customerPhotoUploadsEnabled) {
+        window.parent.postMessage({ type: 'lobola-editor-closed' }, window.location.origin);
+      }
       if (previousFocus instanceof HTMLElement) previousFocus.focus();
     });
     document.getElementById('invitation-form').addEventListener('submit', (event) => event.preventDefault());

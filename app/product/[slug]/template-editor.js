@@ -13,7 +13,6 @@ const exportActions = ['download-png', 'download-jpg', 'download-pdf-print', 'do
 export default function TemplateEditor({ product, autoOpenEditor = false }) {
   const frame = useRef(null);
   const profileLookupId = useRef(0);
-  const [autoOpenPending, setAutoOpenPending] = useState(autoOpenEditor);
   const [accountState, setAccountState] = useState('checking');
   const [account, setAccount] = useState(null);
   const [profileUser, setProfileUser] = useState(null);
@@ -32,6 +31,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
   const [reviewerName, setReviewerName] = useState('');
   const [comment, setComment] = useState('');
   const [savingReview, setSavingReview] = useState(false);
+  const [editorExpanded, setEditorExpanded] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -95,7 +95,11 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
           customerPhotoUploads: true
         }, window.location.origin);
       }
-      if (event.data?.type === 'lobola-template-loaded') setReady(true);
+      if (event.data?.type === 'lobola-template-loaded') {
+        setReady(true);
+        setEditorExpanded(true);
+      }
+      if (event.data?.type === 'lobola-editor-closed') setEditorExpanded(false);
       if (event.data?.type === 'lobola-template-reset') {
         setAccountMessage('This invitation has been reset to the original template design.');
       }
@@ -239,13 +243,8 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
     window.history.replaceState({}, '', url);
   }, [autoOpenEditor]);
 
-  useEffect(() => {
-    if (!account || !autoOpenPending || !ready) return;
-    openEditor();
-    setAutoOpenPending(false);
-  }, [account, autoOpenPending, ready]);
-
   function openEditor() {
+    setEditorExpanded(true);
     frame.current?.contentWindow?.postMessage({ type: 'lobola-open-editor' }, window.location.origin);
   }
 
@@ -358,7 +357,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
   }
 
   return (
-    <div>
+    <div className={editorExpanded ? 'customer-editor-fullscreen' : undefined}>
       <div className="template-account-status">
         <p>Email confirmed: {account.email}</p>
         <button className="text-button" type="button" onClick={signOutEditor}>Sign out</button>
@@ -367,14 +366,14 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
       <button className="button editor-launch" type="button" onClick={openEditor} disabled={!ready}>
         {ready ? 'Edit this invitation' : 'Loading editor…'}
       </button>
-      <button className="button secondary" type="button" onClick={resetEditorToOriginal} disabled={!ready}>
+      <button className="button secondary customer-editor-reset" type="button" onClick={resetEditorToOriginal} disabled={!ready}>
         Reset to original design
       </button>
       {error && <p className="message error" role="alert">{error}</p>}
       {reviewNotice && <p className="message success" role="status">{reviewNotice}</p>}
       <div className="template-frame-wrap">
         <iframe
-          className="template-frame"
+          className={`template-frame${editorExpanded ? ' customer-editor-frame' : ''}`}
           ref={frame}
           src="/invitation-editor.html"
           title={`${product.title} invitation editor`}
