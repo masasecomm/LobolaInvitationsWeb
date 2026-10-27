@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductReviews, getPublishedProduct, isFirebaseConfigured } from '@/lib/firebase/catalog';
+import { getProductPricing } from '@/lib/product-pricing';
 import { getTemplateFormat } from '@/lib/template-formats';
 import TemplateEditor from './template-editor';
 
@@ -30,14 +31,15 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ProductPage({ params }) {
-  const { slug } = await params;
+export default async function ProductPage({ params, searchParams }) {
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
   if (!isFirebaseConfigured) {
     return <main className="page-wrap admin-wrap"><div className="setup-notice">Configure Firebase to publish template pages. See <code>SETUP.md</code>.</div></main>;
   }
   const product = await getPublishedProduct(slug);
   if (!product) notFound();
   const reviews = await getProductReviews(product.id);
+  const pricing = getProductPricing(product);
   const format = getTemplateFormat(product.canvasFormat || product.design_json?.canvasFormat);
   const averageRating = reviews.length
     ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
@@ -49,13 +51,21 @@ export default async function ProductPage({ params }) {
     description: product.seoDescription || product.excerpt || product.title,
     url: `https://lobolainvitation.co.za/product/${product.slug}`,
     ...(product.coverImageUrl ? { image: [product.coverImageUrl] } : {}),
-    ...(product.priceCents > 0 ? {
+    ...(pricing.originalPriceCents > 0 ? {
       offers: {
         '@type': 'Offer',
         priceCurrency: 'ZAR',
-        price: (product.priceCents / 100).toFixed(2),
+        price: (pricing.currentPriceCents / 100).toFixed(2),
         availability: 'https://schema.org/InStock',
-        url: `https://lobolainvitation.co.za/product/${product.slug}`
+        url: `https://lobolainvitation.co.za/product/${product.slug}`,
+        ...(pricing.isOnSale ? {
+          priceSpecification: [{
+            '@type': 'UnitPriceSpecification',
+            price: (pricing.originalPriceCents / 100).toFixed(2),
+            priceCurrency: 'ZAR',
+            priceType: 'https://schema.org/StrikethroughPrice'
+          }]
+        } : {})
       }
     } : {}),
     ...(reviews.length ? {
@@ -81,12 +91,35 @@ export default async function ProductPage({ params }) {
       }))
     } : {})
   };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://lobolainvitation.co.za/' },
+      ...(product.category?.slug ? [{
+        '@type': 'ListItem',
+        position: 2,
+        name: product.category.name,
+        item: `https://lobolainvitation.co.za/category/${product.category.slug}`
+      }] : []),
+      {
+        '@type': 'ListItem',
+        position: product.category?.slug ? 3 : 2,
+        name: product.title,
+        item: `https://lobolainvitation.co.za/product/${product.slug}`
+      }
+    ]
+  };
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, '\\u003c') }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <header className="site-header">
         <Link className="brand" href="/">Lobola Invitation</Link>
@@ -99,11 +132,16 @@ export default async function ProductPage({ params }) {
       </header>
       <main className="page-wrap template-layout">
         <section className="template-copy">
-          <span className="eyebrow">{product.category?.name}</span>
+          {product.category?.slug
+            ? <Link className="eyebrow" href={`/category/${product.category.slug}`}>{product.category.name}</Link>
+            : <span className="eyebrow">{product.category?.name}</span>}
           <h1>{product.title}</h1>
-          <p>{product.excerpt}</p>
-          {product.priceCents > 0 && (
-            <p className="template-price">{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.priceCents / 100)}</p>
+          {pricing.originalPriceCents > 0 && (
+            <p className={`template-price${pricing.isOnSale ? ' is-on-sale' : ''}`}>
+              {pricing.isOnSale && <del aria-label="Original price">{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(pricing.originalPriceCents / 100)}</del>}
+              <strong aria-label={pricing.isOnSale ? 'Sale price' : undefined}>{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(pricing.currentPriceCents / 100)}</strong>
+              {pricing.isOnSale && <span className="sale-label">Sale</span>}
+            </p>
           )}
           <p className="template-format">{format.label} · {format.dimensions}</p>
           {product.coverImageUrl && <img className="template-cover" src={product.coverImageUrl} alt={`Preview of ${product.title}`} />}
@@ -119,9 +157,13 @@ export default async function ProductPage({ params }) {
               ))}
             </section>
           ) : <p>No reviews yet. Be the first to review this template.</p>}
-          <p className="help">Make a personal copy by editing the text and adding your own photos. Your changes stay in this browser.</p>
+          <p className="help">Make a personal copy by editing the text and adding your own photos. Invitation edits stay in this browser; uploaded photos are stored securely and automatically deleted after five days.</p>
         </section>
-        <TemplateEditor key={product.id} product={product} />
+        <TemplateEditor
+          key={product.id}
+          product={product}
+          autoOpenEditor={query['editor-open'] === '1'}
+        />
       </main>
       <footer className="site-footer">
         <span>© {new Date().getFullYear()} Lobola Invitation</span>

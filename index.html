@@ -238,8 +238,8 @@
           <summary>Photo</summary>
           <div class="editor-upload">
             <label for="photo-upload">Upload your photograph</label>
-            <input id="photo-upload" type="file" accept="image/*">
-            <span>Drag the photo on the canvas to reposition it. Resize and move are limited to the photo frame.</span>
+            <input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+            <span>JPEG, PNG, WebP, or GIF; up to 4 MB. Drag the photo on the canvas to reposition it.</span>
           </div>
           <label class="editor-field">
             <span>Remove white background</span>
@@ -301,7 +301,8 @@
           <summary>Background</summary>
           <div class="editor-upload">
             <label for="background-upload">Upload a background image</label>
-            <input id="background-upload" type="file" accept="image/*">
+            <input id="background-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+            <span>JPEG, PNG, WebP, or GIF; up to 4 MB.</span>
             <button class="editor-tool-button" id="remove-background" type="button">Remove background image</button>
           </div>
           <label class="editor-style">Background size <input id="background-zoom" type="range" min="0.2" max="5" step="0.05" value="1"><output for="background-zoom">100%</output></label>
@@ -315,6 +316,20 @@
               <option value="soft-light">Soft light</option><option value="hard-light">Hard light</option>
             </select>
           </label>
+        </details>
+
+        <details class="editor-section editor-elements-section" aria-label="Elements" data-editor-panel="insert">
+          <summary>Elements</summary>
+          <div class="editor-element-categories" role="group" aria-label="Element sections">
+            <button type="button" data-element-category="all" aria-pressed="true">All</button>
+            <button type="button" data-element-category="frames" aria-pressed="false">Frames</button>
+            <button type="button" data-element-category="stickers" aria-pressed="false">Stickers</button>
+            <button type="button" data-element-category="decorations" aria-pressed="false">Decorations</button>
+            <button type="button" data-element-category="backgrounds" aria-pressed="false">Backgrounds</button>
+            <button type="button" data-element-category="texts" aria-pressed="false">Texts</button>
+          </div>
+          <div id="template-elements" class="editor-elements-grid" aria-live="polite"></div>
+          <p class="editor-size">Drag an element onto the invitation or select it to add it. Texts are added from the Text section.</p>
         </details>
 
         <details class="editor-section editor-shapes-section" aria-label="Frames and shapes" data-editor-panel="insert">
@@ -341,13 +356,21 @@
               <option value="chamfered">Chamfered</option>
             </select>
           </label>
+          <label class="editor-style" for="shape-corner-lift">Soft lifted corner
+            <select id="shape-corner-lift">
+              <option value="none">Off</option>
+              <option value="left">Bottom-left</option>
+              <option value="right">Bottom-right</option>
+            </select>
+          </label>
           <label class="editor-style">Outer corner size <input id="shape-corner-radius" type="range" min="0" max="200" value="24"><output for="shape-corner-radius">24 px</output></label>
           <label class="editor-style">Inner corner radius <input id="shape-inner-corner-radius" type="range" min="0" max="200" value="14"><output for="shape-inner-corner-radius">14 px</output></label>
           <label class="editor-style">Fill color <input id="shape-fill" type="color" value="#fffdfc"></label>
           <label class="editor-style"><input id="shape-transparent" type="checkbox" checked> Transparent fill</label>
           <div class="editor-upload">
             <label for="shape-photo-upload">Upload picture into selected frame</label>
-            <input id="shape-photo-upload" type="file" accept="image/*">
+            <input id="shape-photo-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+            <span>JPEG, PNG, WebP, or GIF; up to 4 MB.</span>
           </div>
           <label class="editor-style">Picture crop / size <input id="shape-photo-zoom" type="range" min="1" max="3" step="0.05" value="1"><output for="shape-photo-zoom">100%</output></label>
           <label class="editor-style">Picture opacity <input id="shape-photo-opacity" type="range" min="0" max="100" value="100"><output for="shape-photo-opacity">100%</output></label>
@@ -521,6 +544,76 @@
     const musicPreview = document.getElementById('music-preview');
     let musicFile = null;
     let musicObjectUrl = null;
+    let customerPhotoUploadsEnabled = false;
+    const customerImageCacheName = 'lobola-customer-images';
+    const customerImageCacheStore = 'images';
+    const customerImageRetentionMilliseconds = 5 * 24 * 60 * 60 * 1000;
+
+    function openCustomerImageCache() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(customerImageCacheName, 1);
+        request.onupgradeneeded = () => {
+          if (!request.result.objectStoreNames.contains(customerImageCacheStore)) {
+            request.result.createObjectStore(customerImageCacheStore);
+          }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(new Error('Your browser could not open local photo storage.'));
+      });
+    }
+
+    async function purgeExpiredCustomerImages(database) {
+      const cutoff = Date.now() - customerImageRetentionMilliseconds;
+      await new Promise((resolve, reject) => {
+        const transaction = database.transaction(customerImageCacheStore, 'readwrite');
+        const store = transaction.objectStore(customerImageCacheStore);
+        const request = store.openCursor();
+        request.onsuccess = () => {
+          const cursor = request.result;
+          if (!cursor) return;
+          if (cursor.value.createdAt < cutoff) cursor.delete();
+          cursor.continue();
+        };
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(new Error('Could not remove expired locally saved photos.'));
+        transaction.onabort = () => reject(new Error('Could not remove expired locally saved photos.'));
+      });
+    }
+
+    async function saveCustomerImageInBrowser(file) {
+      if (!('indexedDB' in window)) {
+        throw new Error('Your browser does not support local photo storage. Enable IndexedDB or use another browser.');
+      }
+      const database = await openCustomerImageCache();
+      try {
+        await purgeExpiredCustomerImages(database);
+        const id = crypto.randomUUID();
+        await new Promise((resolve, reject) => {
+          const transaction = database.transaction(customerImageCacheStore, 'readwrite');
+          transaction.objectStore(customerImageCacheStore).put({
+            id,
+            file,
+            createdAt: Date.now()
+          }, id);
+          transaction.oncomplete = resolve;
+          transaction.onerror = () => reject(new Error('Your browser could not save this photo locally. Check available storage and try again.'));
+          transaction.onabort = () => reject(new Error('Your browser could not save this photo locally. Check available storage and try again.'));
+        });
+        return id;
+      } finally {
+        database.close();
+      }
+    }
+
+    async function cleanCustomerImageCache() {
+      if (!('indexedDB' in window)) return;
+      const database = await openCustomerImageCache();
+      try {
+        await purgeExpiredCustomerImages(database);
+      } finally {
+        database.close();
+      }
+    }
     const invitationCanvas = document.getElementById('invitation-canvas');
     const previewFigure = document.getElementById('editor-preview');
     const inlineTextEditor = document.getElementById('canvas-text-editor');
@@ -688,6 +781,8 @@
     };
     let pages = [makePage()];
     let currentPageIndex = 0;
+    let templateElements = [];
+    let activeElementCategory = 'all';
     let selectedLayer = 'names';
     let textEditingActive = false;
     let inlineEditingLayer = null;
@@ -979,6 +1074,42 @@
       canvasContext.fill('evenodd');
     }
 
+    function drawCornerLift(shape) {
+      if (!['left', 'right'].includes(shape.cornerLift)) return;
+      const size = Math.min(64, shape.width * 0.22, shape.height * 0.22);
+      if (size < 8) return;
+      const { x, y, width, height } = shape;
+      const cornerX = shape.cornerLift === 'right' ? x + width : x;
+      const direction = shape.cornerLift === 'right' ? -1 : 1;
+      const bottom = y + height;
+      canvasContext.save();
+      canvasContext.beginPath();
+      canvasContext.moveTo(cornerX + direction * size, bottom);
+      canvasContext.lineTo(cornerX, bottom - size);
+      canvasContext.lineTo(cornerX + direction * size, bottom - size);
+      canvasContext.closePath();
+      canvasContext.shadowColor = 'rgba(32, 24, 20, .32)';
+      canvasContext.shadowBlur = 14;
+      canvasContext.shadowOffsetX = direction * -2;
+      canvasContext.shadowOffsetY = -2;
+      const fold = canvasContext.createLinearGradient(
+        cornerX + direction * size, bottom - size,
+        cornerX, bottom
+      );
+      fold.addColorStop(0, 'rgba(255, 255, 255, .96)');
+      fold.addColorStop(1, 'rgba(210, 197, 185, .9)');
+      canvasContext.fillStyle = fold;
+      canvasContext.fill();
+      canvasContext.shadowColor = 'transparent';
+      canvasContext.strokeStyle = 'rgba(105, 83, 68, .28)';
+      canvasContext.lineWidth = 1.5;
+      canvasContext.beginPath();
+      canvasContext.moveTo(cornerX + direction * size, bottom);
+      canvasContext.lineTo(cornerX, bottom - size);
+      canvasContext.stroke();
+      canvasContext.restore();
+    }
+
     function drawShape(shape) {
       canvasContext.save();
       canvasContext.globalAlpha = shape.opacity / 100;
@@ -1001,6 +1132,7 @@
         canvasContext.fill();
       }
       if (shape.strokeWidth > 0) drawShapeBorder(shape);
+      drawCornerLift(shape);
       canvasContext.restore();
     }
 
@@ -1420,7 +1552,8 @@
       const shapeCornersEnabled = shape && ['rectangle', 'rounded', 'triangle', 'diamond', 'star'].includes(shape.type);
       for (const control of [
         document.getElementById('shape-stroke'), document.getElementById('shape-stroke-width'),
-        document.getElementById('shape-corner-style'), document.getElementById('shape-corner-radius'), document.getElementById('shape-inner-corner-radius'),
+        document.getElementById('shape-corner-style'), document.getElementById('shape-corner-lift'),
+        document.getElementById('shape-corner-radius'), document.getElementById('shape-inner-corner-radius'),
         document.getElementById('shape-fill'), document.getElementById('shape-transparent'),
         document.getElementById('shape-photo-zoom'), document.getElementById('shape-photo-upload'),
         document.getElementById('shape-photo-opacity'), document.getElementById('shape-photo-blend-mode')
@@ -1429,6 +1562,7 @@
       }
       document.getElementById('shape-corner-radius').disabled = !shapeCornersEnabled || locked;
       document.getElementById('shape-corner-style').disabled = !shapeCornersEnabled || locked;
+      document.getElementById('shape-corner-lift').disabled = !shapeCornersEnabled || locked;
       document.getElementById('shape-inner-corner-radius').disabled = !shape || !['rectangle', 'rounded', 'star'].includes(shape.type) || locked;
       for (const control of [document.getElementById('shape-photo-opacity'), document.getElementById('shape-photo-blend-mode')]) {
         control.disabled = !shape?.photo || locked;
@@ -1439,6 +1573,7 @@
         document.getElementById('shape-stroke-width').value = shape.strokeWidth;
         document.getElementById('shape-stroke-width').parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
         document.getElementById('shape-corner-style').value = shape.cornerStyle || 'rounded';
+        document.getElementById('shape-corner-lift').value = shape.cornerLift || 'none';
         document.getElementById('shape-corner-radius').value = shape.cornerRadius ?? 0;
         document.getElementById('shape-inner-corner-radius').value = shape.innerCornerRadius ?? 0;
         document.getElementById('shape-corner-radius').parentElement.querySelector('output').value = `${shape.cornerRadius ?? 0} px`;
@@ -2697,6 +2832,7 @@
       strokeWidth: Number(document.getElementById('shape-stroke-width').value),
       cornerRadius: Number(document.getElementById('shape-corner-radius').value),
       cornerStyle: document.getElementById('shape-corner-style').value,
+      cornerLift: document.getElementById('shape-corner-lift').value,
       innerCornerRadius: Number(document.getElementById('shape-inner-corner-radius').value),
       fill: document.getElementById('shape-fill').value,
       transparent: document.getElementById('shape-transparent').checked,
@@ -2720,7 +2856,8 @@
     });
 
     for (const id of [
-      'shape-stroke', 'shape-stroke-width', 'shape-corner-style', 'shape-corner-radius', 'shape-inner-corner-radius',
+      'shape-stroke', 'shape-stroke-width', 'shape-corner-style', 'shape-corner-lift',
+      'shape-corner-radius', 'shape-inner-corner-radius',
       'shape-fill', 'shape-transparent', 'shape-photo-zoom', 'shape-photo-opacity', 'shape-photo-blend-mode'
     ]) {
     const control = document.getElementById(id);
@@ -2737,6 +2874,7 @@
         control.parentElement.querySelector('output').value = `${shape.strokeWidth} px`;
       }
       if (id === 'shape-corner-style') shape.cornerStyle = control.value;
+      if (id === 'shape-corner-lift') shape.cornerLift = control.value;
       if (id === 'shape-corner-radius') {
         shape.cornerRadius = Number(control.value);
         control.parentElement.querySelector('output').value = `${shape.cornerRadius} px`;
@@ -2784,7 +2922,28 @@
     document.getElementById('shape-bring-forward').addEventListener('click', () => moveShapeLayer(1));
     document.getElementById('shape-send-backward').addEventListener('click', () => moveShapeLayer(-1));
 
-    document.getElementById('shape-photo-upload').addEventListener('change', () => {
+    async function prepareImageSource(file) {
+      if (!customerPhotoUploadsEnabled) {
+        const objectUrl = URL.createObjectURL(file);
+        return { source: objectUrl, objectUrl };
+      }
+      if (file.size > 4 * 1024 * 1024) throw new Error('Choose an image smaller than 4 MB.');
+
+      setStatus('Saving your photo in this browser…');
+      try {
+        await saveCustomerImageInBrowser(file);
+        const objectUrl = URL.createObjectURL(file);
+        return { source: objectUrl, objectUrl };
+      } catch (error) {
+        throw new Error(`Could not save your photo in this browser: ${error.message}`);
+      }
+    }
+
+    function revokeImageObjectUrl(source) {
+      if (source.objectUrl) URL.revokeObjectURL(source.objectUrl);
+    }
+
+    document.getElementById('shape-photo-upload').addEventListener('change', async () => {
       const [file] = document.getElementById('shape-photo-upload').files;
       const shape = currentPage().shapes.find((item) => `shape:${item.id}` === selectedLayer);
       if (!file || !shape) return;
@@ -2793,22 +2952,28 @@
         document.getElementById('shape-photo-upload').value = '';
         return;
       }
+      let source;
+      try {
+        source = await prepareImageSource(file);
+      } catch (error) {
+        setStatus(error.message, 'error');
+        return;
+      }
       recordUndo();
-      const objectUrl = URL.createObjectURL(file);
       const image = new Image();
       image.onload = () => {
         shape.photo = image;
         shape.photoZoom = 1;
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         syncStyleControls();
         drawInvitation();
         setStatus('Picture added inside the selected frame.', 'success');
       };
       image.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         setStatus('The selected picture could not be opened. Try another image.', 'error');
       };
-      image.src = objectUrl;
+      image.src = source.source;
     });
 
     function moveShapeLayer(direction) {
@@ -3233,7 +3398,7 @@
       }
     });
 
-    photoUpload.addEventListener('change', () => {
+    photoUpload.addEventListener('change', async () => {
       const [file] = photoUpload.files;
       if (!file) return;
       if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
@@ -3242,16 +3407,22 @@
         return;
       }
 
+      let source;
+      try {
+        source = await prepareImageSource(file);
+      } catch (error) {
+        setStatus(error.message, 'error');
+        return;
+      }
       recordUndo();
       const targetPage = currentPage();
-      const objectUrl = URL.createObjectURL(file);
       const photoImage = new Image();
       photoImage.onload = () => {
         targetPage.sourcePhoto = photoImage;
         refreshRenderablePhoto(targetPage);
         targetPage.photoX = 0;
         targetPage.photoY = 0;
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         if (targetPage === currentPage()) {
           selectedLayer = 'photo';
           textEditingActive = false;
@@ -3264,14 +3435,14 @@
         }
       };
       photoImage.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         photoUpload.value = '';
         if (targetPage === currentPage()) setStatus('The selected image could not be opened. Try another image.', 'error');
       };
-      photoImage.src = objectUrl;
+      photoImage.src = source.source;
     });
 
-    backgroundUpload.addEventListener('change', () => {
+    backgroundUpload.addEventListener('change', async () => {
       const [file] = backgroundUpload.files;
       if (!file) return;
       if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
@@ -3279,9 +3450,15 @@
         backgroundUpload.value = '';
         return;
       }
+      let source;
+      try {
+        source = await prepareImageSource(file);
+      } catch (error) {
+        setStatus(error.message, 'error');
+        return;
+      }
       recordUndo();
       const targetPage = currentPage();
-      const objectUrl = URL.createObjectURL(file);
       const image = new Image();
       image.onload = () => {
         targetPage.background = image;
@@ -3289,7 +3466,7 @@
         targetPage.backgroundX = 0;
         targetPage.backgroundY = 0;
         targetPage.backgroundZoom = 1;
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         if (targetPage === currentPage()) {
           selectedLayer = 'background';
           textEditingActive = false;
@@ -3302,11 +3479,11 @@
         }
       };
       image.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
+        revokeImageObjectUrl(source);
         backgroundUpload.value = '';
         if (targetPage === currentPage()) setStatus('The background image could not be opened. Try another image.', 'error');
       };
-      image.src = objectUrl;
+      image.src = source.source;
     });
 
     document.getElementById('remove-background').addEventListener('click', () => {
@@ -3445,6 +3622,132 @@
       });
     }
 
+    function isTemplateElement(element) {
+      if (!element || typeof element.id !== 'string' || typeof element.name !== 'string') return false;
+      if (!['frames', 'stickers', 'decorations', 'backgrounds'].includes(element.category)) return false;
+      if (typeof element.url !== 'string') return false;
+      try {
+        const url = new URL(element.url, window.location.origin);
+        return url.origin === window.location.origin && url.pathname.startsWith('/Elements/');
+      } catch {
+        return false;
+      }
+    }
+
+    function renderTemplateElements() {
+      const container = document.getElementById('template-elements');
+      const elements = activeElementCategory === 'all'
+        ? templateElements
+        : templateElements.filter((element) => element.category === activeElementCategory);
+      if (activeElementCategory === 'texts') {
+        const addTextButton = document.createElement('button');
+        addTextButton.className = 'editor-tool-button';
+        addTextButton.type = 'button';
+        addTextButton.textContent = 'Add text';
+        addTextButton.addEventListener('click', () => document.getElementById('add-text').click());
+        container.replaceChildren(addTextButton);
+        return;
+      }
+      if (!elements.length) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.className = 'editor-size';
+        emptyMessage.textContent = 'No elements in this section yet.';
+        container.replaceChildren(emptyMessage);
+        return;
+      }
+
+      container.replaceChildren(...elements.map((element) => {
+        const button = document.createElement('button');
+        button.className = 'editor-element-card';
+        button.type = 'button';
+        button.draggable = true;
+        button.setAttribute('aria-label', `Add ${element.name}`);
+        const image = document.createElement('img');
+        image.src = element.url;
+        image.alt = '';
+        image.loading = 'lazy';
+        const label = document.createElement('span');
+        label.textContent = element.name;
+        button.append(image, label);
+        button.addEventListener('click', () => {
+          insertTemplateElement(element).catch((error) => setStatus(`Could not add element: ${error.message}`, 'error'));
+        });
+        button.addEventListener('dragstart', (event) => {
+          event.dataTransfer.setData('application/x-lobola-template-element', element.id);
+          event.dataTransfer.effectAllowed = 'copy';
+        });
+        return button;
+      }));
+    }
+
+    async function insertTemplateElement(element, centerX = invitationCanvas.width / 2, centerY = invitationCanvas.height / 2) {
+      if (!isTemplateElement(element)) throw new Error('This template element is invalid.');
+      const image = await loadTemplateImage(element.url);
+      if (!image?.naturalWidth || !image?.naturalHeight) throw new Error('The saved element image could not be loaded.');
+      let width = Math.min(320, invitationCanvas.width * 0.35);
+      let height = width * image.naturalHeight / image.naturalWidth;
+      if (height > invitationCanvas.height * 0.35) {
+        height = invitationCanvas.height * 0.35;
+        width = height * image.naturalWidth / image.naturalHeight;
+      }
+      recordUndo();
+      const shape = {
+        id: `element-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        type: 'rectangle',
+        x: centerX - width / 2,
+        y: centerY - height / 2,
+        width,
+        height,
+        stroke: '#895b49',
+        strokeWidth: 0,
+        cornerRadius: 0,
+        cornerLift: 'none',
+        fill: '#fffdfc',
+        transparent: true,
+        photo: image,
+        photoZoom: 1,
+        photoOpacity: 100,
+        photoBlendMode: 'source-over',
+        opacity: 100,
+        locked: false,
+        removable: true
+      };
+      currentPage().shapes.push(shape);
+      selectedLayer = `shape:${shape.id}`;
+      textEditingActive = false;
+      selectionGizmoActive = true;
+      activateShapeSection();
+      syncLayerControls();
+      syncStyleControls();
+      drawInvitation();
+      setStatus(`${element.name} added to the invitation.`, 'success');
+    }
+
+    document.querySelectorAll('[data-element-category]').forEach((button) => {
+      button.addEventListener('click', () => {
+        activeElementCategory = button.dataset.elementCategory;
+        document.querySelectorAll('[data-element-category]').forEach((item) => {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+        renderTemplateElements();
+      });
+    });
+
+    invitationCanvas.addEventListener('dragover', (event) => {
+      if (event.dataTransfer.types.includes('application/x-lobola-template-element')) event.preventDefault();
+    });
+    invitationCanvas.addEventListener('drop', (event) => {
+      const elementId = event.dataTransfer.getData('application/x-lobola-template-element');
+      const element = templateElements.find((item) => item.id === elementId);
+      if (!element) return;
+      event.preventDefault();
+      const bounds = invitationCanvas.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) * invitationCanvas.width / bounds.width;
+      const y = (event.clientY - bounds.top) * invitationCanvas.height / bounds.height;
+      insertTemplateElement(element, x, y)
+        .catch((error) => setStatus(`Could not add element: ${error.message}`, 'error'));
+    });
+
     async function hydrateTemplatePage(savedPage) {
       const defaults = makePage();
       const page = { ...defaults, ...savedPage };
@@ -3496,7 +3799,16 @@
         window.parent.postMessage({ type: 'lobola-editor-ready' }, window.location.origin);
       }
       if (event.data?.type === 'lobola-load-template') {
+        let photoCleanupError = '';
         try {
+          customerPhotoUploadsEnabled = event.data.customerPhotoUploads === true;
+          if (customerPhotoUploadsEnabled) {
+            try {
+              await cleanCustomerImageCache();
+            } catch (error) {
+              photoCleanupError = `Could not remove expired photos from this browser: ${error.message}`;
+            }
+          }
           if (event.data.slug !== currentTemplateSlug) {
             currentTemplateSlug = event.data.slug;
             pendingReviewAction = '';
@@ -3505,6 +3817,8 @@
           }
           const requestedFormat = event.data.canvasFormat || event.data.design?.canvasFormat || 'standard';
           setCanvasFormat(requestedFormat);
+          templateElements = Array.isArray(event.data.elements) ? event.data.elements.filter(isTemplateElement) : [];
+          renderTemplateElements();
           if (event.data.design?.pages?.length) {
             pages = await Promise.all(event.data.design.pages.map(hydrateTemplatePage));
           } else {
@@ -3519,12 +3833,39 @@
           syncPageControls();
           window.parent.postMessage({ type: 'lobola-template-loaded' }, window.location.origin);
           openTemplateEditor();
+          if (photoCleanupError) setStatus(photoCleanupError, 'error');
+        } catch (error) {
+          window.parent.postMessage({ type: 'lobola-editor-error', message: error.message }, window.location.origin);
+        }
+      }
+      if (event.data?.type === 'lobola-reset-template') {
+        try {
+          setCanvasFormat(event.data.canvasFormat || event.data.design?.canvasFormat || 'standard');
+          pages = event.data.design?.pages?.length
+            ? await Promise.all(event.data.design.pages.map(hydrateTemplatePage))
+            : [makePage()];
+          currentPageIndex = 0;
+          selectedLayer = 'names';
+          textEditingActive = false;
+          selectionGizmoActive = false;
+          inlineEditingLayer = null;
+          inlineTextEditor.hidden = true;
+          undoStack.length = 0;
+          document.getElementById('editor-undo').disabled = true;
+          loadCurrentPage();
+          syncPageControls();
+          setStatus('Invitation reset to its original template design.', 'success');
+          window.parent.postMessage({ type: 'lobola-template-reset' }, window.location.origin);
         } catch (error) {
           window.parent.postMessage({ type: 'lobola-editor-error', message: error.message }, window.location.origin);
         }
       }
       if (event.data?.type === 'lobola-open-editor') {
         openTemplateEditor();
+      }
+      if (event.data?.type === 'lobola-set-elements') {
+        templateElements = Array.isArray(event.data.elements) ? event.data.elements.filter(isTemplateElement) : [];
+        renderTemplateElements();
       }
       if (event.data?.type === 'lobola-review-approved'
         && event.data.action === pendingReviewAction

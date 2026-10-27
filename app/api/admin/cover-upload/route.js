@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getFirebaseAdminServices, getPrimaryAdminUid } from '@/lib/firebase/admin';
 
 const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-const uploadFolder = 'Admin Template Covers';
+const uploadFolders = {
+  cover: 'Admin Template Covers',
+  element: 'Elements'
+};
 const githubRepository = 'masasecomm/LobolaInvitationsWeb';
 const githubBranch = 'main';
 const maxFileSize = 4 * 1024 * 1024;
@@ -78,6 +82,21 @@ export async function POST(request) {
   const claims = idToken ? getFirebaseClaims(idToken) : null;
   if (!claims) return jsonError('Sign in with an administrator account to upload a cover image.', 401);
 
+  try {
+    const { auth } = getFirebaseAdminServices();
+    const verifiedClaims = await auth.verifyIdToken(idToken, true);
+    const primaryAdminUid = await getPrimaryAdminUid();
+    if (verifiedClaims.uid !== primaryAdminUid) {
+      return jsonError('Only the configured primary administrator can upload cover images.', 403);
+    }
+  } catch (error) {
+    if (error?.code === 'auth/id-token-expired' || error?.code === 'auth/invalid-id-token' || error?.code === 'auth/argument-error') {
+      return jsonError('Your sign-in expired. Sign in again before uploading a cover image.', 401);
+    }
+    console.error('Could not verify image-upload administrator access.', error);
+    return jsonError('Could not verify administrator access. Please try again.', 503);
+  }
+
   let membershipResponse;
   try {
     const membershipUrl = new URL(
@@ -115,7 +134,16 @@ export async function POST(request) {
 
   const file = formData.get('file');
   const slug = formData.get('slug');
-  if (!(file instanceof File) || typeof slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+  const kind = formData.get('kind') || 'cover';
+  const elementId = formData.get('elementId');
+  if (
+    !(file instanceof File)
+    || typeof slug !== 'string'
+    || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
+    || typeof kind !== 'string'
+    || !Object.hasOwn(uploadFolders, kind)
+    || (kind === 'element' && (typeof elementId !== 'string' || !/^[a-f0-9-]{36}$/i.test(elementId)))
+  ) {
     return jsonError('Choose an image and save it with a valid template name first.', 400);
   }
   if (file.size === 0 || file.size > maxFileSize) {
@@ -128,7 +156,8 @@ export async function POST(request) {
     return jsonError('Use a valid JPEG, PNG, or WebP image.', 415);
   }
 
-  const filename = `${slug}-cover.${extension}`;
+  const uploadFolder = uploadFolders[kind];
+  const filename = kind === 'cover' ? `${slug}-cover.${extension}` : `${slug}-${elementId}.${extension}`;
   const path = `public/${uploadFolder}/${filename}`;
   const encodedPath = path.split('/').map(encodeURIComponent).join('/');
   const contentsUrl = `https://api.github.com/repos/${githubRepository}/contents/${encodedPath}`;
@@ -168,9 +197,9 @@ export async function POST(request) {
     }
 
     const savedFile = await saveResponse.json();
-    const coverImageUrl = `/${encodeURIComponent(uploadFolder)}/${encodeURIComponent(filename)}`;
+    const imageUrl = `/${encodeURIComponent(uploadFolder)}/${encodeURIComponent(filename)}`;
     return NextResponse.json({
-      coverImageUrl,
+      ...(kind === 'cover' ? { coverImageUrl: imageUrl } : { elementImageUrl: imageUrl }),
       commitSha: savedFile.commit?.sha || null
     }, { status: 201 });
   } catch (error) {

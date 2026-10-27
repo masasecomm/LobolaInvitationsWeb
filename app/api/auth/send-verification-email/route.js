@@ -62,9 +62,10 @@ export async function POST(request) {
     if (user.emailVerified) return jsonError('This email is already confirmed. Sign in again to continue.', 409);
 
     const siteUrl = getSiteUrl();
-    const continueUrl = new URL(`/product/${encodeURIComponent(slug)}`, siteUrl).toString();
+    const continueUrl = new URL(`/product/${encodeURIComponent(slug)}`, siteUrl);
+    continueUrl.searchParams.set('editor-open', '1');
     const verificationLink = await auth.generateEmailVerificationLink(user.email, {
-      url: continueUrl,
+      url: continueUrl.toString(),
       handleCodeInApp: false
     });
 

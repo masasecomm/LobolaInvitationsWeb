@@ -20,6 +20,14 @@ export default async function sitemap() {
 
   const [catalog, posts] = await Promise.all([getPublicCatalog(), getPublishedBlogPosts()]);
   entries.push(
+    ...catalog.categories
+      .filter((category) => category.slug && catalog.products.some((product) => product.categoryId === category.id))
+      .map((category) => ({
+        url: `${siteUrl}/category/${category.slug}`,
+        changeFrequency: 'weekly',
+        priority: 0.7,
+        ...(lastModified(category.updatedAt) ? { lastModified: lastModified(category.updatedAt) } : {})
+      })),
     ...catalog.products.map((product) => ({
       url: `${siteUrl}/product/${product.slug}`,
       changeFrequency: 'monthly',

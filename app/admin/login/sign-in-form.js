@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithCustomToken } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/client';
 
 const turnstileSiteKey = '0x4AAAAAAFbXDbZY4AJ5gGSD';
@@ -59,18 +59,18 @@ export default function SignInForm() {
     setError('');
     try {
       if (!captchaToken) throw new Error('Complete the security check before signing in.');
-      const response = await fetch('/api/turnstile', {
+      const response = await fetch('/api/admin/sign-in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: captchaToken })
+        body: JSON.stringify({ email, password, token: captchaToken })
       });
-      const verification = await response.json();
-      if (!response.ok) throw new Error(verification.error || 'Security verification failed.');
-      await signInWithEmailAndPassword(getFirebaseAuth(), email, password);
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Administrator sign-in failed.');
+      await signInWithCustomToken(getFirebaseAuth(), result.customToken);
       router.replace('/admin');
       router.refresh();
     } catch (caught) {
-      setError(`Could not sign in: ${caught.message}`);
+      setError(caught.message);
       setCaptchaToken('');
       if (widgetId.current !== null) window.turnstile?.reset(widgetId.current);
     } finally {

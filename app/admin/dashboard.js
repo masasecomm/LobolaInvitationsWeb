@@ -21,16 +21,26 @@ function documentSize(value) {
   return new Blob([JSON.stringify(value)]).size;
 }
 
-function DesignModal({ product, onClose, onSave }) {
+function DesignModal({ product, onClose, onSave, onSaveElements }) {
   const frame = useRef(null);
   const onSaveRef = useRef(onSave);
+  const elementsRef = useRef(product.elements || []);
   const [ready, setReady] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [elements, setElements] = useState(product.elements || []);
+  const [elementName, setElementName] = useState('');
+  const [elementCategory, setElementCategory] = useState('decorations');
+  const [elementFile, setElementFile] = useState(null);
+  const [savingElement, setSavingElement] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     onSaveRef.current = onSave;
   }, [onSave]);
+
+  useEffect(() => {
+    elementsRef.current = elements;
+  }, [elements]);
 
   useEffect(() => {
     let active = true;
@@ -42,7 +52,8 @@ function DesignModal({ product, onClose, onSave }) {
           slug: product.slug,
           title: product.title,
           canvasFormat: product.canvasFormat || product.design_json?.canvasFormat || 'standard',
-          design: product.design_json
+          design: product.design_json,
+          elements: elementsRef.current
         }, window.location.origin);
       }
       if (event.data?.type === 'lobola-template-loaded') setReady(true);
@@ -71,6 +82,71 @@ function DesignModal({ product, onClose, onSave }) {
     frame.current?.contentWindow?.postMessage({ type: 'lobola-export-template' }, window.location.origin);
   }
 
+  async function saveElementAsset(event) {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    if (!elementFile || !elementName.trim()) {
+      setError('Choose an image and enter a name for this element.');
+      return;
+    }
+
+    setSavingElement(true);
+    setError('');
+    try {
+      const user = getFirebaseAuth().currentUser;
+      if (!user) throw new Error('Sign in again before uploading template elements.');
+
+      const elementId = crypto.randomUUID();
+      const uploadForm = new FormData();
+      uploadForm.set('file', elementFile);
+      uploadForm.set('slug', product.slug);
+      uploadForm.set('kind', 'element');
+      uploadForm.set('elementId', elementId);
+
+      const response = await fetch('/api/admin/cover-upload', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+        body: uploadForm
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'The element image could not be uploaded.');
+
+      const nextElements = [...elements, {
+        id: elementId,
+        name: elementName.trim(),
+        category: elementCategory,
+        url: result.elementImageUrl
+      }];
+      await onSaveElements(nextElements);
+      elementsRef.current = nextElements;
+      setElements(nextElements);
+      frame.current?.contentWindow?.postMessage({ type: 'lobola-set-elements', elements: nextElements }, window.location.origin);
+      setElementName('');
+      setElementFile(null);
+      formElement.reset();
+    } catch (caught) {
+      setError(`Could not save template element: ${caught.message}`);
+    } finally {
+      setSavingElement(false);
+    }
+  }
+
+  async function removeElement(elementId) {
+    const nextElements = elements.filter((element) => element.id !== elementId);
+    setSavingElement(true);
+    setError('');
+    try {
+      await onSaveElements(nextElements);
+      elementsRef.current = nextElements;
+      setElements(nextElements);
+      frame.current?.contentWindow?.postMessage({ type: 'lobola-set-elements', elements: nextElements }, window.location.origin);
+    } catch (caught) {
+      setError(`Could not remove template element: ${caught.message}`);
+    } finally {
+      setSavingElement(false);
+    }
+  }
+
   return (
     <div className="editor-overlay" role="dialog" aria-modal="true" aria-label={`Design ${product.title}`}>
       <div className="editor-modal">
@@ -84,6 +160,49 @@ function DesignModal({ product, onClose, onSave }) {
           </div>
         </div>
         {error && <p className="message error" role="alert">{error}</p>}
+        <details className="admin-elements-manager">
+          <summary>Elements ({elements.length})</summary>
+          <p>Upload reusable images for this template. They are stored in the website’s Elements folder.</p>
+          <form className="form-grid" onSubmit={saveElementAsset}>
+            <label className="field">Element name
+              <input required maxLength={80} value={elementName} onChange={(event) => setElementName(event.target.value)} />
+            </label>
+            <label className="field">Section
+              <select value={elementCategory} onChange={(event) => setElementCategory(event.target.value)}>
+                <option value="frames">Frames</option>
+                <option value="stickers">Stickers</option>
+                <option value="decorations">Decorations</option>
+                <option value="backgrounds">Backgrounds</option>
+              </select>
+            </label>
+            <label className="field">Image
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                required
+                disabled={savingElement}
+                onChange={(event) => setElementFile(event.target.files?.[0] || null)}
+              />
+              <small>JPEG, PNG, or WebP; up to 4 MB.</small>
+            </label>
+            <button className="button" type="submit" disabled={savingElement}>
+              {savingElement ? 'Saving element…' : 'Upload element'}
+            </button>
+          </form>
+          {elements.length > 0 && (
+            <ul className="admin-element-list">
+              {elements.map((element) => (
+                <li key={element.id}>
+                  <img src={element.url} alt="" />
+                  <span>{element.name} · {element.category}</span>
+                  <button className="text-button" type="button" disabled={savingElement} onClick={() => removeElement(element.id)}>
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </details>
         <iframe
           ref={frame}
           className="editor-frame"
@@ -105,7 +224,8 @@ export default function AdminDashboard() {
   const [userEmail, setUserEmail] = useState('');
   const [form, setForm] = useState({
     id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
-    seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
+    seoDescription: '', categorySeoTitle: '', categorySeoDescription: '',
+    status: 'draft', coverImageUrl: '', canvasFormat: '', price: '', salePrice: ''
   });
   const [coverFile, setCoverFile] = useState(null);
   const [slugTouched, setSlugTouched] = useState(false);
@@ -138,8 +258,11 @@ export default function AdminDashboard() {
       setAuthState('loading');
       setUserEmail(user.email || '');
       try {
-        const membership = await getDoc(doc(db, 'admins', user.uid));
-        if (!membership.exists()) {
+        const [membership, primaryAdmin] = await Promise.all([
+          getDoc(doc(db, 'admins', user.uid)),
+          getDoc(doc(db, 'adminConfig', 'primary'))
+        ]);
+        if (!membership.exists() || primaryAdmin.data()?.uid !== user.uid) {
           if (active) setAuthState('unauthorized');
           return;
         }
@@ -183,6 +306,11 @@ export default function AdminDashboard() {
       if (field === 'excerpt' && (!current.seoDescription || current.seoDescription === current.excerpt)) {
         updated.seoDescription = value;
       }
+      if (field === 'categoryName') {
+        const category = categories.find((item) => makeSlug(item.name) === makeSlug(value.trim()));
+        updated.categorySeoTitle = category?.seoTitle || '';
+        updated.categorySeoDescription = category?.seoDescription || '';
+      }
       return updated;
     });
   }
@@ -198,10 +326,13 @@ export default function AdminDashboard() {
       categoryName: product.category?.name || '',
       seoTitle: product.seoTitle || product.title,
       seoDescription: product.seoDescription || '',
+      categorySeoTitle: product.category?.seoTitle || '',
+      categorySeoDescription: product.category?.seoDescription || '',
       status: product.status,
       coverImageUrl: product.coverImageUrl || '',
       canvasFormat: product.canvasFormat || product.design_json?.canvasFormat || 'standard',
-      price: product.priceCents ? (product.priceCents / 100).toFixed(2) : ''
+      price: product.priceCents ? (product.priceCents / 100).toFixed(2) : '',
+      salePrice: product.salePriceCents ? (product.salePriceCents / 100).toFixed(2) : ''
     });
     setSlugTouched(true);
     setMessage('');
@@ -212,7 +343,8 @@ export default function AdminDashboard() {
     setCoverFile(null);
     setForm({
       id: '', title: '', slug: '', excerpt: '', categoryName: '', seoTitle: '',
-      seoDescription: '', status: 'draft', coverImageUrl: '', canvasFormat: '', price: ''
+      seoDescription: '', categorySeoTitle: '', categorySeoDescription: '',
+      status: 'draft', coverImageUrl: '', canvasFormat: '', price: '', salePrice: ''
     });
     setSlugTouched(false);
     setMessage('');
@@ -237,7 +369,18 @@ export default function AdminDashboard() {
       if (!Number.isFinite(price) || price <= 0 || Math.round(price * 100) <= 0) {
         throw new Error('Enter a template price greater than R 0.00.');
       }
+      const salePrice = form.salePrice.trim() ? Number(form.salePrice) : null;
+      if (salePrice !== null && (
+        !Number.isFinite(salePrice)
+        || salePrice <= 0
+        || Math.round(salePrice * 100) <= 0
+        || Math.round(salePrice * 100) >= Math.round(price * 100)
+      )) {
+        throw new Error('A sale price must be greater than R 0.00 and lower than the original price.');
+      }
       if (form.seoDescription.length > 160) throw new Error('SEO description must be 160 characters or fewer.');
+      if (form.categorySeoTitle.length > 70) throw new Error('Category SEO title must be 70 characters or fewer.');
+      if (form.categorySeoDescription.length > 160) throw new Error('Category SEO description must be 160 characters or fewer.');
 
       let coverImageUrl = form.coverImageUrl.trim() || null;
       const existingProduct = await getDocs(query(
@@ -257,10 +400,18 @@ export default function AdminDashboard() {
         await setDoc(doc(db, 'categories', categoryId), {
           name: categoryName,
           slug: categorySlug,
-          createdAt: new Date().toISOString()
+          seoTitle: form.categorySeoTitle.trim() || categoryName,
+          seoDescription: form.categorySeoDescription.trim(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         });
-      } else if (categorySnapshot.docs[0].data().name !== categoryName) {
-        await updateDoc(doc(db, 'categories', categoryId), { name: categoryName });
+      } else {
+        await updateDoc(doc(db, 'categories', categoryId), {
+          name: categoryName,
+          seoTitle: form.categorySeoTitle.trim() || categoryName,
+          seoDescription: form.categorySeoDescription.trim(),
+          updatedAt: new Date().toISOString()
+        });
       }
 
       const productId = form.id || crypto.randomUUID();
@@ -271,6 +422,7 @@ export default function AdminDashboard() {
         title: form.title.trim(),
         slug,
         priceCents: Math.round(price * 100),
+        salePriceCents: salePrice === null ? null : Math.round(salePrice * 100),
         priceCurrency: 'ZAR',
         canvasFormat: form.canvasFormat,
         excerpt: form.excerpt.trim(),
@@ -283,7 +435,7 @@ export default function AdminDashboard() {
         ...(oldProduct ? {} : { createdAt: new Date().toISOString() })
       };
       if (documentSize(payload) > 800 * 1024) {
-        throw new Error('This template design is too large for Firestore on the current setup. Reduce embedded images or use image URLs; Firebase Storage requires a paid-plan upgrade.');
+        throw new Error('This template design is too large for Firestore. Reduce embedded images to fit within the document size limit.');
       }
       if (coverFile) {
         const user = getFirebaseAuth().currentUser;
@@ -347,7 +499,7 @@ export default function AdminDashboard() {
     delete nextPayload.id;
     delete nextPayload.category;
     if (documentSize(nextPayload) > 800 * 1024) {
-      throw new Error('This design is too large for Firestore. Reduce embedded images or use image URLs; Firebase Storage requires a paid-plan upgrade.');
+      throw new Error('This design is too large for Firestore. Reduce embedded images to fit within the document size limit.');
     }
     await updateDoc(doc(getFirebaseDb(), 'products', product.id), {
       design_json: design,
@@ -360,6 +512,20 @@ export default function AdminDashboard() {
     setDesignProduct(null);
     setMessageType('success');
     setMessage(`Design saved for ${product.title}.`);
+    router.refresh();
+  };
+
+  const persistElements = async (product, elements) => {
+    await updateDoc(doc(getFirebaseDb(), 'products', product.id), {
+      elements,
+      updatedAt: new Date().toISOString()
+    });
+    setProducts((current) => current.map((item) => item.id === product.id
+      ? { ...item, elements, updatedAt: new Date().toISOString() }
+      : item));
+    setDesignProduct((current) => current?.id === product.id ? { ...current, elements } : current);
+    setMessageType('success');
+    setMessage(`Elements saved for ${product.title}.`);
     router.refresh();
   };
 
@@ -388,7 +554,7 @@ export default function AdminDashboard() {
         <div className="setup-notice">
           <h1>{authState === 'unauthorized' ? 'Admin access is not enabled for this account.' : 'Could not verify administrator access.'}</h1>
           {authState === 'unauthorized'
-            ? <p>Add a document with this user’s UID at <code>admins/{getFirebaseAuth().currentUser?.uid}</code> in Firestore.</p>
+            ? <p>Only the configured primary administrator can manage content. Set <code>adminConfig/primary</code> to the intended administrator UID in Firestore.</p>
             : <p className="message error" role="alert">{message}</p>}
           <div className="form-actions">
             <Link href="/" className="button secondary">Home</Link>
@@ -429,6 +595,14 @@ export default function AdminDashboard() {
               <input required maxLength={80} list="existing-categories" value={form.categoryName} onChange={(event) => updateField('categoryName', event.target.value)} placeholder="e.g. Lobola Invitation Template" />
               <datalist id="existing-categories">{categories.map((category) => <option value={category.name} key={category.id} />)}</datalist>
               <small>Choose an existing category or type a new one.</small>
+            </label>
+            <label className="field">Category SEO title
+              <input maxLength={70} value={form.categorySeoTitle} onChange={(event) => updateField('categorySeoTitle', event.target.value)} placeholder="Search result title for this category" />
+              <small>{form.categorySeoTitle.length}/70 characters</small>
+            </label>
+            <label className="field">Category SEO description
+              <textarea maxLength={160} value={form.categorySeoDescription} onChange={(event) => updateField('categorySeoDescription', event.target.value)} placeholder="Describe this category for search results." />
+              <small>{form.categorySeoDescription.length}/160 characters</small>
             </label>
             <label className="field">Template format
               <select
@@ -471,7 +645,11 @@ export default function AdminDashboard() {
             </label>
             <label className="field">Price (South African rand)
               <input type="number" required min="0.01" max="999999.99" step="0.01" value={form.price} onChange={(event) => updateField('price', event.target.value)} placeholder="e.g. 99.00" />
-              <small>Payment processing is not connected yet. This amount is displayed for customers only.</small>
+              <small>Enter the regular/original price. Payment processing is not connected yet.</small>
+            </label>
+            <label className="field">Sale price (optional)
+              <input type="number" min="0.01" max="999999.99" step="0.01" value={form.salePrice} onChange={(event) => updateField('salePrice', event.target.value)} placeholder="e.g. 79.00" />
+              <small>Leave blank to show the regular price. A sale price must be lower than the original price.</small>
             </label>
             <h3 className="form-subheading">Search engine details</h3>
             <label className="field">SEO title
@@ -504,7 +682,13 @@ export default function AdminDashboard() {
                     <tr key={product.id}>
                       <td>{product.coverImageUrl ? <img src={product.coverImageUrl} alt="" /> : <span className="cover-placeholder" />}</td>
                       <td><strong>{product.title}</strong><br /><small>/product/{product.slug}</small></td>
-                      <td>{product.priceCents ? new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.priceCents / 100) : 'Set price'}</td>
+                      <td>
+                        {product.priceCents ? (
+                          product.salePriceCents > 0 && product.salePriceCents < product.priceCents
+                            ? <><del>{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.priceCents / 100)}</del><br /><strong>{new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.salePriceCents / 100)}</strong></>
+                            : new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(product.priceCents / 100)
+                        ) : 'Set price'}
+                      </td>
                       <td>{product.category?.name || product.categorySlug}</td>
                       <td><span className={`status-pill ${product.status}`}>{product.status}</span></td>
                       <td>
@@ -532,7 +716,14 @@ export default function AdminDashboard() {
           </div>
         </section>
       )}
-      {designProduct && <DesignModal product={designProduct} onClose={() => setDesignProduct(null)} onSave={(design) => persistDesign(designProduct, design)} />}
+      {designProduct && (
+        <DesignModal
+          product={designProduct}
+          onClose={() => setDesignProduct(null)}
+          onSave={(design) => persistDesign(designProduct, design)}
+          onSaveElements={(elements) => persistElements(designProduct, elements)}
+        />
+      )}
     </main>
   );
 }
