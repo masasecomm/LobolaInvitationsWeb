@@ -3,7 +3,9 @@ import { isIP } from 'node:net';
 import { Timestamp } from 'firebase-admin/firestore';
 import { NextResponse } from 'next/server';
 import { firebaseConfig } from '@/lib/firebase/config';
-import { getFirebaseAdminServices, getPrimaryAdminUid } from '@/lib/firebase/admin';
+import {
+  getFirebaseAdminServices, getPrimaryAdminUid, reserveVerificationEmail
+} from '@/lib/firebase/admin';
 import { verifyTurnstileToken } from '@/lib/turnstile';
 
 export const runtime = 'nodejs';
@@ -28,6 +30,16 @@ function getClientIp(request) {
 function getAttemptReference(firestore, ip) {
   const ipHash = createHash('sha256').update(ip).digest('hex');
   return firestore.collection('adminSignInAttempts').doc(ipHash);
+}
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
 }
 
 async function getActiveBlock(firestore, reference) {
@@ -204,11 +216,84 @@ export async function POST(request) {
   }
 
   if (!signedInUser.emailVerified) {
-    return NextResponse.json({
-      error: 'Verify the primary administrator email before signing in.',
-      code: 'ADMIN_EMAIL_NOT_VERIFIED',
-      uid: adminUid
-    }, { status: 403 });
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const sender = process.env.RESEND_FROM_EMAIL;
+    const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    if (!resendApiKey || !sender || !configuredSiteUrl) {
+      return jsonError('Admin email verification is not configured. Contact the site administrator.', 503);
+    }
+
+    let siteUrl;
+    try {
+      siteUrl = new URL(configuredSiteUrl);
+      if (siteUrl.protocol !== 'https:' && siteUrl.hostname !== 'localhost') {
+        throw new Error('Production site URL must use HTTPS.');
+      }
+    } catch (error) {
+      console.error('The configured site URL for administrator email verification is invalid.', error);
+      return jsonError('Admin email verification is not configured correctly.', 503);
+    }
+
+    let reservation;
+    try {
+      reservation = await reserveVerificationEmail(adminUid);
+    } catch (error) {
+      console.error('Could not reserve an administrator verification email.', error);
+      return jsonError('Could not prepare an administrator verification email. Please try again later.', 503);
+    }
+    if (!reservation.allowed) {
+      if (reservation.retryAfter > 0) {
+        return jsonError(
+          `Please wait ${reservation.retryAfter} seconds before requesting another verification email.`,
+          429,
+          reservation.retryAfter
+        );
+      }
+      return jsonError('The daily limit for administrator verification emails has been reached. Try again tomorrow.', 429);
+    }
+
+    let verificationLink;
+    try {
+      const continueUrl = new URL('/admin/login', siteUrl);
+      verificationLink = await services.auth.generateEmailVerificationLink(adminUser.email, {
+        url: continueUrl.toString(),
+        handleCodeInApp: false
+      });
+    } catch (error) {
+      console.error('Could not generate the administrator verification link.', error);
+      return jsonError('Could not generate the administrator verification link. Check Firebase email action settings.', 502);
+    }
+
+    const safeLink = escapeHtml(verificationLink);
+    let emailResponse;
+    try {
+      emailResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: sender,
+          to: [adminUser.email],
+          subject: 'Verify your Lobola Invitation administrator email',
+          html: `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#33251f;max-width:560px;margin:0 auto;padding:24px"><h1 style="color:#713d32">Lobola Invitation</h1><p>Verify the primary administrator email address to finish signing in.</p><p><a href="${safeLink}" style="display:inline-block;background:#713d32;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px">Verify administrator email</a></p><p>If the button does not work, copy and paste this link into your browser:</p><p style="word-break:break-all">${safeLink}</p><p>If you did not request this, you can ignore this message.</p></div>`,
+          text: `Verify the primary administrator email address to finish signing in.\n\nOpen this link to verify: ${verificationLink}\n\nIf you did not request this, you can ignore this message.`
+        }),
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000)
+      });
+    } catch (error) {
+      console.error('Email service request failed while sending administrator verification.', error);
+      return jsonError('The email service could not be reached. Please try again in a minute.', 502);
+    }
+
+    if (!emailResponse.ok) {
+      console.error(`Email service rejected administrator verification with HTTP ${emailResponse.status}.`);
+      return jsonError('The email service could not send the administrator verification email.', 502);
+    }
+
+    return jsonError('A verification email was sent to the primary administrator address. Confirm it, then sign in again.', 403);
   }
 
   try {

@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  sendEmailVerification, signInWithCustomToken, signInWithEmailAndPassword, signOut
-} from 'firebase/auth';
+import { signInWithCustomToken } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase/client';
 
 const turnstileSiteKey = '0x4AAAAAAFbXDbZY4AJ5gGSD';
@@ -67,26 +65,6 @@ export default function SignInForm() {
         body: JSON.stringify({ email, password, token: captchaToken })
       });
       const result = await response.json();
-      if (!response.ok && result.code === 'ADMIN_EMAIL_NOT_VERIFIED' && typeof result.uid === 'string') {
-        const auth = getFirebaseAuth();
-        const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
-        let verificationSent = false;
-        try {
-          if (credential.user.uid !== result.uid) {
-            throw new Error('The signed-in account does not match the configured primary administrator.');
-          }
-          await credential.user.reload();
-          if (!credential.user.emailVerified) {
-            await sendEmailVerification(credential.user);
-            verificationSent = true;
-          }
-        } finally {
-          await signOut(auth);
-        }
-        throw new Error(verificationSent
-          ? 'A verification email has been sent to the primary administrator address. Confirm it, then sign in again.'
-          : 'The primary administrator email is already verified. Try signing in again.');
-      }
       if (!response.ok) throw new Error(result.error || 'Administrator sign-in failed.');
       await signInWithCustomToken(getFirebaseAuth(), result.customToken);
       router.replace('/admin');
