@@ -34,6 +34,12 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
   const [editorExpanded, setEditorExpanded] = useState(false);
 
   useEffect(() => {
+    if (!editorExpanded) return undefined;
+    document.body.classList.add('customer-editor-active');
+    return () => document.body.classList.remove('customer-editor-active');
+  }, [editorExpanded]);
+
+  useEffect(() => {
     let active = true;
     const unsubscribe = onAuthStateChanged(getFirebaseAuth(), async (user) => {
       const lookupId = ++profileLookupId.current;

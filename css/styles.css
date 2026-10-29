@@ -362,6 +362,10 @@
       max-height: calc(100dvh - 106px);
     }
 
+    .editor-dialog.customer-fullscreen .editor-commandbar {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
     .editor-header {
       display: flex;
       align-items: flex-start;

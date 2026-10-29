@@ -1,11 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase/client';
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    if (!isFirebaseConfigured) return undefined;
+    return onAuthStateChanged(
+      getFirebaseAuth(),
+      (user) => setSignedIn(Boolean(user?.emailVerified)),
+      (error) => console.error('Could not check the customer sign-in status:', error)
+    );
+  }, []);
 
   return (
     <header className="home-site-header">
@@ -28,7 +40,7 @@ export default function SiteHeader() {
         <a href="#contact" onClick={closeMenu}>Contact us</a>
         <Link href="/admin" className="admin-link" onClick={closeMenu}>Admin</Link>
       </nav>
-      <Link className="home-brand" href="/" aria-label="Lobola Invitation home">
+      <Link className="home-brand" href="/" aria-label="Lobola Invitation home" onClick={closeMenu}>
         <img className="home-brand-logo" src="/lobola-invitation-logo.jpg" alt="Lobola Invitation logo" />
       </Link>
       <div className="home-header-note" aria-label="Social media and contact links">
@@ -50,6 +62,7 @@ export default function SiteHeader() {
             <path d="m4 6 8 6 8-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </a>
+        {signedIn && <p className="home-auth-status" role="status">You are signed in</p>}
       </div>
     </header>
   );

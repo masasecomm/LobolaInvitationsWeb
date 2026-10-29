@@ -124,7 +124,7 @@ export default async function ProductPage({ params, searchParams }) {
       <header className="site-header">
         <Link className="brand" href="/">Lobola Invitation</Link>
         <nav className="header-links">
-          <Link href="/">All templates</Link>
+          <Link href="/">Home</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/about-us">About us</Link>
           <Link href="/contact-us">Contact us</Link>

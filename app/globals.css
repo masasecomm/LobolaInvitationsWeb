@@ -8,6 +8,7 @@
   --paper: #fffdfc;
   --line: #e8dfda;
   --surface: #f5f1ee;
+  --customer-site-header-height: 82px;
 }
 
 * { box-sizing: border-box; }
@@ -175,14 +176,14 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
 .turnstile-widget { min-height: 65px; }
 .template-frame-wrap { overflow: hidden; height: min(82vh, 920px); border: 1px solid var(--line); border-radius: 12px; }
 .template-frame { width: 100%; height: 100%; border: 0; }
-.customer-editor-fullscreen { position: fixed; z-index: 100; inset: 0; width: 100vw; height: 100dvh; background: var(--paper); }
+.customer-editor-fullscreen { position: fixed; z-index: 100; top: var(--customer-site-header-height); left: 0; width: 100vw; height: calc(100dvh - var(--customer-site-header-height)); background: var(--paper); }
 .customer-editor-fullscreen .template-account-status,
 .customer-editor-fullscreen .editor-launch { display: none; }
 .customer-editor-fullscreen .template-frame-wrap { position: absolute; inset: 0; height: auto; border: 0; border-radius: 0; }
 .customer-editor-fullscreen .customer-editor-frame { display: block; width: 100%; height: 100%; }
 .customer-editor-fullscreen > .message.success { display: none; }
 .customer-editor-fullscreen > .message.error { position: absolute; z-index: 101; top: 8px; left: 50%; width: min(600px, calc(100% - 24px)); margin: 0; transform: translateX(-50%); }
-.customer-editor-fullscreen .customer-editor-reset { position: absolute; z-index: 101; top: 108px; right: 16px; }
+.customer-editor-fullscreen .customer-editor-reset { position: absolute; z-index: 101; top: calc(108px - var(--customer-site-header-height)); right: 16px; }
 .editor-launch { margin-bottom: 14px; }
 .editor-overlay { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 2vh 2vw; background: #16120fbb; }
 .editor-overlay .editor-modal { position: relative; inset: auto; width: 100%; height: 100%; max-width: 1600px; }
@@ -310,6 +311,7 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
   gap: 17px;
   margin-right: var(--gutter);
 }
+.home-auth-status { position: absolute; top: 100%; right: var(--gutter); margin: 4px 0 0; color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; }
 .home-social-link {
   display: inline-flex;
   width: 30px;
@@ -492,6 +494,29 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
 .home-site-footer a { color: inherit; text-decoration: none; }
 .home-site-footer a:hover { color: var(--ink); }
 .home-site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+body.customer-editor-active { overflow: hidden; }
+body.customer-editor-active .site-header {
+  position: fixed;
+  z-index: 110;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--customer-site-header-height);
+  background: var(--paper);
+}
+body.customer-editor-active .header-links {
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+body.customer-editor-active .brand { flex-shrink: 0; }
+body.customer-editor-active .editor-overlay { z-index: 130; }
+
+@media (max-width: 780px) {
+  :root { --customer-site-header-height: 72px; }
+}
 
 @media (max-width: 760px) {
   .home-brand-logo { width: 120px; height: 120px; }

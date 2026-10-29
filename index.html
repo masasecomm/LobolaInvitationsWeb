@@ -181,11 +181,6 @@
       </button>
     </div>
     <div class="editor-commandbar" aria-label="Document controls">
-      <div class="editor-commandbar-group">
-        <button class="editor-icon-button" type="button" id="editor-home" aria-label="Home" title="Home">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
       <span class="editor-document-name">Lobola Invitation — Product 1</span>
       <div class="editor-commandbar-group">
         <button class="editor-icon-button" type="button" id="editor-undo" aria-label="Undo" title="Undo" disabled>
@@ -2299,7 +2294,6 @@
     });
     setEditorTab(activeEditorTab);
 
-    document.getElementById('editor-home').addEventListener('click', () => editorDialog.close());
     document.getElementById('editor-undo').addEventListener('click', restoreUndo);
     document.getElementById('editor-share').addEventListener('click', async () => {
       if (!navigator.share) {
