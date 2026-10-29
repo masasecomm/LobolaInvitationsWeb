@@ -1,14 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getFirebaseAuth, isFirebaseConfigured } from '@/lib/firebase/client';
 
 export default function SiteHeader() {
+  const header = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    function closeMenuOnOutsideClick(event) {
+      if (!header.current?.contains(event.target)) setMenuOpen(false);
+    }
+
+    document.addEventListener('pointerdown', closeMenuOnOutsideClick);
+    return () => document.removeEventListener('pointerdown', closeMenuOnOutsideClick);
+  }, []);
 
   useEffect(() => {
     if (!isFirebaseConfigured) return undefined;
@@ -20,7 +30,7 @@ export default function SiteHeader() {
   }, []);
 
   return (
-    <header className="home-site-header">
+    <header className="home-site-header" ref={header}>
       <button
         className="home-menu-toggle"
         type="button"

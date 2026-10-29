@@ -229,8 +229,8 @@
         <button type="button" data-editor-tab="apps" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Export</button>
       </nav>
       <form class="editor-tools" id="invitation-form">
-        <details class="editor-section" aria-label="Photo editing" data-editor-panel="pictures">
-          <summary>Photo</summary>
+        <section class="editor-section" aria-label="Photo editing" data-editor-panel="pictures">
+          <h3>Photo</h3>
           <div class="editor-upload">
             <label for="photo-upload">Upload your photograph</label>
             <input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
@@ -290,10 +290,10 @@
             <button class="editor-tool-button" id="flip-photo" type="button" aria-pressed="false">Flip horizontal</button>
             <button class="editor-tool-button" id="flip-photo-vertical" type="button" aria-pressed="false">Flip vertical</button>
           </div>
-        </details>
+        </section>
 
-        <details class="editor-section" aria-label="Background image" data-editor-panel="pictures">
-          <summary>Background</summary>
+        <section class="editor-section" aria-label="Background image" data-editor-panel="pictures">
+          <h3>Background</h3>
           <div class="editor-upload">
             <label for="background-upload">Upload a background image</label>
             <input id="background-upload" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
@@ -311,10 +311,10 @@
               <option value="soft-light">Soft light</option><option value="hard-light">Hard light</option>
             </select>
           </label>
-        </details>
+        </section>
 
-        <details class="editor-section editor-elements-section" aria-label="Elements" data-editor-panel="insert">
-          <summary>Elements</summary>
+        <section class="editor-section editor-elements-section" aria-label="Elements" data-editor-panel="insert">
+          <h3>Elements</h3>
           <div class="editor-element-categories" role="group" aria-label="Element sections">
             <button type="button" data-element-category="all" aria-pressed="true">All</button>
             <button type="button" data-element-category="frames" aria-pressed="false">Frames</button>
@@ -325,10 +325,10 @@
           </div>
           <div id="template-elements" class="editor-elements-grid" aria-live="polite"></div>
           <p class="editor-size">Drag an element onto the invitation or select it to add it. Texts are added from the Text section.</p>
-        </details>
+        </section>
 
-        <details class="editor-section editor-shapes-section" aria-label="Frames and shapes" data-editor-panel="insert">
-          <summary>Insert frame / shape</summary>
+        <section class="editor-section editor-shapes-section" aria-label="Frames and shapes" data-editor-panel="insert">
+          <h3>Insert frame / shape</h3>
           <label class="editor-field" for="shape-type">Shape
             <select id="shape-type">
               <option value="rectangle">Rectangle frame</option>
@@ -383,17 +383,15 @@
             <button class="editor-tool-button" id="delete-shape" type="button">Delete shape</button>
           </div>
           <p class="editor-size">Select a shape to resize it with the canvas handles. Drag it to reposition.</p>
-        </details>
+        </section>
 
-        <details class="editor-section editor-text-disclosure" aria-label="Invitation text" data-editor-panel="text">
-          <summary>Invitation text</summary>
+        <section class="editor-section editor-text-disclosure" aria-label="Invitation text" data-editor-panel="text">
+          <h3>Invitation text</h3>
           <div id="template-text-items" class="editor-layer-list" aria-label="Invitation text, ordered from top to bottom"></div>
-        </details>
+        </section>
 
-        <details class="editor-section editor-advanced" aria-label="Add Text" data-editor-panel="text">
-          <summary>Add Text
-            <svg class="editor-add-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </summary>
+        <section class="editor-section editor-advanced" aria-label="Add Text" data-editor-panel="text">
+          <h3>Add Text</h3>
           <label class="editor-field" for="selected-text-content">Selected text · click to edit on the invitation
             <textarea id="selected-text-content" maxlength="180" readonly></textarea>
           </label>
@@ -445,7 +443,7 @@
             <button class="editor-tool-button" id="send-backward" type="button">Send backward</button>
           </div>
           <p class="editor-size">Drag text on the artwork to position it. Snapping guides appear while moving.</p>
-        </details>
+        </section>
 
         <section class="editor-section" aria-label="Export options" data-editor-panel="apps">
           <h3>Export &amp; preview</h3>
@@ -1648,34 +1646,10 @@
       document.querySelectorAll('[data-editor-panel]').forEach((panel) => {
         panel.hidden = !panel.dataset.editorPanel.split(/\s+/).includes(tab);
       });
-      if (tab === 'text' || tab === 'insert') {
-        document.querySelectorAll('.editor-tools details').forEach((details) => {
-          details.open = false;
-        });
-      }
-      if (tab === 'insert') document.querySelector('.editor-shapes-section').open = true;
-      if (tab === 'pictures') {
-        document.querySelector('[aria-label="Photo editing"]').open = true;
-      }
     }
 
     function activateShapeSection() {
       setEditorTab('insert');
-      document.querySelectorAll('.editor-tools details').forEach((details) => {
-        details.open = details.classList.contains('editor-shapes-section');
-      });
-    }
-
-    function openLayerDetails(key) {
-      if (key === 'photo') return;
-      document.querySelector('.editor-text-disclosure').open = true;
-      for (const details of document.querySelectorAll('[name="invitation-details"]')) {
-        const lockButton = details.querySelector('[data-lock-layer]');
-        if (lockButton && lockButton.dataset.lockLayer === key) {
-          details.open = true;
-          return;
-        }
-      }
     }
 
     function recordUndo() {
@@ -1724,7 +1698,6 @@
       textEditingActive = true;
       selectionGizmoActive = true;
       syncLayerControls();
-      openLayerDetails(key);
       syncStyleControls();
       drawInvitation();
       setStatus(`Additional text duplicated.`, 'success');
@@ -1745,7 +1718,6 @@
       textEditingActive = true;
       selectionGizmoActive = true;
       syncLayerControls();
-      openLayerDetails(key);
       syncStyleControls();
       drawInvitation();
       setStatus('Text item pasted.', 'success');
@@ -1862,25 +1834,25 @@
       const page = currentPage();
       const customKeys = page.layerOrder.filter((key) => !layerKeys.includes(key));
       const orderedTextKeys = [...page.layerOrder].sort((left, right) => page.styles[left].y - page.styles[right].y);
-      const openTextLayers = new Set([...templateTextList.querySelectorAll('details[name="invitation-details"][open]')]
-        .map((details) => details.querySelector('[data-lock-layer]')?.dataset.lockLayer)
-        .filter(Boolean));
       for (const key of Object.keys(textFields)) delete textFields[key];
       templateTextList.replaceChildren(...orderedTextKeys.map((key) => {
         const label = layerLabels[key] || `Additional text ${customKeys.indexOf(key) + 1}`;
-        const details = document.createElement('details');
-        details.className = 'editor-accordion';
-        details.name = 'invitation-details';
-        details.open = openTextLayers.has(key);
-        const summary = document.createElement('summary');
-        summary.setAttribute('aria-current', String(selectedLayer === key));
+        const layerCard = document.createElement('div');
+        layerCard.className = 'editor-accordion';
+        const heading = document.createElement('div');
+        heading.className = 'editor-accordion-heading';
+        const selectButton = document.createElement('button');
+        selectButton.className = 'editor-layer-select';
+        selectButton.type = 'button';
+        selectButton.setAttribute('aria-pressed', String(selectedLayer === key));
         const labelElement = document.createElement('span');
         labelElement.className = 'editor-accordion-label';
         labelElement.textContent = label;
         const preview = document.createElement('span');
         preview.className = 'editor-accordion-preview';
         preview.dataset.textPreview = key;
-        summary.append(labelElement, preview);
+        selectButton.append(labelElement, preview);
+        heading.append(selectButton);
         const lockButton = document.createElement('button');
         lockButton.className = 'editor-lock';
         lockButton.type = 'button';
@@ -1891,7 +1863,7 @@
           event.stopPropagation();
           setLayerLocked(key, !currentPage().styles[key].locked);
         });
-        summary.append(lockButton);
+        heading.append(lockButton);
         const content = document.createElement('div');
         content.className = 'editor-accordion-content';
         const fieldLabel = document.createElement('label');
@@ -1930,21 +1902,18 @@
         });
         fieldLabel.append(field);
         content.append(fieldLabel);
-        details.append(summary, content);
-        summary.addEventListener('click', (event) => {
-          event.preventDefault();
+        layerCard.append(heading, content);
+        selectButton.addEventListener('click', () => {
           selectedLayer = key;
           textEditingActive = true;
           selectionGizmoActive = true;
-          details.open = !details.open;
-          if (details.open) document.querySelector('.editor-text-disclosure').open = true;
           if (inlineEditingLayer && inlineEditingLayer !== key) finishInlineTextEditing();
           syncStyleControls();
           updateTextItemSelection();
           drawInvitation(currentPage(), true);
         });
         updateTextItemPreview(key, preview);
-        return details;
+        return layerCard;
       }));
     }
 
@@ -1955,10 +1924,9 @@
     }
 
     function updateTextItemSelection() {
-      templateTextList.querySelectorAll('.editor-accordion > summary').forEach((summary) => {
-        const details = summary.parentElement;
-        const selected = details.querySelector('[data-lock-layer]')?.dataset.lockLayer === selectedLayer;
-        summary.setAttribute('aria-current', String(selected));
+      templateTextList.querySelectorAll('.editor-layer-select').forEach((button) => {
+        const selected = button.parentElement.querySelector('[data-lock-layer]')?.dataset.lockLayer === selectedLayer;
+        button.setAttribute('aria-pressed', String(selected));
       });
     }
 
@@ -2245,7 +2213,6 @@
       if (field) field.disabled = locked;
       if (key === selectedLayer) syncStyleControls();
       syncLayerControls();
-      openLayerDetails(key);
       drawInvitation();
     }
 
@@ -2280,11 +2247,6 @@
     document.getElementById('invitation-form').addEventListener('submit', (event) => event.preventDefault());
     document.querySelectorAll('[data-editor-tab]').forEach((button) => {
       button.addEventListener('click', () => {
-        if (button.dataset.editorTab === 'text') {
-          document.querySelectorAll('.editor-tools details').forEach((details) => {
-            details.open = false;
-          });
-        }
         setEditorTab(button.dataset.editorTab);
         if (button.dataset.editorTab === 'text' && selectedLayer === 'photo') {
           selectedLayer = 'names';
@@ -2628,13 +2590,13 @@
       if (!contextMenu.hidden && !contextMenu.contains(event.target)) contextMenu.hidden = true;
       const targetElement = event.target instanceof Element ? event.target : null;
       const textFieldTarget = targetElement?.closest('#selected-text-content, .editor-text-layer-value');
-      const textLayerSummaryTarget = targetElement?.closest('.editor-accordion > summary')
+      const textLayerButtonTarget = targetElement?.closest('.editor-layer-select')
         && !targetElement.closest('[data-lock-layer]');
       if (inlineEditingLayer && !inlineTextEditor.contains(event.target) && !editorFormatbar.contains(event.target)
-        && !textFieldTarget && !textLayerSummaryTarget) {
+        && !textFieldTarget && !textLayerButtonTarget) {
         finishInlineTextEditing();
       }
-      if (textFieldTarget || textLayerSummaryTarget) return;
+      if (textFieldTarget || textLayerButtonTarget) return;
       if (!editorDialog.open || invitationCanvas.contains(event.target)
         || inlineTextEditor.contains(event.target) || editorFormatbar.contains(event.target)) return;
       selectionGizmoActive = false;
@@ -2663,7 +2625,6 @@
       textEditingActive = selectedLayer !== 'photo';
       selectionGizmoActive = textEditingActive;
       setEditorTab(selectedLayer === 'photo' ? 'pictures' : 'text');
-      openLayerDetails(selectedLayer);
       syncLayerControls();
       syncStyleControls();
       drawInvitation();
@@ -3190,7 +3151,6 @@
           selectedLayer = textHit;
           textEditingActive = true;
           setEditorTab('text');
-          openLayerDetails(textHit);
           const style = page.styles[textHit];
           if (!style.locked && canTouchEdit) dragState = { type: 'text', key: textHit, startX: x, startY: y, textX: style.x, textY: style.y };
         } else if (page.background && !page.backgroundLocked) {
@@ -3245,7 +3205,6 @@
           selectedLayer = hit;
           textEditingActive = true;
           setEditorTab('text');
-          openLayerDetails(hit);
         } else if (currentPage().background) {
           selectedLayer = 'background';
           textEditingActive = false;
@@ -3470,7 +3429,6 @@
           textEditingActive = false;
           selectionGizmoActive = true;
           setEditorTab('pictures');
-          document.querySelector('[aria-label="Background image"]').open = true;
           syncPageControls();
           setStatus('Background image added. Drag it or use the resize handles to position and scale it.', 'success');
           drawInvitation();
