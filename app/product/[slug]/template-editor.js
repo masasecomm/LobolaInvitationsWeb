@@ -46,6 +46,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
       if (user && !user.emailVerified) {
         setAccount(null);
         setProfileUser(null);
+        setEditorExpanded(false);
         setAccountState('ready');
         setAccountMessage('Confirm your email using the link we sent, then sign in here.');
         return;
@@ -53,6 +54,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
       if (!user) {
         setAccount(null);
         setProfileUser(null);
+        setEditorExpanded(false);
         setAccountState('ready');
         return;
       }
@@ -63,9 +65,11 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
         if (!active || lookupId !== profileLookupId.current) return;
         const profile = snapshot.data();
         if (snapshot.exists() && typeof profile.name === 'string' && typeof profile.phoneNumber === 'string') {
+          setEditorExpanded(true);
           setAccount(user);
           setProfileUser(null);
         } else {
+          setEditorExpanded(false);
           setAccount(null);
           setProfileUser(user);
         }
@@ -103,7 +107,6 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
       }
       if (event.data?.type === 'lobola-template-loaded') {
         setReady(true);
-        setEditorExpanded(true);
       }
       if (event.data?.type === 'lobola-editor-closed') setEditorExpanded(false);
       if (event.data?.type === 'lobola-template-reset') {
@@ -166,9 +169,11 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
         if (lookupId === profileLookupId.current) {
           const profile = profileSnapshot.data();
           if (profileSnapshot.exists() && typeof profile.name === 'string' && typeof profile.phoneNumber === 'string') {
+            setEditorExpanded(true);
             setAccount(credential.user);
             setProfileUser(null);
           } else {
+            setEditorExpanded(false);
             setAccount(null);
             setProfileUser(credential.user);
           }
@@ -214,6 +219,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
         updatedAt: serverTimestamp()
       });
       setAccount(profileUser);
+      setEditorExpanded(true);
       setProfileUser(null);
       setAccountMessage('Thank you. Your details are saved and you can now edit this invitation.');
     } catch (caught) {
@@ -267,6 +273,7 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
     try {
       await signOut(getFirebaseAuth());
       setAccount(null);
+      setEditorExpanded(false);
       setReady(false);
       setAccountMessage('You have signed out.');
     } catch (caught) {
@@ -306,11 +313,11 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
   }
 
   if (accountState === 'checking') {
-    return <section className="panel"><p role="status">Checking email confirmation…</p></section>;
+    return <section className="customer-editor-startup" role="status">Checking your sign-in…</section>;
   }
 
   if (accountState === 'checking-profile') {
-    return <section className="panel"><p role="status">Checking your customer details…</p></section>;
+    return <section className="customer-editor-startup" role="status">Preparing your customization…</section>;
   }
 
   if (profileUser) {
@@ -378,6 +385,9 @@ export default function TemplateEditor({ product, autoOpenEditor = false }) {
       {error && <p className="message error" role="alert">{error}</p>}
       {reviewNotice && <p className="message success" role="status">{reviewNotice}</p>}
       <div className="template-frame-wrap">
+        {editorExpanded && !ready && (
+          <div className="customer-editor-loading" role="status">Preparing your customization…</div>
+        )}
         <iframe
           className={`template-frame${editorExpanded ? ' customer-editor-frame' : ''}`}
           ref={frame}

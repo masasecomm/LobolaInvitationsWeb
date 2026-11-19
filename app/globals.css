@@ -174,8 +174,31 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
 .template-account-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
 .template-account-status p { margin: 0; color: var(--muted); font-size: 13px; }
 .turnstile-widget { min-height: 65px; }
+.customer-editor-startup {
+  position: fixed;
+  z-index: 100;
+  inset: var(--customer-site-header-height) 0 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 24px;
+  background: var(--paper);
+  color: var(--muted);
+  text-align: center;
+}
 .template-frame-wrap { overflow: hidden; height: min(82vh, 920px); border: 1px solid var(--line); border-radius: 12px; }
 .template-frame { width: 100%; height: 100%; border: 0; }
+.customer-editor-loading {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--paper);
+  color: var(--muted);
+  text-align: center;
+}
 .customer-editor-fullscreen { position: fixed; z-index: 100; top: var(--customer-site-header-height); left: 0; width: 100vw; height: calc(100dvh - var(--customer-site-header-height)); background: var(--paper); }
 .customer-editor-fullscreen .template-account-status,
 .customer-editor-fullscreen .editor-launch { display: none; }
@@ -495,8 +518,10 @@ h1 { margin-bottom: 14px; font-size: clamp(38px, 5vw, 62px); line-height: 1.08; 
 .home-site-footer a:hover { color: var(--ink); }
 .home-site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
 
-body.customer-editor-active { overflow: hidden; }
-body.customer-editor-active .site-header {
+body.customer-editor-active,
+body:has(.customer-editor-startup) { overflow: hidden; }
+body.customer-editor-active .site-header,
+body:has(.customer-editor-startup) .site-header {
   position: fixed;
   z-index: 110;
   top: 0;
@@ -505,13 +530,15 @@ body.customer-editor-active .site-header {
   height: var(--customer-site-header-height);
   background: var(--paper);
 }
-body.customer-editor-active .header-links {
+body.customer-editor-active .header-links,
+body:has(.customer-editor-startup) .header-links {
   min-width: 0;
   flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
 }
-body.customer-editor-active .brand { flex-shrink: 0; }
+body.customer-editor-active .brand,
+body:has(.customer-editor-startup) .brand { flex-shrink: 0; }
 body.customer-editor-active .editor-overlay { z-index: 130; }
 
 @media (max-width: 780px) {
